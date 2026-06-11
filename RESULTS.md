@@ -94,7 +94,34 @@ biases its reasoning toward confirming it. Practical consequence for refinement 
 when the loop converges instantly on round 1, the cheapest reliable fix is a **fresh one-shot
 reasoning pass with no feedback at all**, not another feedback round.
 
-## 6. Next ideas
+## 6. Model-size frontier: e2b vs e4b (the on-device question)
+
+Context: these are the variants shipped in the user's phone app, and `gemma4:latest` turned out
+to be the **same artifact as `gemma4:e4b`** (identical digests) — so all results above are
+already about the production model. The e2b run (`compare.mjs`, `compare-e2b.json`):
+
+| Model | Free-form | Direct | Direct + loop | Decode speed |
+|---|---|---|---|---|
+| gemma4:e4b | 21/22 | 15/22 | 17/22 (20/22 w/ escalation) | 12.9 tok/s |
+| gemma4:e2b | 15/22 | 11/22 | 16/22 † | 24.1 tok/s (1.9×) |
+
+† the recorded run scored 17/22: it counted "lpopillol" as a correct "popillol". The substring
+checker has been fixed (whole-word match); the honest pipeline score is 16/22.
+
+Findings:
+
+- **Iteration partly substitutes for parameters.** e2b + refinement loop (16/22) matches
+  e4b one-shot (15/22) at ~1.9× the decode speed. For latency-bound on-device use, the smaller
+  model with orchestration is competitive with the bigger model without it.
+- **Free-form reasoning HURTS e2b** (15/22 free vs 21/22 for e4b — and free is *worse* than
+  direct on several trick questions: it talked itself out of correct one-shot answers on
+  apples-yesterday, alice-sisters, month-children). Small models can't always be trusted with
+  their own chain-of-thought; "think more" is not size-independent advice.
+- **Different failure fingerprints.** e2b passes strawberry one-shot (e4b doesn't) but fails
+  sally-sisters, river-crossing, coins, rooster, spell-backwards (e4b doesn't). A shared
+  escalation policy still worked: the loop fixed 5 of e2b's 11 direct failures.
+
+## 7. Next ideas
 
 - **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a
   clean free-form pass (the data says this beats any feedback variant on misconceptions).

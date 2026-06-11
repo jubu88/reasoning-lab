@@ -12,6 +12,8 @@ export interface Problem {
   expected?: number | string;
   /** word type: substring that must NOT appear in the FINAL line */
   forbidden?: string;
+  /** word type: require word-boundary match (rejects e.g. "lpopillol" for "popillol") */
+  wholeWord?: boolean;
   /** keywords type: pass if ANY group has ALL its keywords in the searched text */
   expectedKeywords?: string[][];
   /** keywords type: search only the FINAL line (default) or the full response */
@@ -59,9 +61,11 @@ export function checkAnswer(problem: Problem, fullText: string): Verdict {
   }
   if (problem.type === "word") {
     const expected = String(problem.expected).toLowerCase();
+    const matched = problem.wholeWord
+      ? new RegExp(`\\b${expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).test(lower)
+      : lower.includes(expected);
     const pass =
-      lower.includes(expected) &&
-      (!problem.forbidden || !lower.includes(problem.forbidden.toLowerCase()));
+      matched && (!problem.forbidden || !lower.includes(problem.forbidden.toLowerCase()));
     return { pass, extracted: finalLine };
   }
   // keywords — searching the whole response is prone to false positives (a correct

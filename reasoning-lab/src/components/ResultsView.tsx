@@ -9,6 +9,7 @@ import expDirect from "../data/exp-direct-classic.json";
 import expTemp from "../data/exp-temp-revisions.json";
 import expHybrid from "../data/exp-hybrid.json";
 import expStudent from "../data/exp-student-framing.json";
+import compareE2b from "../data/compare-e2b.json";
 
 interface ProbeResult {
   id: string;
@@ -183,6 +184,65 @@ export default function ResultsView() {
           </div>
         ))}
 
+        <div className="card" style={{ marginBottom: 16 }}>
+          <div className="card-title">Model-size frontier — e2b vs e4b (the on-device question)</div>
+          <div className="exp-config">
+            classic battery · same checkers · decode speed measured with identical short prompts
+          </div>
+          <table className="bench" style={{ marginTop: 10 }}>
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Free-form</th>
+                <th>Direct</th>
+                <th>Direct + loop</th>
+                <th>Decode speed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>gemma4:e4b (= :latest)</td>
+                <td>21/22</td>
+                <td>15/22</td>
+                <td>17/22 (20/22 with escalation)</td>
+                <td>12.9 tok/s</td>
+              </tr>
+              <tr>
+                <td>gemma4:e2b</td>
+                <td>15/22</td>
+                <td>11/22</td>
+                <td>16/22 *</td>
+                <td>24.1 tok/s (1.9×)</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style={{ marginTop: 12 }}>
+            {(compareE2b as any).summary[0].refined.map((r: any) => {
+              const reallyFixed = r.fixed && r.id !== "spell-backwards";
+              return (
+                <div key={r.id} style={{ marginBottom: 6 }}>
+                  <span className="chip" style={{ marginRight: 8 }}>{r.id}</span>
+                  {r.trail.map((a: string, i: number) => (
+                    <span key={i}>
+                      {i > 0 && <span className="trail-arrow"> → </span>}
+                      <span className={`trail-answer ${i === r.trail.length - 1 && reallyFixed ? "ok" : "bad"}`}>
+                        {a.length > 22 ? a.slice(0, 22) + "…" : a}
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+          <div className="exp-takeaway">
+            e2b + refinement loop (16/22) ≈ e4b one-shot direct (15/22) at 1.9× the decode speed — iteration partly
+            substitutes for parameters. But free-form reasoning HURTS e2b on trick questions (15/22 vs 21/22 for
+            e4b): it talks itself out of memorized correct answers. * The recorded run counted e2b's
+            "lpopillol" as a pass for spell-backwards; the substring checker has since been fixed (whole-word
+            match) and the corrected pipeline score is 16/22.
+          </div>
+        </div>
+
         <div className="card">
           <div className="card-title">Reproduce</div>
           <pre className="repro-block">{`# from the repo root (Ollama running, gemma4 pulled)
@@ -197,7 +257,12 @@ node experiment.mjs --style direct --rounds 4 --feedback full --set classic
 node experiment.mjs --style direct --revisionTemp 0.8 --rounds 6 \\
   --only count-r-strawberry,arithmetic-chain,widow-marry,count-words,monty-random-host
 node experiment.mjs --style direct --revisionStyle free --rounds 3 \\
-  --only count-r-strawberry,arithmetic-chain,widow-marry,count-words,monty-random-host`}</pre>
+  --only count-r-strawberry,arithmetic-chain,widow-marry,count-words,monty-random-host
+
+# de-anchoring variant + cross-model frontier
+node experiment.mjs --style direct --revisionStyle free --framing student --rounds 3 \\
+  --only count-r-strawberry,arithmetic-chain,widow-marry,count-words,monty-random-host
+node compare.mjs --models gemma4:e2b,gemma4:e4b --rounds 3`}</pre>
         </div>
       </div>
     </>

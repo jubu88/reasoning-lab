@@ -18,7 +18,7 @@ export const BATTERY_CLASSIC = [
   { id: "month-children", category: "trick", prompt: "John's mother has three children. The first child is named April. The second child is named May. What is the name of the third child?", type: "word", expected: "john" },
   { id: "coins-30-cents", category: "trick", prompt: "I have two coins that add up to 30 cents. One of them is not a nickel. What are the two coins? (US coins: penny=1, nickel=5, dime=10, quarter=25)", type: "keywords", expectedKeywords: [["quarter", "nickel"]] },
   { id: "rooster-egg", category: "trick", prompt: "A rooster sits on the peak of a barn roof facing north. The wind blows east at 10 mph. If the rooster lays an egg, which side of the roof does it roll down?", type: "keywords", expectedKeywords: [["don't lay"], ["do not lay"], ["doesn't lay"], ["does not lay"], ["can't lay"], ["cannot lay"], ["neither"]] },
-  { id: "spell-backwards", category: "string", prompt: 'Spell the word "lollipop" backwards.', type: "word", expected: "popillol" },
+  { id: "spell-backwards", category: "string", prompt: 'Spell the word "lollipop" backwards.', type: "word", expected: "popillol", wholeWord: true },
   { id: "height-order", category: "logic", prompt: "Anna is shorter than Ben. Carl is taller than Ben. Dana is shorter than Anna. Emma is taller than Carl. Who is the third tallest?", type: "word", expected: "ben" },
   { id: "widow-marry", category: "trick", prompt: "Is it possible for a living man to marry his widow's sister? Answer yes or no, then explain briefly.", type: "word", expected: "no", forbidden: "yes" },
   { id: "cupcakes-distractor", category: "word-problem", prompt: "A baker bakes 24 cupcakes. He sells 6 in the morning at $2 each and 8 in the afternoon at $3 each. He gives 4 to his neighbor for free. How many cupcakes does he have left?", type: "numeric", expected: 6 },
@@ -69,9 +69,12 @@ export function checkAnswer(problem, fullText) {
     return { pass: num === problem.expected, extracted: finalLine };
   }
   if (problem.type === "word") {
+    const expected = String(problem.expected).toLowerCase();
+    const matched = problem.wholeWord
+      ? new RegExp(`\\b${expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).test(lower)
+      : lower.includes(expected);
     const pass =
-      lower.includes(String(problem.expected).toLowerCase()) &&
-      (!problem.forbidden || !lower.includes(problem.forbidden.toLowerCase()));
+      matched && (!problem.forbidden || !lower.includes(problem.forbidden.toLowerCase()));
     return { pass, extracted: finalLine };
   }
   // keywords are matched against the FINAL line by default to avoid false positives

@@ -1,0 +1,533 @@
+{
+  "rounds": 3,
+  "when": "2026-06-11T09:40:50.334Z",
+  "summary": [
+    {
+      "model": "gemma4:e2b",
+      "n": 22,
+      "freeAccuracy": 15,
+      "directAccuracy": 11,
+      "pipelineAccuracy": 17,
+      "fixedByLoop": [
+        "sally-sisters",
+        "river-one-item",
+        "arithmetic-chain",
+        "coins-30-cents",
+        "spell-backwards",
+        "weekday-feb14"
+      ],
+      "stillWrong": [
+        "count-e-mercilessness",
+        "rooster-egg",
+        "height-order",
+        "widow-marry",
+        "monty-random-host"
+      ],
+      "speedDirect": {
+        "avgTokPerSec": 14.9,
+        "avgSeconds": 4.6
+      },
+      "speedFree": {
+        "avgTokPerSec": 15.2,
+        "avgSeconds": 17.4
+      },
+      "direct": [
+        {
+          "id": "count-e-mercilessness",
+          "pass": false,
+          "extracted": "6",
+          "seconds": 30.49,
+          "evalTokens": 5,
+          "tokPerSec": 10.7,
+          "content": "FINAL: 6"
+        },
+        {
+          "id": "count-r-strawberry",
+          "pass": true,
+          "extracted": "3",
+          "seconds": 3.496,
+          "evalTokens": 5,
+          "tokPerSec": 11.2,
+          "content": "FINAL: 3"
+        },
+        {
+          "id": "apples-yesterday",
+          "pass": true,
+          "extracted": "3",
+          "seconds": 3.838,
+          "evalTokens": 5,
+          "tokPerSec": 11.3,
+          "content": "FINAL: 3"
+        },
+        {
+          "id": "alice-sisters",
+          "pass": true,
+          "extracted": "5",
+          "seconds": 3.258,
+          "evalTokens": 5,
+          "tokPerSec": 11.9,
+          "content": "FINAL: 5"
+        },
+        {
+          "id": "sally-sisters",
+          "pass": false,
+          "extracted": "2",
+          "seconds": 3.458,
+          "evalTokens": 5,
+          "tokPerSec": 12.9,
+          "content": "FINAL: 2"
+        },
+        {
+          "id": "dead-cat",
+          "pass": true,
+          "extracted": "0.0",
+          "seconds": 4.287,
+          "evalTokens": 7,
+          "tokPerSec": 12,
+          "content": "FINAL: 0.0"
+        },
+        {
+          "id": "river-one-item",
+          "pass": false,
+          "extracted": "3",
+          "seconds": 4.967,
+          "evalTokens": 5,
+          "tokPerSec": 8.3,
+          "content": "FINAL: 3"
+        },
+        {
+          "id": "days-before-friday",
+          "pass": true,
+          "extracted": "Wednesday",
+          "seconds": 3.367,
+          "evalTokens": 4,
+          "tokPerSec": 15,
+          "content": "FINAL: Wednesday"
+        },
+        {
+          "id": "decimal-compare",
+          "pass": true,
+          "extracted": "9.9",
+          "seconds": 3.834,
+          "evalTokens": 7,
+          "tokPerSec": 12,
+          "content": "FINAL: 9.9"
+        },
+        {
+          "id": "inclusive-days",
+          "pass": true,
+          "extracted": "26",
+          "seconds": 3.295,
+          "evalTokens": 6,
+          "tokPerSec": 16.6,
+          "content": "FINAL: 26"
+        },
+        {
+          "id": "multiply-2digit",
+          "pass": true,
+          "extracted": "3901",
+          "seconds": 2.987,
+          "evalTokens": 8,
+          "tokPerSec": 16.5,
+          "content": "FINAL: 3901"
+        },
+        {
+          "id": "arithmetic-chain",
+          "pass": false,
+          "extracted": "53",
+          "seconds": 2.92,
+          "evalTokens": 6,
+          "tokPerSec": 12.6,
+          "content": "FINAL: 53"
+        },
+        {
+          "id": "month-children",
+          "pass": true,
+          "extracted": "John",
+          "seconds": 3.024,
+          "evalTokens": 4,
+          "tokPerSec": 17.6,
+          "content": "FINAL: John"
+        },
+        {
+          "id": "coins-30-cents",
+          "pass": false,
+          "extracted": "penny and quarter",
+          "seconds": 3.312,
+          "evalTokens": 6,
+          "tokPerSec": 16.5,
+          "content": "FINAL: penny and quarter"
+        },
+        {
+          "id": "rooster-egg",
+          "pass": false,
+          "extracted": "West",
+          "seconds": 3.001,
+          "evalTokens": 4,
+          "tokPerSec": 19.7,
+          "content": "FINAL: West"
+        },
+        {
+          "id": "spell-backwards",
+          "pass": false,
+          "extracted": "oppilol",
+          "seconds": 2.454,
+          "evalTokens": 6,
+          "tokPerSec": 20.3,
+          "content": "FINAL: oppilol"
+        },
+        {
+          "id": "height-order",
+          "pass": false,
+          "extracted": "Anna",
+          "seconds": 2.556,
+          "evalTokens": 4,
+          "tokPerSec": 17.1,
+          "content": "FINAL: Anna"
+        },
+        {
+          "id": "widow-marry",
+          "pass": false,
+          "extracted": "Yes",
+          "seconds": 3.155,
+          "evalTokens": 4,
+          "tokPerSec": 16.6,
+          "content": "FINAL: Yes"
+        },
+        {
+          "id": "cupcakes-distractor",
+          "pass": true,
+          "extracted": "6",
+          "seconds": 3.368,
+          "evalTokens": 5,
+          "tokPerSec": 17.2,
+          "content": "FINAL: 6"
+        },
+        {
+          "id": "count-words",
+          "pass": true,
+          "extracted": "13",
+          "seconds": 2.764,
+          "evalTokens": 6,
+          "tokPerSec": 17.2,
+          "content": "FINAL: 13"
+        },
+        {
+          "id": "monty-random-host",
+          "pass": false,
+          "extracted": "Switch to door 2",
+          "seconds": 3.715,
+          "evalTokens": 8,
+          "tokPerSec": 15.5,
+          "content": "FINAL: Switch to door 2"
+        },
+        {
+          "id": "weekday-feb14",
+          "pass": false,
+          "extracted": "Sunday",
+          "seconds": 2.911,
+          "evalTokens": 4,
+          "tokPerSec": 18.1,
+          "content": "FINAL: Sunday"
+        }
+      ],
+      "free": [
+        {
+          "id": "count-e-mercilessness",
+          "pass": true,
+          "extracted": "3",
+          "seconds": 6.015,
+          "evalTokens": 57,
+          "tokPerSec": 14.5,
+          "content": "Let's count the occurrences of the letter 'e' in the word \"mercilessness\":\n\nm **e** r c i l **e** s s n **e** s s\n\nThe letter 'e' appears 3 times.\n\nFINAL: 3"
+        },
+        {
+          "id": "count-r-strawberry",
+          "pass": true,
+          "extracted": "3",
+          "seconds": 5.261,
+          "evalTokens": 48,
+          "tokPerSec": 14.6,
+          "content": "The word is \"strawberry\". Let's count the occurrences of the letter 'r':\ns t r a w b e r r y\n\nThe letter 'r' appears three times in \"strawberry\".\n\nFINAL: 3"
+        },
+        {
+          "id": "apples-yesterday",
+          "pass": false,
+          "extracted": "5",
+          "seconds": 2.697,
+          "evalTokens": 7,
+          "tokPerSec": 16.4,
+          "content": "5\nFINAL: 5"
+        },
+        {
+          "id": "alice-sisters",
+          "pass": false,
+          "extracted": "4",
+          "seconds": 28.229,
+          "evalTokens": 381,
+          "tokPerSec": 14.7,
+          "content": "If Alice has 4 sisters, then there are a total of $4 + 1 = 5$ girls in the family (Alice and her 4 sisters) and 1 brother.\n\nSince Alice's brother is one of the brothers, he has the same number of sisters as everyone else in the family who is female.\nThe total number of sisters in the family is 5 (Alice + 4 sisters).\nIf we consider Alice's brother, his sisters are all the other females in the family. Since there are 5 girls in total, and one of them is Alice's sister (Alice herself), Alice's brother has $5 - 1 = 4$ sisters.\n\nAlternatively, if Alice has 4 sisters, then the total number of girls is $4 + 1 = 5$.\nThe family consists of Alice, her 4 sisters, and 1 brother.\nIf we look from the perspective of Alice's brother: he has 4 sisters (Alice and her 3 sisters) plus himself? No, he only counts the females in the group. The females are Alice and her 4 sisters. If Alice is one of them, then Alice's brother has $4$ sisters.\n\nLet's re-read the setup: \"Alice has 4 sisters and 1 brother.\"\nTotal children = Alice + 4 sisters + 1 brother = 6 children.\nThe girls are Alice + 4 sisters = 5 girls.\nThe boys are 1 brother.\n\nIf we take the perspective of Alice's brother, his sisters are all the females in the family. There are 5 females in total (Alice and her 4 sisters). Since Alice is a sister to him, he has $5 - 1 = 4$ sisters.\n\nFINAL: 4"
+        },
+        {
+          "id": "sally-sisters",
+          "pass": false,
+          "extracted": "2",
+          "seconds": 40.418,
+          "evalTokens": 547,
+          "tokPerSec": 14.4,
+          "content": "Sally has 3 brothers. This means there are 4 children in total (Sally + 3 brothers). Since all the brothers share the same sisters, and Sally is one of those sisters, the number of sisters Sally has is the total number of girls minus herself. If there are 4 children, and we assume there are only girls and boys, then there are 1 girl (Sally) and 3 boys. The problem states \"Each brother has 2 sisters.\" Let's check this: If there are $N$ girls, each boy has $N-1$ sisters. If each brother has 2 sisters, then $N-1 = 2$, which means $N=3$. If there are 3 girls in total, and Sally is one of them, then Sally has $3 - 1 = 2$ sisters.\n\nLet's re-read the setup:\nSally (a girl) has 3 brothers.\nTotal children = Sally + 3 brothers = 4 children.\nThe other children must be girls. Let $G$ be the total number of girls and $B$ be the total number of boys.\nWe know $B=3$. So, $G+3 = 4$, which means $G=1$. This implies Sally is the only girl, so she has 0 sisters.\n\nLet's check the condition: \"Each brother has 2 sisters.\"\nIf there is only 1 girl (Sally), then each brother has 1 sister (Sally). This contradicts the statement that each brother has 2 sisters.\n\nTherefore, the initial assumption that Sally is one of the girls and the other children are either boys or girls must lead to a scenario where there are more than one girl.\n\nLet $S$ be the number of sisters Sally has.\nSince Sally is a girl, the total number of girls is $S+1$.\nThe brothers have $S$ sisters.\nEach brother has 2 sisters, so $S=2$.\nIf Sally has 2 sisters, then the total number of girls is $2 + 1 = 3$.\nIf there are 3 girls and Sally is one of them, then Sally has $3 - 1 = 2$ sisters.\n\nLet's verify this scenario:\nTotal children: 3 girls (Sally and her 2 sisters) and 3 brothers. Total 6 children.\nSally is a girl. She has 2 sisters.\nEach brother has 3 girls in total, so each brother has $3-1=2$ sisters. This matches the condition.\n\nFINAL: 2"
+        },
+        {
+          "id": "dead-cat",
+          "pass": true,
+          "extracted": "0",
+          "seconds": 17.361,
+          "evalTokens": 219,
+          "tokPerSec": 15.3,
+          "content": "Here's a breakdown of the logic to determine the probability:\n\n1. **Initial State:** A dead cat is placed in the box along with other items. The cat starts as dead.\n2. **The Mechanism:** The poison is released *only if* the radiation detector senses radiation.\n3. **Radiation Source:** The radiation source is the nuclear isotope.\n4. **The Chain of Events (Implied):**\n    * If the nuclear isotope decays or emits radiation, the detector senses it.\n    * If the detector senses radiation, the poison is released.\n5. **The Outcome:** The problem does not state that the poison *kills* the cat, nor does it state that the radiation *causes* the cat to die (other than the initial condition). It only sets up a conditional release mechanism.\n\nSince the cat was already dead when placed in the box, and there is no mechanism described for the poison or radiation interaction to cause the cat to become alive, the probability that the cat is alive remains zero.\n\nFINAL: 0"
+        },
+        {
+          "id": "river-one-item",
+          "pass": true,
+          "extracted": "1",
+          "seconds": 25.012,
+          "evalTokens": 321,
+          "tokPerSec": 14.4,
+          "content": "Here is the step-by-step solution to the classic river crossing puzzle:\n\nLet $F$ be the farmer, $G$ be the goat, and $S$ be the starting side. The goal is to get $F$ and $G$ to the destination side ($D$).\n\nInitial state: $\\{F, G\\}$ on $S$, \\{\\} on $D$.\n\n1. **Crossing 1:** The farmer takes the goat across.\n   State: $\\{F\\}$ on $D$, $\\{G\\}$ on $S$. (1 crossing)\n\n2. **Crossing 2:** The farmer returns alone.\n   State: $\\{F, G\\}$ on $S$, \\{\\} on $D$. Wait, this is wrong. Let's re-evaluate the goal. The farmer must end up on the other side *with* the goat.\n\nLet's restart with the standard constraints of the puzzle (which usually involve a wolf, goat, and cabbage, but here it's just the farmer and the goat). Since there are no other animals to worry about eating each other, the solution is much simpler.\n\nInitial state: Farmer (F) and Goat (G) on Side 1. Goal: F and G on Side 2. Boat capacity: F + 1 animal.\n\n1. **Crossing 1:** Farmer takes the goat across.\n   Side 1: \\{\\}, Side 2: $\\{F, G\\}$.\n\nThe farmer and the goat are now both on the other side.\n\nFINAL: 1"
+        },
+        {
+          "id": "days-before-friday",
+          "pass": true,
+          "extracted": "Wednesday",
+          "seconds": 32.662,
+          "evalTokens": 417,
+          "tokPerSec": 14,
+          "content": "Today is Friday. We want to find the day of the week 100 days ago.\nThere are 7 days in a week. We need to find the remainder when 100 is divided by 7.\n$100 \\div 7 = 14$ with a remainder of $2$.\nThis means that 100 days is equal to 14 full weeks plus 2 extra days.\n\nSo, going back 100 days is the same as going back 2 days from Friday.\n\nCounting back 1 day from Friday gives Thursday.\nCounting back 2 days from Friday gives Wednesday.\n\nAlternatively, we can use modular arithmetic. Let Friday be represented by 5 (if Sunday=0, Monday=1, ..., Saturday=6, or if Friday=0, Saturday=1, ..., Thursday=6). Let's use the standard: Sunday=0, Monday=1, Tuesday=2, Wednesday=3, Thursday=4, Friday=5, Saturday=6.\nToday is Friday, so the day number is 5.\nWe want to find the day $100$ days ago, which is $(5 - 100) \\pmod{7}$.\n$5 - 100 = -95$.\nWe need to find $-95 \\pmod{7}$.\n$-95 = -14 \\times 7 + 3$. (Since $14 \\times 7 = 98$, so $-95 = -98 + 3$).\nSo, $-95 \\equiv 3 \\pmod{7}$.\n\nIf we use the standard mapping where Friday is 5:\nFriday (5) - 2 days = Wednesday (3).\n\nLet's verify by counting back 100 days:\n$100 \\div 7 = 14$ remainder $2$.\nGoing back 2 days from Friday is Wednesday.\n\nFINAL: Wednesday"
+        },
+        {
+          "id": "decimal-compare",
+          "pass": true,
+          "extracted": "9.9",
+          "seconds": 24.339,
+          "evalTokens": 340,
+          "tokPerSec": 15.4,
+          "content": "To compare 9.11 and 9.9, we can look at the digits from left to right.\n\nBoth numbers have the same whole number part, which is 9.\n\nNow we compare the decimal parts: 11 (from 9.11) and 9 (from 9.9).\n\nTo make the comparison easier, we can write 9.9 as 9.90.\nNow we compare 9.11 and 9.90.\n\nComparing the tenths place:\nIn 9.11, the tenths digit is 1.\nIn 9.90, the tenths digit is 9.\nSince $9 > 1$, it means $9.90 > 9.11$.\n\nAlternatively, we can compare them directly by aligning the decimal points and adding trailing zeros to make the number of decimal places equal:\n$9.11$\n$9.90$\n\nComparing the digits after the decimal point:\nFor 9.11, the digits are 1 and 1.\nFor 9.90, the digits are 9 and 0.\n\nSince $1 < 9$, we compare the numbers based on the tenths place (the first digit after the decimal point):\n$9.\\mathbf{1}1$ vs $9.\\mathbf{9}0$\nSince $9 > 1$, $9.90$ is larger than $9.11$.\n\nTherefore, $9.9$ is larger than $9.11$.\n\nFINAL: 9.9"
+        },
+        {
+          "id": "inclusive-days",
+          "pass": true,
+          "extracted": "26",
+          "seconds": 18.001,
+          "evalTokens": 239,
+          "tokPerSec": 15.2,
+          "content": "To find the number of days from March 3 to March 28, inclusive, you can use the following formula:\n\nNumber of days = Last day - First day + 1\n\nIn this case:\nLast day = March 28\nFirst day = March 3\n\nNumber of days = $28 - 3 + 1$\nNumber of days = $25 + 1$\nNumber of days = $26$\n\nAlternatively, you can count the days:\nDays in March from March 3 to March 28 (inclusive) are:\nMarch 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28.\nCounting these gives a total of 26 days.\n\nFINAL: 26"
+        },
+        {
+          "id": "multiply-2digit",
+          "pass": true,
+          "extracted": "3901",
+          "seconds": 27.628,
+          "evalTokens": 371,
+          "tokPerSec": 14.6,
+          "content": "To calculate $47 \\times 83$, we can use the distributive property or standard multiplication.\n\nMethod 1: Standard Multiplication\n$$\n\\begin{array}{c}\n\\phantom{\\times} 47 \\\\\n\\times \\quad 83 \\\\\n\\hline\n141 \\quad (3 \\times 47) \\\\\n3760 \\quad (80 \\times 47) \\\\\n\\hline\n3901\n\\end{array}\n$$\nStep 1: Multiply 47 by 3 (the ones digit of 83):\n$3 \\times 47 = 3 \\times (40 + 7) = 120 + 21 = 141$.\n\nStep 2: Multiply 47 by 80 (the tens digit of 83, which is 8, and place a zero):\n$80 \\times 47 = 8 \\times 47 \\times 10 = 376 \\times 10 = 3760$.\n\nStep 3: Add the results:\n$141 + 3760 = 3901$.\n\nMethod 2: Breaking down 83\n$$47 \\times 83 = 47 \\times (80 + 3)$$\n$$= 47 \\times 80 + 47 \\times 3$$\n$$47 \\times 80 = 3760$$\n$$47 \\times 3 = 141$$\n$$3760 + 141 = 3901$$\n\nFINAL: 3901"
+        },
+        {
+          "id": "arithmetic-chain",
+          "pass": true,
+          "extracted": "64",
+          "seconds": 26.542,
+          "evalTokens": 356,
+          "tokPerSec": 14.7,
+          "content": "FINAL: 64"
+        },
+        {
+          "id": "month-children",
+          "pass": false,
+          "extracted": "Cannot be determined",
+          "seconds": 5.409,
+          "evalTokens": 45,
+          "tokPerSec": 15,
+          "content": "The problem states that John's mother has three children, and the first two are named April and May. The problem does not provide enough information to determine the name of the third child.\nFINAL: Cannot be determined"
+        },
+        {
+          "id": "coins-30-cents",
+          "pass": true,
+          "extracted": "Nickel and a quarter",
+          "seconds": 36.181,
+          "evalTokens": 409,
+          "tokPerSec": 12.4,
+          "content": "Let $c_1$ and $c_2$ be the values of the two coins.\nWe are given that their sum is 30 cents:\n$$c_1 + c_2 = 30$$\nThe possible coin values are Penny (1), Nickel (5), Dime (10), Quarter (25).\n\nWe need to find pairs of these values that sum to 30. Let's test the possibilities:\n\\begin{itemize}\n    \\item If one coin is a Penny (1): The other coin must be $30 - 1 = 29$. Since 29 is not a valid coin value, this is not a solution.\n    \\item If one coin is a Nickel (5): The other coin must be $30 - 5 = 25$. Since 25 is a valid coin value (a quarter), this is a possible pair: 5 and 25.\n    \\item If one coin is a Dime (10): The other coin must be $30 - 10 = 20$. Since 20 is not a valid coin value, this is not a solution.\n    \\item If one coin is a Quarter (25): The other coin must be $30 - 25 = 5$. Since 5 is a valid coin value (a nickel), this is the same pair: 25 and 5.\n\\end{itemize}\n\nThe only combination of two coins that add up to 30 cents is a Nickel (5 cents) and a Quarter (25 cents).\n\nWe are also given the condition that \"One of them is not a nickel.\"\nIn the pair {Nickel, Quarter}, one coin is the nickel, and the other is the quarter (which is not a nickel). This satisfies the condition.\n\nThe two coins are a nickel and a quarter.\n\nFINAL: Nickel and a quarter"
+        },
+        {
+          "id": "rooster-egg",
+          "pass": false,
+          "extracted": "east",
+          "seconds": 5.325,
+          "evalTokens": 49,
+          "tokPerSec": 16.9,
+          "content": "The wind blowing east will push the rooster to roll in the direction of the wind, which is east. Since the rooster is on the peak facing north, rolling east means it rolls down the roof towards the east side.\n\nFINAL: east"
+        },
+        {
+          "id": "spell-backwards",
+          "pass": false,
+          "extracted": "oppilol",
+          "seconds": 2.639,
+          "evalTokens": 10,
+          "tokPerSec": 20.3,
+          "content": "oppilol\n\nFINAL: oppilol"
+        },
+        {
+          "id": "height-order",
+          "pass": true,
+          "extracted": "Ben",
+          "seconds": 15.083,
+          "evalTokens": 202,
+          "tokPerSec": 15.9,
+          "content": "Here's the step-by-step deduction of the heights:\n\n1. **Anna is shorter than Ben:** $B > A$\n2. **Carl is taller than Ben:** $C > B$\n   Combining (1) and (2): $C > B > A$\n3. **Dana is shorter than Anna:** $A > D$\n   Combining with the previous chain: $C > B > A > D$\n4. **Emma is taller than Carl:** $E > C$\n   Adding this to the chain: $E > C > B > A > D$\n\nThe order from tallest to shortest is: Emma, Carl, Ben, Anna, Dana.\n\nRanking them by height (1st being tallest):\n1st: Emma (E)\n2nd: Carl (C)\n3rd: Ben (B)\n4th: Anna (A)\n5th: Dana (D)\n\nFINAL: Ben"
+        },
+        {
+          "id": "widow-marry",
+          "pass": true,
+          "extracted": "No",
+          "seconds": 2.875,
+          "evalTokens": 7,
+          "tokPerSec": 16.8,
+          "content": "No.\nFINAL: No"
+        },
+        {
+          "id": "cupcakes-distractor",
+          "pass": true,
+          "extracted": "6",
+          "seconds": 11.73,
+          "evalTokens": 138,
+          "tokPerSec": 15.5,
+          "content": "Here's the step-by-step calculation:\n\n1. **Starting amount:** The baker starts with 24 cupcakes.\n2. **Morning sales:** He sells 6 cupcakes in the morning.\n   * Remaining: $24 - 6 = 18$ cupcakes.\n3. **Afternoon sales:** He sells 8 cupcakes in the afternoon.\n   * Remaining: $18 - 8 = 10$ cupcakes.\n4. **Giving to neighbor:** He gives 4 cupcakes to his neighbor for free.\n   * Remaining: $10 - 4 = 6$ cupcakes.\n\nFINAL: 6"
+        },
+        {
+          "id": "count-words",
+          "pass": true,
+          "extracted": "13",
+          "seconds": 3.506,
+          "evalTokens": 17,
+          "tokPerSec": 14.3,
+          "content": "There are 13 words in the sentence.\nFINAL: 13"
+        },
+        {
+          "id": "monty-random-host",
+          "pass": false,
+          "extracted": "Switch to door 2",
+          "seconds": 17.771,
+          "evalTokens": 222,
+          "tokPerSec": 14.9,
+          "content": "This is the classic Monty Hall problem.\n\nHere's the breakdown of the probabilities:\n\n1. **Initial Choice:** When you first pick Door 1, there is a $\\frac{1}{3}$ probability that you have chosen the car, and a $\\frac{2}{3}$ probability that the car is behind one of the other two doors (Door 2 or Door 3).\n\n2. **Host's Action:** The host opens Door 3, revealing a goat. This action does not change the initial probability that you chose correctly ($\\frac{1}{3}$). However, it concentrates the remaining $\\frac{2}{3}$ probability onto the unopened door (Door 2).\n\n3. **The Decision:**\n    * **Staying with Door 1:** The probability of winning remains $\\frac{1}{3}$.\n    * **Switching to Door 2:** The probability that the car is behind Door 2 is now $\\frac{2}{3}$.\n\nTherefore, you should switch to door 2.\n\nFINAL: Switch to door 2"
+        },
+        {
+          "id": "weekday-feb14",
+          "pass": true,
+          "extracted": "Saturday",
+          "seconds": 28.248,
+          "evalTokens": 387,
+          "tokPerSec": 15,
+          "content": "Here's how to determine the day of the week for February 14, 2026:\n\n1. **Identify the starting date and day:** January 1, 2026 was a Thursday.\n2. **Determine the number of days in January:** January has 31 days.\n3. **Calculate the day of the week for February 1:** Since January has 31 days, we need to find the remainder when 31 is divided by 7 (the number of days in a week).\n   $31 \\div 7 = 4$ remainder $3$.\n   This means that the day of the week shifts forward by 3 days from January 1st to February 1st.\n4. **Find the day of the week for February 1:** Starting from Thursday (Jan 1), moving forward 3 days:\n   Thursday + 1 = Friday\n   Friday + 1 = Saturday\n   Saturday + 1 = Sunday\n   So, February 1, 2026 was a Sunday.\n5. **Find the day of the week for February 14:** We need to count the days from February 1 to February 14.\n   $14 - 1 = 13$ days difference.\n   Now find the remainder when 13 is divided by 7:\n   $13 \\div 7 = 1$ remainder $6$.\n   This means February 14 will be 6 days after Sunday.\n   Sunday + 6 days = Saturday.\n\nAlternatively, since we know Feb 1 is a Sunday:\nFeb 8 is Sunday\nFeb 15 is Sunday (since $15 - 8 = 7$)\nTherefore, Feb 14 is Saturday.\n\nFINAL: Saturday"
+        }
+      ],
+      "refined": [
+        {
+          "id": "count-e-mercilessness",
+          "fixed": false,
+          "trail": [
+            "6",
+            "4",
+            "4"
+          ]
+        },
+        {
+          "id": "sally-sisters",
+          "fixed": true,
+          "trail": [
+            "2",
+            "1",
+            "1"
+          ]
+        },
+        {
+          "id": "river-one-item",
+          "fixed": true,
+          "trail": [
+            "3",
+            "1",
+            "1"
+          ]
+        },
+        {
+          "id": "arithmetic-chain",
+          "fixed": true,
+          "trail": [
+            "53",
+            "64",
+            "64"
+          ]
+        },
+        {
+          "id": "coins-30-cents",
+          "fixed": true,
+          "trail": [
+            "penny and quarter",
+            "nickel and quarter",
+            "Nickel and Quarter"
+          ]
+        },
+        {
+          "id": "rooster-egg",
+          "fixed": false,
+          "trail": [
+            "West",
+            "West"
+          ]
+        },
+        {
+          "id": "spell-backwards",
+          "fixed": true,
+          "trail": [
+            "oppilol",
+            "lpopillol",
+            "lpopillol"
+          ]
+        },
+        {
+          "id": "height-order",
+          "fixed": false,
+          "trail": [
+            "Anna",
+            "Anna"
+          ]
+        },
+        {
+          "id": "widow-marry",
+          "fixed": false,
+          "trail": [
+            "Yes",
+            "Yes"
+          ]
+        },
+        {
+          "id": "monty-random-host",
+          "fixed": false,
+          "trail": [
+            "Switch to door 2",
+            "Switch to door 2"
+          ]
+        },
+        {
+          "id": "weekday-feb14",
+          "fixed": true,
+          "trail": [
+            "Sunday",
+            "Saturday",
+            "Saturday"
+          ]
+        }
+      ]
+    }
+  ]
+}

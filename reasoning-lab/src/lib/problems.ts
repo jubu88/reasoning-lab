@@ -160,6 +160,7 @@ export const PROBLEMS: Problem[] = [
     prompt: 'Spell the word "lollipop" backwards.',
     type: "word",
     expected: "popillol",
+    wholeWord: true,
     expectedDisplay: "popillol",
   },
   {
