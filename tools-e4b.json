@@ -1,0 +1,286 @@
+{
+  "model": "gemma4:e4b",
+  "when": "2026-06-11T13:08:55.833Z",
+  "results": [
+    {
+      "id": "count-e-mercilessness",
+      "pass": true,
+      "extracted": "3",
+      "toolCalls": [
+        {
+          "name": "count_occurrences",
+          "args": {
+            "substring": "e",
+            "text": "mercilessness"
+          },
+          "result": "3"
+        }
+      ],
+      "outTokens": 29,
+      "seconds": 72.2,
+      "content": "FINAL: 3"
+    },
+    {
+      "id": "count-r-strawberry",
+      "pass": true,
+      "extracted": "3",
+      "toolCalls": [
+        {
+          "name": "count_occurrences",
+          "args": {
+            "substring": "r",
+            "text": "strawberry"
+          },
+          "result": "3"
+        }
+      ],
+      "outTokens": 27,
+      "seconds": 9.8,
+      "content": "FINAL: 3"
+    },
+    {
+      "id": "apples-yesterday",
+      "pass": true,
+      "extracted": "3",
+      "toolCalls": [],
+      "outTokens": 5,
+      "seconds": 3.7,
+      "content": "FINAL: 3"
+    },
+    {
+      "id": "alice-sisters",
+      "pass": true,
+      "extracted": "5",
+      "toolCalls": [],
+      "outTokens": 5,
+      "seconds": 3.5,
+      "content": "FINAL: 5"
+    },
+    {
+      "id": "sally-sisters",
+      "pass": true,
+      "extracted": "1",
+      "toolCalls": [],
+      "outTokens": 5,
+      "seconds": 4.1,
+      "content": "FINAL: 1"
+    },
+    {
+      "id": "dead-cat",
+      "pass": true,
+      "extracted": "0",
+      "toolCalls": [],
+      "outTokens": 5,
+      "seconds": 4.9,
+      "content": "FINAL: 0"
+    },
+    {
+      "id": "river-one-item",
+      "pass": true,
+      "extracted": "1",
+      "toolCalls": [],
+      "outTokens": 5,
+      "seconds": 5.1,
+      "content": "FINAL: 1"
+    },
+    {
+      "id": "days-before-friday",
+      "pass": true,
+      "extracted": "Wednesday",
+      "toolCalls": [
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "100 % 7"
+          },
+          "result": "2"
+        }
+      ],
+      "outTokens": 46,
+      "seconds": 12.9,
+      "content": "The remainder is 2, meaning the day was 2 days before Friday. Two days before Friday is Wednesday.\n\nFINAL: Wednesday"
+    },
+    {
+      "id": "decimal-compare",
+      "pass": true,
+      "extracted": "9.9",
+      "toolCalls": [],
+      "outTokens": 7,
+      "seconds": 3.8,
+      "content": "FINAL: 9.9"
+    },
+    {
+      "id": "inclusive-days",
+      "pass": true,
+      "extracted": "26",
+      "toolCalls": [
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "28 - 3 + 1"
+          },
+          "result": "26"
+        }
+      ],
+      "outTokens": 26,
+      "seconds": 12.9,
+      "content": "FINAL: 26"
+    },
+    {
+      "id": "multiply-2digit",
+      "pass": true,
+      "extracted": "3901",
+      "toolCalls": [
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "47 * 83"
+          },
+          "result": "3901"
+        }
+      ],
+      "outTokens": 26,
+      "seconds": 10.1,
+      "content": "FINAL: 3901"
+    },
+    {
+      "id": "arithmetic-chain",
+      "pass": true,
+      "extracted": "64",
+      "toolCalls": [
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "((17 + 28) * 6 - 14) / 4"
+          },
+          "result": "64"
+        }
+      ],
+      "outTokens": 37,
+      "seconds": 11.7,
+      "content": "FINAL: 64"
+    },
+    {
+      "id": "month-children",
+      "pass": true,
+      "extracted": "John",
+      "toolCalls": [],
+      "outTokens": 4,
+      "seconds": 4.1,
+      "content": "FINAL: John"
+    },
+    {
+      "id": "coins-30-cents",
+      "pass": false,
+      "extracted": "A dime and a quarter",
+      "toolCalls": [],
+      "outTokens": 8,
+      "seconds": 5,
+      "content": "FINAL: A dime and a quarter"
+    },
+    {
+      "id": "rooster-egg",
+      "pass": true,
+      "extracted": "roosters do not lay eggs",
+      "toolCalls": [],
+      "outTokens": 9,
+      "seconds": 4.8,
+      "content": "FINAL: roosters do not lay eggs"
+    },
+    {
+      "id": "spell-backwards",
+      "pass": true,
+      "extracted": "popillol",
+      "toolCalls": [
+        {
+          "name": "reverse_string",
+          "args": {
+            "text": "lollipop"
+          },
+          "result": "popillol"
+        }
+      ],
+      "outTokens": 21,
+      "seconds": 9.1,
+      "content": "FINAL: popillol"
+    },
+    {
+      "id": "height-order",
+      "pass": false,
+      "extracted": "Emma",
+      "toolCalls": [],
+      "outTokens": 4,
+      "seconds": 4.1,
+      "content": "FINAL: Emma"
+    },
+    {
+      "id": "widow-marry",
+      "pass": true,
+      "extracted": "No",
+      "toolCalls": [],
+      "outTokens": 4,
+      "seconds": 4,
+      "content": "FINAL: No"
+    },
+    {
+      "id": "cupcakes-distractor",
+      "pass": true,
+      "extracted": "6",
+      "toolCalls": [],
+      "outTokens": 5,
+      "seconds": 4.9,
+      "content": "FINAL: 6"
+    },
+    {
+      "id": "count-words",
+      "pass": true,
+      "extracted": "13",
+      "toolCalls": [
+        {
+          "name": "count_words",
+          "args": {
+            "text": "The cat sat on the mat while the dog slept near the door"
+          },
+          "result": "13"
+        }
+      ],
+      "outTokens": 33,
+      "seconds": 11.8,
+      "content": "FINAL: 13"
+    },
+    {
+      "id": "monty-random-host",
+      "pass": false,
+      "extracted": "Switch to door 2",
+      "toolCalls": [],
+      "outTokens": 8,
+      "seconds": 5.9,
+      "content": "FINAL: Switch to door 2"
+    },
+    {
+      "id": "weekday-feb14",
+      "pass": false,
+      "extracted": "Tuesday",
+      "toolCalls": [
+        {
+          "name": "calculate",
+          "args": {
+            "expression": "4 + (14 - 1) % 7"
+          },
+          "result": "10"
+        },
+        {
+          "name": "count_occurrences",
+          "args": {
+            "substring": "Thursday",
+            "text": "January 1, 2026 was a Thursday. February 14, 2026 is the day we are looking for."
+          },
+          "result": "1"
+        }
+      ],
+      "outTokens": 80,
+      "seconds": 24.4,
+      "content": "FINAL: Tuesday"
+    }
+  ]
+}

@@ -216,7 +216,31 @@ Verdict: a near-free structured-attention trick for constraint-integration probl
 with what the restart loop already fixes. The measured stack remains: direct → restart loop →
 fresh-CoT escalation → cross-model referee.
 
-## 10. Next ideas
+## 10. Tool use: the cheapest accuracy of the project
+
+Same battery, direct answers, plus a generic toolbox (`calculate`, `count_occurrences`,
+`count_words`, `reverse_string`) via Ollama tool-calling — `tools.mjs`, `tools-e4b.json`:
+
+| | Accuracy | Output tokens |
+|---|---|---|
+| Direct one-shot | 15/22 | ~120 |
+| **Direct + tools** | **18/22** | **399** |
+| (CoT everywhere, for reference) | 21/22 | 5,549 |
+
+- The model used tools on 9/22 problems, every invocation sensible: `count_occurrences` for
+  letter counts, `calculate` for arithmetic, `reverse_string` for spelling, `count_words` for
+  word counts. **The perception and arithmetic failure classes are simply gone** — strawberry,
+  arithmetic-chain, and count-words all fixed, and previously-lucky passes (mercilessness,
+  47×83) are now exact instead of memorized.
+- Tools don't help conceptual failures: height-order, Monty Hall unchanged; weekday-feb14
+  *misused* the calculator (one arithmetic op can't do calendar reasoning) and still failed.
+- Two context-sensitivity flips at temp 0: coins-30-cents broke ("a dime and a quarter") and
+  widow-marry passed ("No") in this run — the system prompt shifts borderline answers both
+  ways. Treat both as noise until re-measured; the +3 net is robust either way.
+- **Accuracy-per-token king**: 18/22 at ~18 output tokens/problem. For on-device use, a 4-line
+  JS toolbox buys more than 3,000 tokens of chain-of-thought.
+
+## 11. Next ideas
 
 - **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a
   clean free-form pass (the data says this beats any feedback variant on misconceptions).
