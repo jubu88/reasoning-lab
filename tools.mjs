@@ -15,6 +15,7 @@ const args = Object.fromEntries(
 
 const MODEL = args.model ?? "gemma4:e4b";
 const OUT = args.out ?? "tools-e4b.json";
+const SYS_STYLE = args.sysprompt ?? "pushy"; // pushy | neutral
 const MAX_TOOL_TURNS = 5;
 
 const TOOLS = [
@@ -102,8 +103,11 @@ function runTool(name, rawArgs) {
   }
 }
 
+// "pushy" caused interference: it recasts trick questions as computations (see RESULTS.md §11)
 const SYS =
-  "You have tools available (calculator, substring counter, word counter, string reverser). Whenever a question involves counting letters or words, arithmetic, or manipulating strings, USE A TOOL rather than doing it in your head — tools are exact. After getting tool results, give your final answer.";
+  SYS_STYLE === "neutral"
+    ? "You have tools available. Use one only when it is an exact fit for what the question asks (counting letters or words, arithmetic on given numbers, reversing a string). Otherwise just answer the question normally."
+    : "You have tools available (calculator, substring counter, word counter, string reverser). Whenever a question involves counting letters or words, arithmetic, or manipulating strings, USE A TOOL rather than doing it in your head — tools are exact. After getting tool results, give your final answer.";
 
 async function chatTurn(messages) {
   const res = await fetch(`${OLLAMA}/api/chat`, {

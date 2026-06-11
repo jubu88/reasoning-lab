@@ -239,6 +239,11 @@ Same battery, direct answers, plus a generic toolbox (`calculate`, `count_occurr
   ways. Treat both as noise until re-measured; the +3 net is robust either way.
 - **Accuracy-per-token king**: 18/22 at ~18 output tokens/problem. For on-device use, a 4-line
   JS toolbox buys more than 3,000 tokens of chain-of-thought.
+- **Neutral-prompt fix (follow-up):** rewording the system prompt from "whenever a question
+  involves arithmetic, USE A TOOL" to "use one only when it is an exact fit… otherwise just
+  answer normally" scores **19/22** (`tools-e4b-neutral.json`) and cures the interference of
+  section 11: apples-yesterday and coins recover, all genuine tool wins stay, six invocations
+  all sensible. Recipe: attach the toolbox, mention it gently, never command it.
 
 ## 11. Stacking everything: components don't compose
 
