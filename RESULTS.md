@@ -327,7 +327,39 @@ confidence as the minimum token probability after "FINAL:" — `router.mjs`,
   `chat_template_kwargs: {"enable_thinking": false}`; health-check `127.0.0.1`, not
   `localhost` (IPv6 resolution).
 
-## 14. Next ideas
+## 14. The vigilance prime: unconditional doubt is poison
+
+Idea (user's): skip iteration — inject a system prompt claiming "YOUR PREVIOUS ATTEMPT WAS
+WRONG" with re-derivation instructions, on every question. Zero extra generations if it works.
+Tested with the exact wording on the full battery (`probe-prime-*.json`):
+
+| Configuration | Baseline | + prime |
+|---|---|---|
+| e4b direct | 15/22 | **13/22** |
+| e2b direct | 11/22 | **6/22** |
+| e4b free-form | 21/22 | **18/22** |
+
+Zero fixes in 66 problem-runs; breaks everywhere, worst on the small model; and in free mode
+it roughly doubles generation time (the model re-checks obsessively — two problems rambled
+past a 240 s timeout).
+
+The mechanism completes the doubt picture: a model's first answer is its argmax — its best
+guess. Unconditional doubt is an instruction to deviate from the best guess, which can only
+help where the guess was wrong (7/22) and can hurt everywhere it was right (15/22). The
+instruction-following gradient makes small models obey harder, hence e2b's collapse. The full
+spectrum, measured:
+
+| Form of doubt | Model sees | Result |
+|---|---|---|
+| "Are you sure?" (history kept) | its answer + social pressure | inert (e4b) / sycophantic (e2b) |
+| Vigilance prime | a verdict, no answer | breaks right answers, 2× slower |
+| Restart loop | a candidate + a procedure | fixes slips, breaks nothing |
+| Fresh resample | nothing | fixes misconceptions |
+
+**Doubt only works when it is earned** — attached to a real artifact the model can examine,
+adjudicate, and overrule. Assert less, let it re-derive more.
+
+## 15. Next ideas
 
 - **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a
   clean free-form pass (the data says this beats any feedback variant on misconceptions).

@@ -14,6 +14,10 @@ const THINK = (args.think ?? "false") === "true";
 const TEMP = Number(args.temp ?? 0);
 const STYLE = args.style ?? "free"; // free | direct
 const PREDICT = Number(args.predict ?? 768); // raise for thinking mode — truncation looks like failure
+const PRIME = (args.prime ?? "false") === "true"; // vigilance prime: fictional "you were wrong" system prompt
+
+const VIGILANCE_PRIME =
+  "You previously attempted to solve a problem.\nYOUR PREVIOUS ATTEMPT WAS WRONG.\n1. Re-read the problem carefully, watch for traps. 2. Solve it from scratch.\n3. Compare with the previous attempt and decide which is right. 4. Final answer.";
 const OUT = args.out ?? "probe-results.json";
 const OLLAMA = "http://localhost:11434";
 
@@ -233,7 +237,10 @@ function checkAnswer(problem, fullText) {
 async function ask(prompt, { retryWithoutThink = true } = {}) {
   const body = {
     model: MODEL,
-    messages: [{ role: "user", content: prompt + FORMAT_INSTR }],
+    messages: [
+      ...(PRIME ? [{ role: "system", content: VIGILANCE_PRIME }] : []),
+      { role: "user", content: prompt + FORMAT_INSTR },
+    ],
     stream: false,
     think: THINK,
     keep_alive: "15m",
@@ -265,7 +272,7 @@ async function ask(prompt, { retryWithoutThink = true } = {}) {
 }
 
 const results = [];
-console.log(`Probing ${MODEL} | think=${THINK} | temp=${TEMP} | style=${STYLE} | ${PROBLEMS.length} problems\n`);
+console.log(`Probing ${MODEL} | think=${THINK} | temp=${TEMP} | style=${STYLE} | prime=${PRIME} | ${PROBLEMS.length} problems\n`);
 
 for (const p of PROBLEMS) {
   const t0 = Date.now();

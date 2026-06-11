@@ -53,7 +53,7 @@ export function instructionFor(style) {
 }
 
 export function extractFinal(text) {
-  const matches = [...text.matchAll(/FINAL:\s*(.+)/gi)];
+  const matches = [...text.matchAll(/FINAL(?:\s+ANSWER)?\s*:\s*(.+)/gi)];
   if (matches.length > 0) return matches[matches.length - 1][1].trim();
   const lines = text.trim().split("\n").filter((l) => l.trim());
   return lines.length ? lines[lines.length - 1].trim() : "";

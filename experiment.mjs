@@ -32,9 +32,14 @@ const BASE_TEMP = Number(args.temp ?? 0);
 const REV_TEMP = Number(args.revisionTemp ?? BASE_TEMP); // jitter revisions with --revisionTemp 0.8
 const FEEDBACK = args.feedback ?? "full"; // full | answer | none (fresh resample — no previous attempt shown)
 const FRAMING = args.framing ?? "self"; // self ("your previous attempt") | student (de-anchored third-person)
-// fresh: each round is a new context with the problem + previous attempt (the default loop)
+// fresh:     each round is a new context with the problem + previous attempt (the default loop)
 // challenge: one growing conversation where each round just appends "Are you sure?"
+// reiterate: growing conversation; each round asks to re-solve DIFFERENTLY; the model
+//            self-declares "FINAL ANSWER:" when two consecutive attempts agree, which stops the loop
 const MODE = args.mode ?? "fresh";
+
+const REITERATE_PROMPT =
+  "Reiterate the problem and try to solve it differently this time. If you get the same answer two times in a row then that should be the correct answer, if you get the correct answer say FINAL ANSWER: <answer>";
 const SET = args.set ?? "classic";
 const ONLY = args.only ? args.only.split(",").map((s) => s.trim()) : null;
 const OUT = args.out ?? "experiment-results.json";
@@ -91,16 +96,16 @@ for (const p of problems) {
     for (let i = 0; i <= ROUNDS; i++) {
       const t0 = Date.now();
       let resp;
-      if (i > 0 && MODE === "challenge") {
+      if (i > 0 && (MODE === "challenge" || MODE === "reiterate")) {
+        const followUp =
+          MODE === "reiterate"
+            ? REITERATE_PROMPT
+            : "Are you sure? Double-check your answer carefully and give your final answer." +
+              instructionFor(REV_STYLE);
         const convo = [{ role: "user", content: p.prompt + instructionFor(STYLE) }];
         for (let j = 0; j < i; j++) {
           convo.push({ role: "assistant", content: iterations[j].content });
-          convo.push({
-            role: "user",
-            content:
-              "Are you sure? Double-check your answer carefully and give your final answer." +
-              instructionFor(REV_STYLE),
-          });
+          convo.push({ role: "user", content: followUp });
         }
         resp = await ask({ model: MODEL, messages: convo, think: THINK, seed: 7 + i, temperature: REV_TEMP });
       } else {
@@ -118,6 +123,7 @@ for (const p of problems) {
       }
       const content = resp.message?.content ?? "";
       const verdict = checkAnswer(p, content);
+      const declaredFinal = MODE === "reiterate" && /FINAL\s+ANSWER\s*:/i.test(content);
       iterations.push({
         index: i,
         extracted: verdict.extracted,
@@ -125,8 +131,11 @@ for (const p of problems) {
         seconds: (Date.now() - t0) / 1000,
         evalTokens: resp.eval_count ?? null,
         promptTokens: resp.prompt_eval_count ?? null,
+        declaredFinal,
         content,
       });
+      // the model self-terminates the reiterate loop by declaring its final answer
+      if (declaredFinal) break;
     }
   } catch (e) {
     errored = true;

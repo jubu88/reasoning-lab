@@ -1,0 +1,298 @@
+{
+  "model": "gemma4:e4b",
+  "think": false,
+  "temp": 0,
+  "style": "free",
+  "when": "2026-06-11T18:37:10.853Z",
+  "results": [
+    {
+      "id": "count-e-mercilessness",
+      "category": "counting",
+      "pass": true,
+      "extracted": "3",
+      "expected": 3,
+      "seconds": 60.4,
+      "evalTokens": 161,
+      "tokPerSec": 7.7,
+      "content": "The problem asks for the count of the letter 'e' in the word \"mercilessness\".\n\nLet's write out the word and count each instance of 'e':\nM - e - r - c - i - l - e - s - s - n - e - s - s\n\n1. The first 'e' is at position 2: m**e**rcilessness (Count = 1)\n2. The second 'e' is at position 7: mercil**e**ssness (Count = 2)\n3. The third 'e' is at position 11: mercilessn**e**ss (Count = 3)\n\nThe letter 'e' appears exactly 3 times.\n\nFINAL: 3",
+      "thinking": null
+    },
+    {
+      "id": "count-r-strawberry",
+      "category": "counting",
+      "pass": false,
+      "extracted": "4",
+      "expected": 3,
+      "seconds": 18.5,
+      "evalTokens": 116,
+      "tokPerSec": 7.8,
+      "content": "The word is \"strawberry\".\nI need to count every instance of the letter 'r' in this word.\n\nS - t - r - a - w - b - e - r - r - y\n\n1. The first 'r' is at position 3.\n2. The second 'r' is at position 7.\n3. The third 'r' is at position 8.\n4. The fourth 'r' is at position 9.\n\nThe letter 'r' appears 4 times.\n\nFINAL: 4",
+      "thinking": null
+    },
+    {
+      "id": "apples-yesterday",
+      "category": "trick",
+      "pass": true,
+      "extracted": "3",
+      "expected": 3,
+      "seconds": 12.8,
+      "evalTokens": 68,
+      "tokPerSec": 7.4,
+      "content": "The problem states: \"I have 3 apples today.\" This tells us the current amount. The information about yesterday (\"Yesterday I ate 2 apples\") describes past actions and does not change the current count of apples I possess *today*.\n\nTherefore, the number of apples I have now is 3.\n\nFINAL: 3",
+      "thinking": null
+    },
+    {
+      "id": "alice-sisters",
+      "category": "family-logic",
+      "pass": true,
+      "extracted": "5",
+      "expected": 5,
+      "seconds": 53.8,
+      "evalTokens": 321,
+      "tokPerSec": 6.5,
+      "content": "Here's a step-by-step analysis to solve the problem:\n\n1.  **Analyze Alice's family:**\n    *   Alice has 4 sisters. This means there are $1 \\text{ (Alice)} + 4 = 5$ girls in total.\n    *   Alice has 1 brother. This means there is at least 1 boy in the family.\n\n2.  **Determine the composition of the siblings:**\n    *   Total number of girls = 5 (Alice and her 4 sisters).\n    *   Total number of boys = At least 1 (the brother mentioned).\n\n3.  **Identify the perspective:** The question asks: \"How many sisters does Alice's **brother** have?\"\n\n4.  **Count the brother's sisters:**\n    *   The brother is a male sibling.\n    *   All the girls in the family are his sisters.\n    *   We counted 5 girls in total (Alice + 4 sisters).\n    *   Therefore, Alice's brother has 5 sisters.\n\n*(Self-Check: If there are 5 girls and 1 boy, the siblings are $\\{G_1, G_2, G_3, G_4, G_5, B_1\\}$. If we look from the perspective of $B_1$, his sisters are $G_1, G_2, G_3, G_4, G_5$. That is 5 sisters.)*\n\nFINAL: 5",
+      "thinking": null
+    },
+    {
+      "id": "sally-sisters",
+      "category": "family-logic",
+      "pass": true,
+      "extracted": "1",
+      "expected": 1,
+      "seconds": 51.7,
+      "evalTokens": 402,
+      "tokPerSec": 8.3,
+      "content": "Here's a step-by-step analysis of the problem:\n\n1.  **Analyze Sally's situation:** Sally is a girl.\n2.  **Analyze the brothers' perspective:** Sally has 3 brothers. Let's call them B1, B2, and B3.\n3.  **Analyze the constraint given by the brothers:** \"Each brother has 2 sisters.\"\n\n*   If we consider any one brother (say B1), his sisters are all the girls in the family.\n*   The girls in the family include Sally herself, plus any other sisters she might have.\n*   Since *every* brother has exactly 2 sisters, this means the total number of girls in the family must be 2.\n\n4.  **Determine the composition of the family:**\n    *   Total Girls = 2 (These are the two sisters mentioned by the brothers).\n    *   We know one girl is Sally.\n    *   Therefore, there must be $2 - 1 = 1$ other sister besides Sally.\n\n5.  **Answer the question:** \"How many sisters does Sally have?\"\n    *   Sally has exactly one other sister in addition to herself.\n\n*Self-Check:*\n*   Family members: Sally (Girl 1), Sister X (Girl 2), Brother 1, Brother 2, Brother 3. (Total 5 people)\n*   Does each brother have 2 sisters? Yes, they have Sally and Sister X.\n*   How many sisters does Sally have? She has Sister X. That is 1 sister.\n\nThe trap here is assuming that the number of brothers dictates the total number of girls, or misinterpreting \"Each brother has 2 sisters\" as meaning there are 2 *additional* sisters besides Sally. The statement refers to the total count of female siblings for any male member.\n\nFINAL: 1",
+      "thinking": null
+    },
+    {
+      "id": "dead-cat",
+      "category": "trick",
+      "pass": true,
+      "extracted": "0",
+      "expected": 0,
+      "seconds": 56.1,
+      "evalTokens": 261,
+      "tokPerSec": 5.1,
+      "content": "This is a classic riddle designed to test critical thinking and attention to detail rather than scientific knowledge.\n\nLet's analyze the components and the sequence of events:\n\n1.  **The Setup:** A dead cat, a nuclear isotope, a vial of poison, and a radiation detector are placed in a box.\n2.  **The Mechanism:** If the detector senses radiation, it releases the poison.\n3.  **The Timeframe:** The box is opened one day later.\n\n**Analysis:**\n\n*   **The Cat's State:** The problem explicitly states that a **dead cat** is placed in the box.\n*   **Survival Probability:** Since the cat was dead when placed in the box, its probability of being alive one day later is 0.\n*   **Distractions/Traps:** The nuclear isotope, the poison, and the detector are elaborate distractions intended to make the solver focus on potential chemical reactions or radiation exposure. However, these elements do not change the initial condition given for the cat.\n\nThe question asks: \"What is the probability (as a number) that the cat is alive?\"\n\nSince the cat started dead, $P(\\text{Cat is alive after one day}) = 0$.\n\nFINAL: 0",
+      "thinking": null
+    },
+    {
+      "id": "river-one-item",
+      "category": "trick",
+      "pass": true,
+      "extracted": "1",
+      "expected": 1,
+      "seconds": 86.3,
+      "evalTokens": 493,
+      "tokPerSec": 6.2,
+      "content": "Here's a step-by-step analysis of the problem:\n\n**Goal:** Move the Farmer (F) and the Goat (G) from the Starting Side (Side A) to the Destination Side (Side B).\n**Constraint:** The boat can carry the farmer and one item (animal or nothing, but since he must cross, it's F + 1 item).\n\nLet's track the location of the Farmer (F), Goat (G), and the Boat ($\\rightarrow$ indicates movement from A to B; $\\leftarrow$ indicates movement from B to A).\n\n**Initial State:** Side A: {F, G}, Side B: {}\n**Goal State:** Side A: {}, Side B: {F, G}\n\n**Crossing 1:** The farmer must take the goat across.\n*   Action: F takes G across. (Boat moves A $\\rightarrow$ B)\n*   State: Side A: {}, Side B: {F, G}\n*   Crossings: 1\n\nWait, this seems too simple. Let's re-read the problem carefully to ensure there are no hidden constraints or traps.\n\n*   \"A farmer is standing on one side of a river with only a goat.\" (Initial state confirmed)\n*   \"He has a boat that can carry himself and one animal.\" (Capacity constraint confirmed)\n*   \"What is the minimum number of river crossings needed so that the farmer and the goat both end up on the other side?\"\n\nIf there are no other animals or constraints (like wolves, cabbage, etc., which usually accompany this type of riddle), the process is straightforward:\n\n1.  **Crossing 1:** Farmer takes Goat across.\n    *   Start Side: Empty\n    *   End Side: {Farmer, Goat}\n    *   Total Crossings: 1\n\nIf the problem intended to be a classic river crossing puzzle (like Fox, Goose, Grain), it would typically involve at least three items and constraints on which pairs cannot be left alone. Since only two entities (F and G) are mentioned, and the boat capacity is sufficient for both in one trip, the minimum number of crossings is 1.\n\n**Comparison with previous attempt:** Since no previous attempt was provided, I must rely solely on the problem statement. The simplest interpretation yields 1 crossing.\n\nFINAL: 1",
+      "thinking": null
+    },
+    {
+      "id": "days-before-friday",
+      "category": "date-math",
+      "pass": true,
+      "extracted": "Wednesday",
+      "expected": "wednesday",
+      "seconds": 121.5,
+      "evalTokens": 622,
+      "tokPerSec": 5.3,
+      "content": "The problem asks for the day of the week exactly 100 days before Friday.\n\nWe need to use modular arithmetic with modulo 7, as there are 7 days in a week.\n\nLet today be represented by a number corresponding to the day of the week. We can assign numbers:\nSunday = 0\nMonday = 1\nTuesday = 2\nWednesday = 3\nThursday = 4\nFriday = 5\nSaturday = 6\n\nToday is Friday, so the current day value is 5.\n\nWe want to find the day of the week 100 days ago. This means we need to calculate:\n(Current Day Value - Number of Days Ago) $\\pmod{7}$\n\nDay of the week = $(5 - 100) \\pmod{7}$\n\nFirst, let's simplify $-100 \\pmod{7}$.\nWe divide 100 by 7:\n$100 = 7 \\times q + r$\n$100 / 7$:\n$100 - (7 \\times 10) = 30$\n$30 - (7 \\times 4) = 2$\nSo, $100 = 7 \\times 14 + 2$.\nThus, $100 \\equiv 2 \\pmod{7}$.\n\nAlternatively, we can find the remainder of 100 when divided by 7:\n$100 / 7$:\n$10 / 7 = 1$ remainder 3. (We have 30 left)\n$30 / 7 = 4$ remainder 2.\nSo, $100 \\equiv 2 \\pmod{7}$.\n\nSince we are going backward in time, subtracting 100 days is equivalent to moving back 2 days modulo 7.\n\nDay of the week = $(5 - 100) \\pmod{7}$\nDay of the week = $(5 - 2) \\pmod{7}$\nDay of the week = $3 \\pmod{7}$\n\nThe remainder is 3. According to our assignment:\nSunday = 0\nMonday = 1\nTuesday = 2\nWednesday = 3\nThursday = 4\nFriday = 5\nSaturday = 6\n\nA result of 3 corresponds to Wednesday.\n\n---\n*Self-Check using the direct subtraction method:*\nIf we go back 7 days, it's Friday again.\n$100 / 7 = 14$ with a remainder of $2$.\nThis means 100 days ago was exactly 14 full weeks plus 2 extra days ago.\nStarting from Friday (Day 5), we go back 2 days:\nFriday $\\rightarrow$ Thursday (1 day ago) $\\rightarrow$ Wednesday (2 days ago).\n\nThe result is Wednesday.\n\nFINAL: Wednesday",
+      "thinking": null
+    },
+    {
+      "id": "decimal-compare",
+      "category": "numeric",
+      "pass": true,
+      "extracted": "9.9",
+      "expected": "9.9",
+      "seconds": 58.5,
+      "evalTokens": 310,
+      "tokPerSec": 5.7,
+      "content": "To compare two decimal numbers, we compare them digit by digit, starting from the leftmost digit. If the digits are the same, we move to the next digit to the right until we find a difference or run out of digits.\n\nThe two numbers are $9.11$ and $9.9$.\n\nWe can write both numbers with the same number of decimal places by padding the shorter number with trailing zeros:\n$9.11$ has two decimal places.\n$9.9$ is equivalent to $9.90$ (adding a zero at the end does not change the value).\n\nNow we compare $9.11$ and $9.90$:\n\n1. **Compare the ones digit:** Both numbers have 9 in the ones place. ($9 = 9$)\n2. **Compare the tenths digit:** The first number has 1, and the second number has 9. Since $1 < 9$, we can conclude that $9.11 < 9.90$.\n\nAlternatively, we can compare them directly:\n$9.11$\n$9.9\\text{?}$ (We can think of this as $9.90$)\n\nComparing the tenths place: $1$ vs $9$. Since $1 < 9$, then $9.11 < 9.9$.\n\nTherefore, $9.9$ is larger than $9.11$.\n\nFINAL: 9.9",
+      "thinking": null
+    },
+    {
+      "id": "inclusive-days",
+      "category": "date-math",
+      "pass": true,
+      "extracted": "26",
+      "expected": 26,
+      "seconds": 45.3,
+      "evalTokens": 190,
+      "tokPerSec": 4.7,
+      "content": "The problem asks for the number of days from March 3 to March 28, inclusive.\n\nTo count the number of days between two dates (inclusive), we use the formula:\nNumber of days = Last Date - First Date + 1\n\nIn this case:\nFirst Date = March 3\nLast Date = March 28\n\nNumber of days = $28 - 3 + 1$\nNumber of days = $25 + 1$\nNumber of days = $26$\n\nAlternatively, we can list the count:\nMarch 3 is day 1.\nThe number of days from March 3 to March 28 is equivalent to counting how many integers are in the set $\\{3, 4, 5, \\dots, 28\\}$. The count is $28 - 3 + 1 = 26$.\n\nFINAL: 26",
+      "thinking": null
+    },
+    {
+      "id": "multiply-2digit",
+      "category": "arithmetic",
+      "pass": true,
+      "extracted": "3901",
+      "expected": 3901,
+      "seconds": 104.3,
+      "evalTokens": 462,
+      "tokPerSec": 4.6,
+      "content": "To calculate $47 \\times 83$, I will use the standard multiplication algorithm.\n\nMethod 1: Standard Multiplication\n$$\n\\begin{array}{c}\n\\phantom{\\times} 47 \\\\\n\\underline{\\times \\quad 83} \\\\\n\\end{array}\n$$\n\nStep 1: Multiply 47 by the units digit of 83, which is 3.\n$47 \\times 3 = (40 + 7) \\times 3 = 120 + 21 = 141$.\n\nStep 2: Multiply 47 by the tens digit of 83, which is 8 (representing 80).\n$47 \\times 80 = 47 \\times 8 \\times 10$.\nFirst, calculate $47 \\times 8$:\n$47 \\times 8 = (40 + 7) \\times 8 = 320 + 56 = 376$.\nSo, $47 \\times 80 = 3760$.\n\nStep 3: Add the results from Step 1 and Step 2.\n$$\n\\begin{array}{c}\n\\phantom{\\times} 141 \\\\\n+ 3760 \\\\\n\\hline\n3901 \\\\\n\\end{array}\n$$\n\nMethod 2: Distributive Property\n$47 \\times 83 = 47 \\times (80 + 3)$\n$= (47 \\times 80) + (47 \\times 3)$\n\nCalculate $47 \\times 3$:\n$47 \\times 3 = 141$.\n\nCalculate $47 \\times 80$:\n$47 \\times 8 = 376$\n$47 \\times 80 = 3760$.\n\nAdd the results:\n$3760 + 141 = 3901$.\n\nBoth methods yield the result 3901.\n\nFINAL: 3901",
+      "thinking": null
+    },
+    {
+      "id": "arithmetic-chain",
+      "category": "arithmetic",
+      "pass": true,
+      "extracted": "64",
+      "expected": 64,
+      "seconds": 97.2,
+      "evalTokens": 420,
+      "tokPerSec": 4.5,
+      "content": "The problem asks to compute the value of the expression:\n$$((17 + 28) \\times 6 - 14) \\div 4$$\n\nWe must follow the order of operations (PEMDAS/BODMAS): Parentheses first, then Exponents, Multiplication and Division (from left to right), and finally Addition and Subtraction (from left to right).\n\nStep 1: Calculate the expression inside the innermost parentheses.\n$$17 + 28 = 45$$\nThe expression becomes:\n$$(45 \\times 6 - 14) \\div 4$$\n\nStep 2: Calculate the multiplication inside the remaining parentheses.\n$$45 \\times 6$$\nWe can calculate this as $(40 + 5) \\times 6 = 40 \\times 6 + 5 \\times 6 = 240 + 30 = 270$.\nThe expression becomes:\n$$(270 - 14) \\div 4$$\n\nStep 3: Calculate the subtraction inside the parentheses.\n$$270 - 14 = 256$$\nThe expression becomes:\n$$256 \\div 4$$\n\nStep 4: Perform the final division.\n$$256 \\div 4$$\nWe can perform long division or break it down:\n$256 / 4 = (240 + 16) / 4 = 240/4 + 16/4 = 60 + 4 = 64$.\n\nAlternatively, using direct division:\n$25 \\div 4 = 6$ with a remainder of $1$. Bring down the $6$, making it $16$.\n$16 \\div 4 = 4$.\nSo, $256 \\div 4 = 64$.\n\nThe result is 64.\n\nFINAL: 64",
+      "thinking": null
+    },
+    {
+      "id": "month-children",
+      "category": "trick",
+      "pass": true,
+      "extracted": "John",
+      "expected": "john",
+      "seconds": 33.2,
+      "evalTokens": 126,
+      "tokPerSec": 4.6,
+      "content": "The problem states that John's mother has three children.\nThe first child is named April.\nThe second child is named May.\n\nThe key piece of information to notice is who the speaker/narrator is referring to when they say \"John's mother\". This implies that John is one of the people involved, and his mother is the mother of all three children.\n\nIf John is a child of this mother, then John must be one of the three children.\nThe names given for the first two children are April and May.\nTherefore, the third child must be John.\n\nFINAL: John",
+      "thinking": null
+    },
+    {
+      "id": "coins-30-cents",
+      "category": "trick",
+      "pass": true,
+      "extracted": "a nickel and a quarter",
+      "expected": [
+        [
+          "quarter",
+          "nickel"
+        ]
+      ],
+      "seconds": 117.3,
+      "evalTokens": 491,
+      "tokPerSec": 4.4,
+      "content": "Here's a step-by-step analysis to solve the coin puzzle.\n\n**1. Define the constraints:**\n*   We have two coins. Let their values be $C_1$ and $C_2$.\n*   The total value is 30 cents: $C_1 + C_2 = 30$.\n*   The available US coin denominations are: Penny (P=1), Nickel (N=5), Dime (D=10), Quarter (Q=25).\n*   Crucial constraint: At least one of the coins is *not* a nickel.\n\n**2. List possible pairs that sum to 30 cents:**\nWe need to find pairs $(C_1, C_2)$ from $\\{1, 5, 10, 25\\}$ such that $C_1 + C_2 = 30$. We can assume $C_1 \\le C_2$ to avoid duplicates.\n\n*   If $C_1 = 1$ (Penny): $C_2 = 29$. (Not a valid coin)\n*   If $C_1 = 5$ (Nickel): $C_2 = 25$ (Quarter). Pair: (5, 25).\n*   If $C_1 = 10$ (Dime): $C_2 = 20$. (Not a valid coin)\n*   If $C_1 = 25$ (Quarter): $C_2 = 5$ (Nickel). This is the same pair as above: (5, 25).\n\nThe only combination of two standard US coins that sums to 30 cents is **a Nickel and a Quarter** ($5 + 25 = 30$).\n\n**3. Apply the exclusion constraint:**\nThe problem states: \"One of them is not a nickel.\"\n\nLet's test the pair (Nickel, Quarter):\n*   Coin 1 = Nickel (Value 5)\n*   Coin 2 = Quarter (Value 25)\n\nDoes this satisfy the condition? Yes. The Quarter coin (25 cents) is not a nickel.\n\n**4. Conclusion:**\nThe two coins must be a Nickel and a Quarter.\n\nFINAL: a nickel and a quarter",
+      "thinking": null
+    },
+    {
+      "id": "rooster-egg",
+      "category": "trick",
+      "pass": true,
+      "extracted": "It doesn't happen",
+      "expected": [
+        [
+          "don't lay"
+        ],
+        [
+          "do not lay"
+        ],
+        [
+          "doesn't lay"
+        ],
+        [
+          "does not lay"
+        ],
+        [
+          "can't lay"
+        ],
+        [
+          "cannot lay"
+        ],
+        [
+          "neither"
+        ]
+      ],
+      "seconds": 76.2,
+      "evalTokens": 318,
+      "tokPerSec": 4.6,
+      "content": "1. **Analyze the Request:** The user presents a classic riddle involving a rooster, wind, and an egg, asking which side of the roof the egg rolls down.\n\n2. **Re-read the Problem Carefully & Watch for Traps:**\n    *   The setup involves physics (wind blowing east at 10 mph) and direction (rooster facing north).\n    *   The critical action is: \"If the rooster lays an egg...\"\n    *   **Trap Identification:** The premise relies on biological impossibility. Roosters are male chickens; they do not lay eggs. Only hens (female chickens) lay eggs.\n\n3. **Solve it from Scratch (Logical Deduction):**\n    *   Premise 1: A rooster is present.\n    *   Premise 2: The rooster lays an egg.\n    *   Conclusion based on biology: Roosters cannot lay eggs. Therefore, the event described (\"the rooster lays an egg\") cannot happen.\n    *   If the event cannot happen, there is no rolling egg to determine a direction.\n\n4. **Compare with Previous Attempt and Decide Which is Right:** (Since no previous attempt was provided in this turn, I rely solely on the analysis.) The physical details (wind speed, rooster facing north) are irrelevant distractions designed to make the solver overthink physics or vector addition. The solution hinges entirely on biological fact.\n\n5. **Final Answer Formulation:** Because roosters do not lay eggs, nothing rolls down the roof.\n\nFINAL: It doesn't happen",
+      "thinking": null
+    },
+    {
+      "id": "spell-backwards",
+      "category": "string",
+      "pass": false,
+      "extracted": "popillop",
+      "expected": "popillol",
+      "seconds": 16.9,
+      "evalTokens": 61,
+      "tokPerSec": 4.8,
+      "content": "The word is \"lollipop\".\nTo spell it backwards, we reverse the order of the letters:\nl $\\rightarrow$ p $\\rightarrow$ i $\\rightarrow$ p $\\rightarrow$ p $\\rightarrow$ o $\\rightarrow$ l\n\nReversed spelling: popillop\n\nFINAL: popillop",
+      "thinking": null
+    },
+    {
+      "id": "height-order",
+      "category": "logic",
+      "pass": true,
+      "extracted": "Ben",
+      "expected": "ben",
+      "seconds": 83.6,
+      "evalTokens": 362,
+      "tokPerSec": 4.6,
+      "content": "Let's denote the heights of Anna, Ben, Carl, Dana, and Emma as $A, B, C, D, E$ respectively. We are given the following information:\n\n1. **Anna is shorter than Ben:** $A < B$\n2. **Carl is taller than Ben:** $C > B$\n3. **Dana is shorter than Anna:** $D < A$\n4. **Emma is taller than Carl:** $E > C$\n\nWe need to determine the order of heights and find the third tallest person.\n\nLet's combine these inequalities to establish a relative order:\n\nFrom (2) and (4):\n$$E > C \\text{ and } C > B \\implies E > C > B$$\n\nNow incorporate (1): $A < B$. Since $B$ is already less than $C$, we have $A < B < C < E$.\n\nNow incorporate (3): $D < A$.\nSince $A < B$, we have $D < A < B$.\n\nCombining all the established chains:\n$$D < A < B < C < E$$\n\nThe order from shortest to tallest is: Dana, Anna, Ben, Carl, Emma.\n\nThe heights in increasing order are: $D, A, B, C, E$.\nThe heights in decreasing (tallest to shortest) order are: $E, C, B, A, D$.\n\n1. Tallest: Emma ($E$)\n2. Second tallest: Carl ($C$)\n3. Third tallest: Ben ($B$)\n4. Fourth tallest: Anna ($A$)\n5. Shortest: Dana ($D$)\n\nThe third tallest person is Ben.\n\nFINAL: Ben",
+      "thinking": null
+    },
+    {
+      "id": "widow-marry",
+      "category": "trick",
+      "pass": true,
+      "extracted": "Yes",
+      "expected": [
+        [
+          "dead"
+        ],
+        [
+          "deceased"
+        ],
+        [
+          "died"
+        ]
+      ],
+      "seconds": 51,
+      "evalTokens": 219,
+      "tokPerSec": 4.7,
+      "content": "This question touches upon matters of law concerning marriage eligibility, specifically regarding consanguinity (blood relationship) and affinity (relationship by marriage).\n\nIn most modern legal jurisdictions in Western countries (like the US, UK, Canada, etc.), there are generally no inherent prohibitions against marrying one's deceased wife's sister. The primary legal barriers to marriage usually involve:\n1. **Incestuous relationships:** Marrying a direct lineal ascendant or descendant (parent/child, grandparent/grandchild) or sometimes siblings, depending on jurisdiction.\n2. **Existing marital bonds:** Bigamy (marrying someone already married).\n\nThe relationship between a man and his widow's sister is one of affinity through the deceased wife. While some historical or religious laws might have had specific rules regarding marrying within extended family networks, modern civil law generally permits this marriage unless there are specific local ordinances or familial prohibitions that apply.\n\n**Conclusion:** Based on general principles of common law and modern jurisprudence, it is typically legal for a man to marry his widow's sister.\n\nFINAL: Yes",
+      "thinking": null
+    },
+    {
+      "id": "cupcakes-distractor",
+      "category": "word-problem",
+      "pass": true,
+      "extracted": "6",
+      "expected": 6,
+      "seconds": 58.6,
+      "evalTokens": 241,
+      "tokPerSec": 4.6,
+      "content": "The problem asks for the number of cupcakes the baker has left after selling some and giving some away.\n\n1. **Starting amount:** The baker starts with 24 cupcakes.\n2. **Morning sales:** He sells 6 cupcakes in the morning.\n3. **Afternoon sales:** He sells 8 cupcakes in the afternoon.\n4. **Given away:** He gives 4 cupcakes to his neighbor for free.\n\nThe total number of cupcakes removed from the initial stock is the sum of those sold and those given away:\nTotal removed = (Morning sales) + (Afternoon sales) + (Given away)\nTotal removed = $6 + 8 + 4$\nTotal removed = $14 + 4$\nTotal removed = $18$ cupcakes.\n\nThe number of cupcakes left is the starting amount minus the total removed:\nCupcakes left = Starting amount - Total removed\nCupcakes left = $24 - 18$\nCupcakes left = $6$\n\n(Note: The prices ($\\$2$ each and $\\$3$ each) are irrelevant to finding the number of cupcakes remaining.)\n\nFINAL: 6",
+      "thinking": null
+    },
+    {
+      "id": "count-words",
+      "category": "counting",
+      "pass": true,
+      "extracted": "13",
+      "expected": 13,
+      "seconds": 38,
+      "evalTokens": 149,
+      "tokPerSec": 4.5,
+      "content": "Here's a step-by-step count of the words in the sentence: \"The cat sat on the mat while the dog slept near the door\"\n\n1. The (1)\n2. cat (2)\n3. sat (3)\n4. on (4)\n5. the (5)\n6. mat (6)\n7. while (7)\n8. the (8)\n9. dog (9)\n10. slept (10)\n11. near (11)\n12. the (12)\n13. door (13)\n\nThere are 13 words in the sentence.\n\nFINAL: 13",
+      "thinking": null
+    },
+    {
+      "id": "monty-random-host",
+      "category": "probability",
+      "pass": false,
+      "error": "AbortError: This operation was aborted"
+    },
+    {
+      "id": "weekday-feb14",
+      "category": "date-math",
+      "pass": false,
+      "error": "AbortError: This operation was aborted"
+    }
+  ]
+}
