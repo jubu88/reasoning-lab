@@ -30,7 +30,7 @@ const THINK = (args.think ?? "false") === "true";
 const ROUNDS = Number(args.rounds ?? 4);
 const BASE_TEMP = Number(args.temp ?? 0);
 const REV_TEMP = Number(args.revisionTemp ?? BASE_TEMP); // jitter revisions with --revisionTemp 0.8
-const FEEDBACK = args.feedback ?? "full"; // full | answer
+const FEEDBACK = args.feedback ?? "full"; // full | answer | none (fresh resample — no previous attempt shown)
 const FRAMING = args.framing ?? "self"; // self ("your previous attempt") | student (de-anchored third-person)
 // fresh: each round is a new context with the problem + previous attempt (the default loop)
 // challenge: one growing conversation where each round just appends "Are you sure?"
@@ -43,6 +43,9 @@ let problems = SET === "hard" ? BATTERY_HARD : SET === "all" ? ALL_PROBLEMS : BA
 if (ONLY) problems = problems.filter((p) => ONLY.includes(p.id));
 
 function revisionPrompt(problemPrompt, prevContent, prevExtracted) {
+  // fresh resample: the revision is a clean re-ask — our anchoring data says any
+  // visible prior answer biases the model toward confirming it
+  if (FEEDBACK === "none") return problemPrompt + instructionFor(REV_STYLE);
   const prevText =
     FEEDBACK === "full"
       ? prevContent.length > 4000 ? prevContent.slice(0, 4000) + "\n[...truncated]" : prevContent
@@ -120,6 +123,8 @@ for (const p of problems) {
         extracted: verdict.extracted,
         correct: verdict.pass,
         seconds: (Date.now() - t0) / 1000,
+        evalTokens: resp.eval_count ?? null,
+        promptTokens: resp.prompt_eval_count ?? null,
         content,
       });
     }

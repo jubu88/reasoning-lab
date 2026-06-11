@@ -12,6 +12,7 @@ import expStudent from "../data/exp-student-framing.json";
 import compareE2b from "../data/compare-e2b.json";
 import challengeE4b from "../data/exp-challenge-e4b.json";
 import challengeE2b from "../data/exp-challenge-e2b.json";
+import freshResample from "../data/exp-fresh-resample-e4b.json";
 
 interface ProbeResult {
   id: string;
@@ -92,6 +93,21 @@ const EXPERIMENTS: Experiment[] = [
       "Sycophantic: 11/22 drops to 10/22 — it abandoned a correct answer (Alice's sisters 5 → 4), churned two wrong answers into different wrong answers, and fixed nothing. Compare the fresh-context loop: fixed 2–5, broke zero.",
     results: (challengeE2b as any).results,
   },
+  {
+    title: "Fresh-resample escalation — the winning design",
+    config: "direct baseline → clean re-ask with reasoning, NO previous answer shown · the 5 stuck problems",
+    takeaway:
+      "4/5 fixed including random-host Monty Hall, which feedback revisions fixed 0/5 across three variants. Removing the previous answer from the prompt removes the anchor. Only the widow riddle survives — that one fails every strategy on both models, including thinking mode.",
+    results: (freshResample as any).results,
+  },
+];
+
+const MATRIX = [
+  { strategy: "Direct one-shot", acc: "15/22", out: "~120", inp: "~900" },
+  { strategy: "Restart loop (converge stop)", acc: "17/22", out: "252", inp: "6,141" },
+  { strategy: "Loop + fresh-CoT escalation †", acc: "21/22", out: "3,428", inp: "6,933" },
+  { strategy: "Inline CoT everywhere", acc: "21/22 ‡", out: "5,549", inp: "~2,000" },
+  { strategy: "Native thinking mode", acc: "21/22", out: "7,276", inp: "~2,000" },
 ];
 
 function pct(pass: number, total: number) {
@@ -199,6 +215,38 @@ export default function ResultsView() {
             <div className="exp-takeaway">{exp.takeaway}</div>
           </div>
         ))}
+
+        <div className="card" style={{ marginBottom: 16 }}>
+          <div className="card-title">The verdict — exact output tokens per strategy (e4b, 22 problems)</div>
+          <div className="exp-config">eval_count from Ollama · decode time scales linearly with output tokens</div>
+          <table className="bench" style={{ marginTop: 10 }}>
+            <thead>
+              <tr>
+                <th>Strategy</th>
+                <th>Accuracy</th>
+                <th>Output tokens</th>
+                <th>Input tokens</th>
+              </tr>
+            </thead>
+            <tbody>
+              {MATRIX.map((m) => (
+                <tr key={m.strategy}>
+                  <td>{m.strategy}</td>
+                  <td>{m.acc}</td>
+                  <td className="bench-answer">{m.out}</td>
+                  <td className="bench-answer">{m.inp}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="exp-takeaway">
+            † escalation routed by answer key — without ground truth, confidently-wrong answers are
+            indistinguishable from correct ones (both converge instantly); a real router needs a confidence
+            signal such as token logprobs. ‡ recorded 22/22 included a loose-checker artifact on widow-marry;
+            honest score 21/22. The plain loop is 29× cheaper than thinking mode at −4 accuracy; loop +
+            fresh-CoT escalation ties it at 2.1× cheaper.
+          </div>
+        </div>
 
         <div className="card" style={{ marginBottom: 16 }}>
           <div className="card-title">Model-size frontier — e2b vs e4b (the on-device question)</div>

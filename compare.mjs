@@ -90,7 +90,13 @@ async function refineFailures(model, directRows) {
         const resp = await ask({ model, prompt: revisionPrompt(p.prompt, iterations[i - 1].content), seed: 7 + i });
         const content = resp.message?.content ?? "";
         const verdict = checkAnswer(p, content);
-        iterations.push({ extracted: verdict.extracted, content, correct: verdict.pass });
+        iterations.push({
+          extracted: verdict.extracted,
+          content,
+          correct: verdict.pass,
+          evalTokens: resp.eval_count ?? null,
+          promptTokens: resp.prompt_eval_count ?? null,
+        });
         const a = normalizeAnswer(verdict.extracted);
         if (a !== "" && a === normalizeAnswer(iterations[i - 1].extracted)) break; // honest convergence
       }

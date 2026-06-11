@@ -13,6 +13,7 @@ const MODEL = args.model ?? "gemma4:latest";
 const THINK = (args.think ?? "false") === "true";
 const TEMP = Number(args.temp ?? 0);
 const STYLE = args.style ?? "free"; // free | direct
+const PREDICT = Number(args.predict ?? 768); // raise for thinking mode — truncation looks like failure
 const OUT = args.out ?? "probe-results.json";
 const OLLAMA = "http://localhost:11434";
 
@@ -236,7 +237,7 @@ async function ask(prompt, { retryWithoutThink = true } = {}) {
     stream: false,
     think: THINK,
     keep_alive: "15m",
-    options: { temperature: TEMP, seed: 7, num_predict: 768 },
+    options: { temperature: TEMP, seed: 7, num_predict: PREDICT },
   };
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), 180_000);

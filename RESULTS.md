@@ -150,7 +150,45 @@ Footnote on determinism: two same-seed temp-0 runs of e2b differed on 3/22 basel
 (GPU reduction nondeterminism) — treat single-problem deltas of ±1 across runs as noise;
 the directional findings above are consistent across all runs.
 
-## 8. Next ideas
+## 8. Final matrix: restart loop vs chain-of-thought vs thinking mode (e4b, exact tokens)
+
+All output-token counts are exact (`eval_count` from Ollama), 22-problem classic battery:
+
+| Strategy | Accuracy | Output tokens | Input tokens |
+|---|---|---|---|
+| Direct one-shot | 15/22 | ~120 | ~900 |
+| Restart loop (converge stop) | 17/22 | **252** | 6,141 |
+| Loop + fresh-CoT escalation on the 5 stuck † | **21/22** | **3,428** | 6,933 |
+| Inline CoT on every problem | 21/22 ‡ | 5,549 | ~2,000 |
+| Native thinking mode | 21/22 | 7,276 | ~2,000 |
+
+† escalation routing used the answer key to pick the 5 problems — see the router caveat below.
+‡ recorded as 22/22 by an older loose checker: on widow-marry the reasoning mentions "dead"
+  but the final answer is "depends on jurisdiction" — honest score 21/22.
+
+Findings:
+
+- **Fresh resample is the right escalation.** Re-asking with reasoning allowed and NO previous
+  answer in the prompt fixed **4/5** stuck problems including random-host Monty Hall — which
+  feedback-based revisions fixed **0/5** across three variants (self-framed, student-framed,
+  temp-jittered). Direct confirmation of the anchoring finding: feedback prevents the very
+  fixes escalation exists to make.
+- **The plain restart loop does not beat thinking mode on accuracy** (17 vs 21) — but costs
+  **29× fewer output tokens** (252 vs 7,276). Since decode time scales with output tokens,
+  that's the latency ratio too.
+- **Loop + fresh-CoT escalation ties thinking mode** (21/22) at **2.1× fewer output tokens**
+  (and 1.6× fewer than inline CoT). Input tokens are higher (each round re-prefills the
+  problem), but prefill is parallel and several times cheaper per token than decode.
+- **The router caveat (the open problem):** correct answers and confidently-wrong answers
+  produce the *same* loop signature — instant convergence. Unstable answers (the slips) are
+  detectable and cheaply fixable; confident errors are invisible without ground truth. The
+  missing piece is a confidence signal, e.g. token logprobs via llama.cpp's server — which
+  Ollama does not expose.
+- **The widow riddle survives every strategy on both models** (direct, loop, all escalations,
+  inline CoT, thinking mode): the false premise ("his widow" = he is dead) is simply invisible
+  to this model family at inference time. Some failures are training-level, full stop.
+
+## 9. Next ideas
 
 - **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a
   clean free-form pass (the data says this beats any feedback variant on misconceptions).
