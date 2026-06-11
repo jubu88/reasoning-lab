@@ -244,6 +244,43 @@ Optimize tokens first, silicon second. Gotchas recorded: Ollama runs CPU-only on
 machines; Ollama's gemma4 e-variant blobs load only in Ollama's own engine (use community
 GGUFs with llama.cpp); speculative decoding e2b→e4b needs ~15.6 GB.
 
+## 15. The vigilance prime — fictional doubt
+
+**Question:** can a system prompt claiming "YOUR PREVIOUS ATTEMPT WAS WRONG" (with no actual
+attempt) buy the loop's care at zero extra generations?
+**How it works:** the claim primes re-derivation behavior — but unconditionally. The model's
+first answer is its argmax, its best guess; an instruction to distrust it deviates from the
+best guess on every problem, right or wrong.
+
+```
+node probe.mjs --style direct --prime true
+```
+
+**Result:** zero fixes in 66 runs; e4b direct 15→13, e2b direct 11→6 (the small model obeys
+the doubt hardest), free-form 21→18 plus ~2× slower. Completes the doubt spectrum: doubt
+helps only when attached to a real, examinable artifact (the restart loop), never as a blanket
+verdict.
+
+## 16. Agreement-based early stopping — verification without an oracle
+
+**Question:** can "two derivations agree" replace an answer key as the stopping/verification
+signal?
+**How it works:** produce attempts until any two normalized answers match (the script judges
+agreement, the model just solves); cap at 4; no match = "unresolved" → escalate. Two designs:
+*fresh* (independent attempts, the script varies the solving angle each round) vs *chat*
+(growing conversation, "re-solve differently").
+
+```
+node agree.mjs --mode fresh --rounds 4
+node agree.mjs --mode chat  --rounds 4
+```
+
+**Result:** fresh — 20/22 correct, 95% precision-when-agreed, one honest "unresolved" flag,
+avg exactly 2 attempts; the best oracle-free score recorded, portable to any chat API. Chat —
+86% precision with 3 false agreements, including one where a *correct* first answer was
+overwritten by an echoed wrong one. Agreement is evidence only when attempts are independent;
+in-context attempts aren't.
+
 ---
 
 ## The cheat sheet
@@ -255,3 +292,4 @@ GGUFs with llama.cpp); speculative decoding e2b→e4b needs ~15.6 GB.
 | a misconception (stable wrong answer) | fresh re-ask with reasoning, **no feedback** | visible answers anchor; reasoning needs a clean slate |
 | in the model's *reading* of the question | a different model | priors repair what they expect; no prompt arrives early enough |
 | "it's too slow" | fewer output tokens, then better backend | decode cost is linear in tokens; bandwidth caps the rest |
+| you must trust an answer with no key | agreement of two **independent** attempts | matching independent derivations are evidence; in-context echoes aren't |

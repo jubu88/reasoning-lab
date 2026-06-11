@@ -1,0 +1,409 @@
+{
+  "model": "gemma4:e4b",
+  "style": "free",
+  "mode": "chat",
+  "rounds": 4,
+  "when": "2026-06-11T20:04:51.738Z",
+  "results": [
+    {
+      "id": "count-e-mercilessness",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 335,
+      "agreedAnswer": "3",
+      "attempts": [
+        {
+          "extracted": "3",
+          "correct": true
+        },
+        {
+          "extracted": "3",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "count-r-strawberry",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 214,
+      "agreedAnswer": "3",
+      "attempts": [
+        {
+          "extracted": "3",
+          "correct": true
+        },
+        {
+          "extracted": "3",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "apples-yesterday",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 157,
+      "agreedAnswer": "3",
+      "attempts": [
+        {
+          "extracted": "3",
+          "correct": true
+        },
+        {
+          "extracted": "3",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "alice-sisters",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 370,
+      "agreedAnswer": "5",
+      "attempts": [
+        {
+          "extracted": "5",
+          "correct": true
+        },
+        {
+          "extracted": "5",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "sally-sisters",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 399,
+      "agreedAnswer": "1",
+      "attempts": [
+        {
+          "extracted": "1",
+          "correct": true
+        },
+        {
+          "extracted": "1",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "dead-cat",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 505,
+      "agreedAnswer": "0",
+      "attempts": [
+        {
+          "extracted": "0",
+          "correct": true
+        },
+        {
+          "extracted": "0",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "river-one-item",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 719,
+      "agreedAnswer": "1",
+      "attempts": [
+        {
+          "extracted": "1",
+          "correct": true
+        },
+        {
+          "extracted": "1",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "days-before-friday",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 510,
+      "agreedAnswer": "Wednesday",
+      "attempts": [
+        {
+          "extracted": "Wednesday",
+          "correct": true
+        },
+        {
+          "extracted": "Wednesday",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "decimal-compare",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 461,
+      "agreedAnswer": "9.9",
+      "attempts": [
+        {
+          "extracted": "9.9",
+          "correct": true
+        },
+        {
+          "extracted": "9.9",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "inclusive-days",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 574,
+      "agreedAnswer": "26",
+      "attempts": [
+        {
+          "extracted": "26",
+          "correct": true
+        },
+        {
+          "extracted": "26",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "multiply-2digit",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 471,
+      "agreedAnswer": "3901",
+      "attempts": [
+        {
+          "extracted": "3901",
+          "correct": true
+        },
+        {
+          "extracted": "3901",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "arithmetic-chain",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 694,
+      "agreedAnswer": "64",
+      "attempts": [
+        {
+          "extracted": "64",
+          "correct": true
+        },
+        {
+          "extracted": "64",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "month-children",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 255,
+      "agreedAnswer": "John",
+      "attempts": [
+        {
+          "extracted": "John",
+          "correct": true
+        },
+        {
+          "extracted": "John",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "coins-30-cents",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 1131,
+      "agreedAnswer": "Quarter and Nickel",
+      "attempts": [
+        {
+          "extracted": "Quarter and Nickel",
+          "correct": true
+        },
+        {
+          "extracted": "Quarter and Nickel",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "rooster-egg",
+      "resolved": true,
+      "correct": false,
+      "rounds": 2,
+      "outTokens": 172,
+      "agreedAnswer": "None",
+      "attempts": [
+        {
+          "extracted": "None",
+          "correct": false
+        },
+        {
+          "extracted": "None",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "spell-backwards",
+      "resolved": true,
+      "correct": false,
+      "rounds": 3,
+      "outTokens": 620,
+      "agreedAnswer": "loppillol",
+      "attempts": [
+        {
+          "extracted": "popillol",
+          "correct": true
+        },
+        {
+          "extracted": "loppillol",
+          "correct": false
+        },
+        {
+          "extracted": "loppillol",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "height-order",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 639,
+      "agreedAnswer": "Ben",
+      "attempts": [
+        {
+          "extracted": "Ben",
+          "correct": true
+        },
+        {
+          "extracted": "Ben",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "widow-marry",
+      "resolved": true,
+      "correct": false,
+      "rounds": 2,
+      "outTokens": 284,
+      "agreedAnswer": "Yes",
+      "attempts": [
+        {
+          "extracted": "Yes",
+          "correct": false
+        },
+        {
+          "extracted": "Yes",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "cupcakes-distractor",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 177,
+      "agreedAnswer": "6",
+      "attempts": [
+        {
+          "extracted": "6",
+          "correct": true
+        },
+        {
+          "extracted": "6",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "count-words",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 261,
+      "agreedAnswer": "13",
+      "attempts": [
+        {
+          "extracted": "13",
+          "correct": true
+        },
+        {
+          "extracted": "13",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "monty-random-host",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 1785,
+      "agreedAnswer": "it does not matter",
+      "attempts": [
+        {
+          "extracted": "it does not matter",
+          "correct": true
+        },
+        {
+          "extracted": "it does not matter",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "weekday-feb14",
+      "resolved": true,
+      "correct": true,
+      "rounds": 2,
+      "outTokens": 736,
+      "agreedAnswer": "Saturday",
+      "attempts": [
+        {
+          "extracted": "Saturday",
+          "correct": true
+        },
+        {
+          "extracted": "Saturday",
+          "correct": true
+        }
+      ]
+    }
+  ]
+}

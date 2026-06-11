@@ -359,7 +359,33 @@ spectrum, measured:
 **Doubt only works when it is earned** — attached to a real artifact the model can examine,
 adjudicate, and overrule. Assert less, let it re-derive more.
 
-## 15. Next ideas
+## 15. Agreement-based early stopping: verification without an oracle
+
+Protocol (user's, refined): produce solution attempts until ANY two give the same normalized
+answer (the script judges — the model just solves); cap at 4 attempts; no agreement =
+"unresolved", a natural escalation flag. Tested in two context designs on e4b free-form
+(`agree-fresh-e4b.json`, `agree-chat-e4b.json`):
+
+| | Fresh (independent attempts, varied angles) | Chat (growing conversation) |
+|---|---|---|
+| Resolved by agreement | 21/22 (avg 2.0 attempts) | 22/22 (avg 2.0) |
+| Correct when agreed | **20/21 (95%)** | 19/22 (86%) |
+| False agreements | 1 (widow) | 3 |
+| Unresolved → escalate | 1 (rooster — all 4 attempts semantically right, phrasing varied) | 0 |
+| Output tokens (battery) | 15,463 | 11,469 |
+
+- **Fresh agreement is real evidence**: 20/22 with no answer key, no logprobs, no special
+  runtime — the best oracle-free score recorded. Two independent derivations agreeing is
+  verification, and it caught Monty Hall and the weekday problem on the first pair.
+- **Chat agreement is echo**: the anchoring proof in one trail — spell-backwards went
+  correct → mangled → *echo of the mangled version*, and the protocol "agreed" on the wrong
+  answer despite having produced the right one first. Visible prior attempts contaminate the
+  independence that makes agreement meaningful.
+- Deployment guidance: ~2× the cost of one-shot CoT, but works over ANY chat API (no logit
+  access needed) — use the logprobs router where you control the server, agreement-stopping
+  where you don't (e.g. phone runtimes).
+
+## 16. Next ideas
 
 - **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a
   clean free-form pass (the data says this beats any feedback variant on misconceptions).

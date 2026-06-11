@@ -22,6 +22,8 @@ import compareE2b from "../data/compare-e2b.json";
 import primeE4bDirect from "../data/probe-prime-e4b-direct.json";
 import primeE2bDirect from "../data/probe-prime-e2b-direct.json";
 import primeE4bFree from "../data/probe-prime-e4b-free.json";
+import agreeFresh from "../data/agree-fresh-e4b.json";
+import agreeChat from "../data/agree-chat-e4b.json";
 import toolsNeutral from "../data/tools-e4b-neutral.json";
 import dripV2 from "../data/drip-e4b-v2.json";
 import pipelineE4b from "../data/pipeline-e4b.json";
@@ -140,6 +142,7 @@ const TOC = [
   { id: "sec-combos", label: "Combinations" },
   { id: "sec-size", label: "Size & speed" },
   { id: "sec-routing", label: "Routing" },
+  { id: "sec-agree", label: "Agreement" },
   { id: "sec-repro", label: "Reproduce" },
 ];
 
@@ -560,6 +563,50 @@ export default function ResultsView({
               Correct answers: minP avg 0.913. Wrong answers: 0.553. Escalating below ~0.94 catches every wrong
               answer at 3 false alarms (9/22 escalated on this adversarial battery; far fewer on normal traffic).
               n=22 — threshold is sample-fitted; treat as proof of signal, not a production constant.
+            </div>
+          </div>
+        </Section>
+
+        <Section
+          id="sec-agree"
+          title="Agreement stopping — verification without an oracle"
+          lesson="Produce attempts until any two independent answers match (the script judges); no match in 4 = escalate. Fresh-context agreement is evidence (95% precision); conversational agreement is echo (a correct first answer got overwritten by an agreed-upon wrong one)."
+        >
+          <div className="card" style={{ marginBottom: 14 }}>
+            <table className="bench">
+              <thead>
+                <tr><th></th><th>Fresh (independent)</th><th>Chat (conversation)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Resolved by agreement</td><td>21/22 · avg 2.0 attempts</td><td>22/22 · avg 2.0</td></tr>
+                <tr><td>Correct when agreed</td><td className="bench-answer">20/21 (95%)</td><td className="bench-answer">19/22 (86%)</td></tr>
+                <tr><td>False agreements</td><td>1 (widow)</td><td>3 (incl. spell-backwards echo)</td></tr>
+                <tr><td>Unresolved → escalate</td><td>1 (rooster — 4 right answers, 4 phrasings)</td><td>0</td></tr>
+                <tr><td>Output tokens (battery)</td><td className="bench-answer">15,463</td><td className="bench-answer">11,469</td></tr>
+              </tbody>
+            </table>
+            <div style={{ marginTop: 10 }}>
+              {[
+                { label: "fresh · monty-random-host", rows: (agreeFresh as any).results.find((r: any) => r.id === "monty-random-host") },
+                { label: "chat · spell-backwards", rows: (agreeChat as any).results.find((r: any) => r.id === "spell-backwards") },
+              ].map((x) => (
+                <div key={x.label} style={{ marginBottom: 6 }}>
+                  <span className="chip" style={{ marginRight: 8 }}>{x.label}</span>
+                  {x.rows?.attempts.map((a: any, i: number) => (
+                    <span key={i}>
+                      {i > 0 && <span className="trail-arrow"> | </span>}
+                      <span className={`trail-answer ${a.correct ? "ok" : "bad"}`}>
+                        {(a.extracted || "…").slice(0, 22)}
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div className="exp-takeaway">
+              The best oracle-free score recorded (20/22) — needs no logprobs and no special runtime, so it ports
+              to any chat API (including phone runtimes). ~2× the cost of one-shot CoT, in exchange for built-in
+              verification. Use the logprobs router where you control the server; agreement where you don't.
             </div>
           </div>
         </Section>
