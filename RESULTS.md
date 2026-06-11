@@ -293,8 +293,14 @@ when the question literally asks for counting or arithmetic").
   confidence-router signal Ollama hides is one server swap away. (Windows note: the server
   binds 127.0.0.1; health-check that address, not `localhost`, which resolves to ::1.)
 - Phone equivalents of these levers: LiteRT-LM NPU path on Qualcomm (speed + battery);
-  Vulkan-based runtimes (llama.cpp Vulkan / MLC) where Exynos OpenCL is broken; prompt-prefix
-  KV caching; smaller quants ∝ faster decode.
+  prompt-prefix KV caching; smaller quants ∝ faster decode.
+- **Field validation on real phones** ([EXYNOS-VULKAN.md](EXYNOS-VULKAN.md)): Vulkan *does*
+  run on Exynos Xclipse where OpenCL fails (and, inversely, crashes on Adreno's Vulkan
+  driver) — but it's a net regression: decode +31%, prefill **~11× slower** (the batch-GEMM
+  path collapses on a GPU with no matrix cores; same `matrix-cores: none` weakness our Iris
+  Xe showed, amplified). Verdict NO-GO; the optimized ARM CPU path (i8mm/dotprod) is already
+  near the hardware ceiling. Confirms the hierarchy: model size/arch and token count are the
+  levers, not the runtime.
 
 ## 13. The confidence router: deployable escalation, no answer key
 
