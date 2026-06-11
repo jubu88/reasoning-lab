@@ -1,0 +1,723 @@
+{
+  "when": "2026-06-11T16:11:10.650Z",
+  "results": [
+    {
+      "id": "count-e-mercilessness",
+      "correct": false,
+      "extracted": "4",
+      "meanP": 0.5401,
+      "minP": 0.5401,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": 0
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -0.0000013113030945532955
+        },
+        {
+          "token": "4",
+          "logprob": -0.6159572005271912
+        },
+        {
+          "token": "",
+          "logprob": -0.000004291543518775143
+        }
+      ]
+    },
+    {
+      "id": "count-r-strawberry",
+      "correct": true,
+      "extracted": "3",
+      "meanP": 0.9489,
+      "minP": 0.9489,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": 0
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -5.960466182841628e-7
+        },
+        {
+          "token": "3",
+          "logprob": -0.05242461711168289
+        },
+        {
+          "token": "",
+          "logprob": -0.000003933914285880746
+        }
+      ]
+    },
+    {
+      "id": "apples-yesterday",
+      "correct": true,
+      "extracted": "3",
+      "meanP": 1,
+      "minP": 1,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": 0
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -0.00001025205165205989
+        },
+        {
+          "token": "3",
+          "logprob": -0.000010848104466276709
+        },
+        {
+          "token": "",
+          "logprob": -0.000053168758313404396
+        }
+      ]
+    },
+    {
+      "id": "alice-sisters",
+      "correct": true,
+      "extracted": "5",
+      "meanP": 0.9711,
+      "minP": 0.9711,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -5.960466182841628e-7
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -0.000011682578588079195
+        },
+        {
+          "token": "5",
+          "logprob": -0.0293769259005785
+        },
+        {
+          "token": "",
+          "logprob": -0.00007212421769509092
+        }
+      ]
+    },
+    {
+      "id": "sally-sisters",
+      "correct": true,
+      "extracted": "1",
+      "meanP": 0.9896,
+      "minP": 0.9896,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -2.3841860752327193e-7
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -0.000013470740668708459
+        },
+        {
+          "token": "1",
+          "logprob": -0.010458671487867832
+        },
+        {
+          "token": "",
+          "logprob": -0.00007736981933703646
+        }
+      ]
+    },
+    {
+      "id": "dead-cat",
+      "correct": true,
+      "extracted": "0",
+      "meanP": 1,
+      "minP": 1,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -0.000013113108252582606
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -0.002931835362687707
+        },
+        {
+          "token": "0",
+          "logprob": -0.000005841272468387615
+        },
+        {
+          "token": "",
+          "logprob": -0.10276501625776291
+        }
+      ]
+    },
+    {
+      "id": "river-one-item",
+      "correct": true,
+      "extracted": "1",
+      "meanP": 0.9996,
+      "minP": 0.9996,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -0.0000013113030945532955
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -0.000011444157280493528
+        },
+        {
+          "token": "1",
+          "logprob": -0.0003547105297911912
+        },
+        {
+          "token": "",
+          "logprob": -0.000021219479094725102
+        }
+      ]
+    },
+    {
+      "id": "days-before-friday",
+      "correct": false,
+      "extracted": "Tuesday",
+      "meanP": 0.6464,
+      "minP": 0.6464,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -0.0000027418175250204513
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " Tuesday",
+          "logprob": -0.4363730549812317
+        },
+        {
+          "token": "",
+          "logprob": -0.000043750766053562984
+        }
+      ]
+    },
+    {
+      "id": "decimal-compare",
+      "correct": true,
+      "extracted": "9.9",
+      "meanP": 1,
+      "minP": 0.9999,
+      "nAnswerTokens": 3,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": 0
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -0.0000023841887468734058
+        },
+        {
+          "token": "9",
+          "logprob": -0.000002861027041944908
+        },
+        {
+          "token": ".",
+          "logprob": 0
+        },
+        {
+          "token": "9",
+          "logprob": -0.0000680708180880174
+        },
+        {
+          "token": "",
+          "logprob": -0.00004887700197286904
+        }
+      ]
+    },
+    {
+      "id": "inclusive-days",
+      "correct": true,
+      "extracted": "26",
+      "meanP": 1,
+      "minP": 1,
+      "nAnswerTokens": 2,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -2.3841860752327193e-7
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -0.00000607969241173123
+        },
+        {
+          "token": "2",
+          "logprob": 0
+        },
+        {
+          "token": "6",
+          "logprob": -0.000010013630344474223
+        },
+        {
+          "token": "",
+          "logprob": -0.00018258568888995796
+        }
+      ]
+    },
+    {
+      "id": "multiply-2digit",
+      "correct": true,
+      "extracted": "3901",
+      "meanP": 0.9968,
+      "minP": 0.9899,
+      "nAnswerTokens": 4,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -2.3841860752327193e-7
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -3.576279254957626e-7
+        },
+        {
+          "token": "3",
+          "logprob": -1.1920930376163597e-7
+        },
+        {
+          "token": "9",
+          "logprob": -0.00252332491800189
+        },
+        {
+          "token": "0",
+          "logprob": -0.010170746594667435
+        },
+        {
+          "token": "1",
+          "logprob": -0.00003635949542513117
+        },
+        {
+          "token": "",
+          "logprob": -0.00002372293056396302
+        }
+      ]
+    },
+    {
+      "id": "arithmetic-chain",
+      "correct": false,
+      "extracted": "37",
+      "meanP": 0.2904,
+      "minP": 0.1727,
+      "nAnswerTokens": 2,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -0.000562289438676089
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -0.000052334245992824435
+        },
+        {
+          "token": "3",
+          "logprob": -0.8963839411735535
+        },
+        {
+          "token": "7",
+          "logprob": -1.7562347650527954
+        },
+        {
+          "token": "",
+          "logprob": -0.0019927197135984898
+        }
+      ]
+    },
+    {
+      "id": "month-children",
+      "correct": true,
+      "extracted": "John",
+      "meanP": 0.9928,
+      "minP": 0.9928,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -2.3841860752327193e-7
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " John",
+          "logprob": -0.007255766540765762
+        },
+        {
+          "token": "",
+          "logprob": -0.00013352332462091
+        }
+      ]
+    },
+    {
+      "id": "coins-30-cents",
+      "correct": true,
+      "extracted": "quarter and nickel",
+      "meanP": 0.8442,
+      "minP": 0.5344,
+      "nAnswerTokens": 3,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -2.3841860752327193e-7
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " quarter",
+          "logprob": -0.6265659332275391
+        },
+        {
+          "token": " and",
+          "logprob": -0.0014204334001988173
+        },
+        {
+          "token": " nickel",
+          "logprob": -0.0004843454225920141
+        },
+        {
+          "token": "",
+          "logprob": -0.002159063471481204
+        }
+      ]
+    },
+    {
+      "id": "rooster-egg",
+      "correct": false,
+      "extracted": "It does not roll down",
+      "meanP": 0.7599,
+      "minP": 0.4946,
+      "nAnswerTokens": 5,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -2.3841860752327193e-7
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " It",
+          "logprob": -0.7040932774543762
+        },
+        {
+          "token": " does",
+          "logprob": -0.380435585975647
+        },
+        {
+          "token": " not",
+          "logprob": -0.00007474701851606369
+        },
+        {
+          "token": " roll",
+          "logprob": -0.3702271580696106
+        },
+        {
+          "token": " down",
+          "logprob": -0.07142449915409088
+        },
+        {
+          "token": "",
+          "logprob": -0.057657014578580856
+        }
+      ]
+    },
+    {
+      "id": "spell-backwards",
+      "correct": true,
+      "extracted": "popillol",
+      "meanP": 0.9758,
+      "minP": 0.9394,
+      "nAnswerTokens": 3,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": 0
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " pop",
+          "logprob": -0.06249142438173294
+        },
+        {
+          "token": "ill",
+          "logprob": -0.010903758928179741
+        },
+        {
+          "token": "ol",
+          "logprob": -0.0011944748694077134
+        },
+        {
+          "token": "",
+          "logprob": -0.0003942432231269777
+        }
+      ]
+    },
+    {
+      "id": "height-order",
+      "correct": false,
+      "extracted": "Emma",
+      "meanP": 0.9385,
+      "minP": 0.9385,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -0.000009059946933120955
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " Emma",
+          "logprob": -0.06352337449789047
+        },
+        {
+          "token": "",
+          "logprob": -0.00004267783515388146
+        }
+      ]
+    },
+    {
+      "id": "widow-marry",
+      "correct": true,
+      "extracted": "No",
+      "meanP": 0.6183,
+      "minP": 0.6183,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -0.00002527268952690065
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " No",
+          "logprob": -0.480721116065979
+        },
+        {
+          "token": "",
+          "logprob": -0.009550013579428196
+        }
+      ]
+    },
+    {
+      "id": "cupcakes-distractor",
+      "correct": true,
+      "extracted": "6",
+      "meanP": 0.9998,
+      "minP": 0.9998,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -2.3841860752327193e-7
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -0.000017285496141994372
+        },
+        {
+          "token": "6",
+          "logprob": -0.00024899959680624306
+        },
+        {
+          "token": "",
+          "logprob": -0.00017900876991916448
+        }
+      ]
+    },
+    {
+      "id": "count-words",
+      "correct": true,
+      "extracted": "13",
+      "meanP": 0.8234,
+      "minP": 0.6469,
+      "nAnswerTokens": 2,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": 0
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " ",
+          "logprob": -0.000003695494797284482
+        },
+        {
+          "token": "1",
+          "logprob": 0
+        },
+        {
+          "token": "3",
+          "logprob": -0.43562051653862
+        },
+        {
+          "token": "",
+          "logprob": -0.000007152582838898525
+        }
+      ]
+    },
+    {
+      "id": "monty-random-host",
+      "correct": false,
+      "extracted": "switch to door 2",
+      "meanP": 0.8441,
+      "minP": 0.5279,
+      "nAnswerTokens": 4,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -0.000003337865791763761
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " switch",
+          "logprob": -0.6388193368911743
+        },
+        {
+          "token": " to",
+          "logprob": -0.16445961594581604
+        },
+        {
+          "token": " door",
+          "logprob": -0.0000066757424974639434
+        },
+        {
+          "token": " ",
+          "logprob": -9.536747711536009e-7
+        },
+        {
+          "token": "2",
+          "logprob": -4.768372718899627e-7
+        },
+        {
+          "token": "",
+          "logprob": -0.00004434683796716854
+        }
+      ]
+    },
+    {
+      "id": "weekday-feb14",
+      "correct": true,
+      "extracted": "Saturday",
+      "meanP": 0.9717,
+      "minP": 0.9717,
+      "nAnswerTokens": 1,
+      "tokens": [
+        {
+          "token": "FINAL",
+          "logprob": -0.000005722062269342132
+        },
+        {
+          "token": ":",
+          "logprob": 0
+        },
+        {
+          "token": " Saturday",
+          "logprob": -0.028717229142785072
+        },
+        {
+          "token": "",
+          "logprob": -0.00007128969446057454
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "correctMeanP": 0.9457500000000001,
+    "wrongMeanP": 0.6699,
+    "correctMinP": 0.9126437500000001,
+    "wrongMinP": 0.5533666666666667,
+    "best": {
+      "t": 0.938500001,
+      "caught": 6,
+      "falseAlarms": 3,
+      "missed": 0,
+      "escalated": 9,
+      "score": 5.1
+    }
+  }
+}

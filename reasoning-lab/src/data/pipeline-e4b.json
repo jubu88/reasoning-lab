@@ -1,0 +1,469 @@
+{
+  "model": "gemma4:e4b",
+  "when": "2026-06-11T13:37:45.777Z",
+  "s1tok": 1226,
+  "s2tok": 1762,
+  "s3tok": 2719,
+  "results": [
+    {
+      "id": "count-e-mercilessness",
+      "stages": {
+        "s1": {
+          "answer": "3",
+          "correct": true,
+          "tokens": 29,
+          "tools": 1
+        },
+        "s2": {
+          "answer": "3",
+          "correct": true,
+          "tokens": 29
+        }
+      },
+      "final": {
+        "answer": "3",
+        "correct": true
+      }
+    },
+    {
+      "id": "count-r-strawberry",
+      "stages": {
+        "s1": {
+          "answer": "3",
+          "correct": true,
+          "tokens": 27,
+          "tools": 1
+        },
+        "s2": {
+          "answer": "3",
+          "correct": true,
+          "tokens": 27
+        }
+      },
+      "final": {
+        "answer": "3",
+        "correct": true
+      }
+    },
+    {
+      "id": "apples-yesterday",
+      "stages": {
+        "s1": {
+          "answer": "3",
+          "correct": true,
+          "tokens": 5,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "1",
+          "correct": false,
+          "tokens": 42
+        },
+        "s3": {
+          "answer": "1",
+          "correct": false,
+          "tokens": 42
+        }
+      },
+      "final": {
+        "answer": "1",
+        "correct": false
+      }
+    },
+    {
+      "id": "alice-sisters",
+      "stages": {
+        "s1": {
+          "answer": "5",
+          "correct": true,
+          "tokens": 5,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "5",
+          "correct": true,
+          "tokens": 5
+        }
+      },
+      "final": {
+        "answer": "5",
+        "correct": true
+      }
+    },
+    {
+      "id": "sally-sisters",
+      "stages": {
+        "s1": {
+          "answer": "1",
+          "correct": true,
+          "tokens": 5,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "1",
+          "correct": true,
+          "tokens": 5
+        }
+      },
+      "final": {
+        "answer": "1",
+        "correct": true
+      }
+    },
+    {
+      "id": "dead-cat",
+      "stages": {
+        "s1": {
+          "answer": "0",
+          "correct": true,
+          "tokens": 5,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "0",
+          "correct": true,
+          "tokens": 5
+        }
+      },
+      "final": {
+        "answer": "0",
+        "correct": true
+      }
+    },
+    {
+      "id": "river-one-item",
+      "stages": {
+        "s1": {
+          "answer": "1",
+          "correct": true,
+          "tokens": 5,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "1",
+          "correct": true,
+          "tokens": 5
+        }
+      },
+      "final": {
+        "answer": "1",
+        "correct": true
+      }
+    },
+    {
+      "id": "days-before-friday",
+      "stages": {
+        "s1": {
+          "answer": "Wednesday",
+          "correct": true,
+          "tokens": 46,
+          "tools": 1
+        },
+        "s2": {
+          "answer": "Wednesday",
+          "correct": true,
+          "tokens": 46
+        }
+      },
+      "final": {
+        "answer": "Wednesday",
+        "correct": true
+      }
+    },
+    {
+      "id": "decimal-compare",
+      "stages": {
+        "s1": {
+          "answer": "9.9",
+          "correct": true,
+          "tokens": 7,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "9.9",
+          "correct": true,
+          "tokens": 7
+        }
+      },
+      "final": {
+        "answer": "9.9",
+        "correct": true
+      }
+    },
+    {
+      "id": "inclusive-days",
+      "stages": {
+        "s1": {
+          "answer": "26",
+          "correct": true,
+          "tokens": 26,
+          "tools": 1
+        },
+        "s2": {
+          "answer": "26",
+          "correct": true,
+          "tokens": 26
+        }
+      },
+      "final": {
+        "answer": "26",
+        "correct": true
+      }
+    },
+    {
+      "id": "multiply-2digit",
+      "stages": {
+        "s1": {
+          "answer": "3901",
+          "correct": true,
+          "tokens": 26,
+          "tools": 1
+        },
+        "s2": {
+          "answer": "3901",
+          "correct": true,
+          "tokens": 26
+        }
+      },
+      "final": {
+        "answer": "3901",
+        "correct": true
+      }
+    },
+    {
+      "id": "arithmetic-chain",
+      "stages": {
+        "s1": {
+          "answer": "64",
+          "correct": true,
+          "tokens": 37,
+          "tools": 1
+        },
+        "s2": {
+          "answer": "64",
+          "correct": true,
+          "tokens": 37
+        }
+      },
+      "final": {
+        "answer": "64",
+        "correct": true
+      }
+    },
+    {
+      "id": "month-children",
+      "stages": {
+        "s1": {
+          "answer": "John",
+          "correct": true,
+          "tokens": 4,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "John",
+          "correct": true,
+          "tokens": 4
+        }
+      },
+      "final": {
+        "answer": "John",
+        "correct": true
+      }
+    },
+    {
+      "id": "coins-30-cents",
+      "stages": {
+        "s1": {
+          "answer": "Quarter and Nickel",
+          "correct": true,
+          "tokens": 870,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "Quarter and Nickel",
+          "correct": true,
+          "tokens": 415
+        }
+      },
+      "final": {
+        "answer": "Quarter and Nickel",
+        "correct": true
+      }
+    },
+    {
+      "id": "rooster-egg",
+      "stages": {
+        "s1": {
+          "answer": "roosters do not lay eggs",
+          "correct": true,
+          "tokens": 9,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "roosters do not lay eggs",
+          "correct": true,
+          "tokens": 9
+        }
+      },
+      "final": {
+        "answer": "roosters do not lay eggs",
+        "correct": true
+      }
+    },
+    {
+      "id": "spell-backwards",
+      "stages": {
+        "s1": {
+          "answer": "popillol",
+          "correct": true,
+          "tokens": 21,
+          "tools": 1
+        },
+        "s2": {
+          "answer": "popillol",
+          "correct": true,
+          "tokens": 21
+        }
+      },
+      "final": {
+        "answer": "popillol",
+        "correct": true
+      }
+    },
+    {
+      "id": "height-order",
+      "stages": {
+        "s1": {
+          "answer": "Emma",
+          "correct": false,
+          "tokens": 4,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "Emma",
+          "correct": false,
+          "tokens": 8
+        },
+        "s3": {
+          "answer": "Ben",
+          "correct": true,
+          "tokens": 618
+        }
+      },
+      "final": {
+        "answer": "Ben",
+        "correct": true
+      }
+    },
+    {
+      "id": "widow-marry",
+      "stages": {
+        "s1": {
+          "answer": "No",
+          "correct": true,
+          "tokens": 4,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "Yes",
+          "correct": false,
+          "tokens": 8
+        },
+        "s3": {
+          "answer": "Yes",
+          "correct": false,
+          "tokens": 611
+        }
+      },
+      "final": {
+        "answer": "Yes",
+        "correct": false
+      }
+    },
+    {
+      "id": "cupcakes-distractor",
+      "stages": {
+        "s1": {
+          "answer": "6",
+          "correct": true,
+          "tokens": 5,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "6",
+          "correct": true,
+          "tokens": 28
+        }
+      },
+      "final": {
+        "answer": "6",
+        "correct": true
+      }
+    },
+    {
+      "id": "count-words",
+      "stages": {
+        "s1": {
+          "answer": "13",
+          "correct": true,
+          "tokens": 33,
+          "tools": 1
+        },
+        "s2": {
+          "answer": "13",
+          "correct": true,
+          "tokens": 33
+        }
+      },
+      "final": {
+        "answer": "13",
+        "correct": true
+      }
+    },
+    {
+      "id": "monty-random-host",
+      "stages": {
+        "s1": {
+          "answer": "Switch to door 2",
+          "correct": false,
+          "tokens": 8,
+          "tools": 0
+        },
+        "s2": {
+          "answer": "Switch to door 2",
+          "correct": false,
+          "tokens": 8
+        },
+        "s3": {
+          "answer": "switch",
+          "correct": false,
+          "tokens": 1448
+        }
+      },
+      "final": {
+        "answer": "switch",
+        "correct": false
+      }
+    },
+    {
+      "id": "weekday-feb14",
+      "stages": {
+        "s1": {
+          "answer": "Thursday",
+          "correct": false,
+          "tokens": 45,
+          "tools": 2
+        },
+        "s2": {
+          "answer": "Saturday",
+          "correct": true,
+          "tokens": 968
+        }
+      },
+      "final": {
+        "answer": "Saturday",
+        "correct": true
+      }
+    }
+  ]
+}
