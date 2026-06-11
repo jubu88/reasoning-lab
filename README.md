@@ -30,6 +30,7 @@ Three findings worth knowing:
    misconceptions.
 
 Full write-up with per-problem trails: [RESULTS.md](RESULTS.md).
+What each experiment does and the mechanism behind it: [EXPERIMENTS.md](EXPERIMENTS.md).
 
 ## Repo layout
 
