@@ -267,7 +267,31 @@ involve counting/arithmetic? is it multi-premise? did the answer destabilize?), 
 exactly one technique. Untested fix: a neutral tool prompt ("tools are available; use them only
 when the question literally asks for counting or arithmetic").
 
-## 12. Next ideas
+## 12. Speed levers, measured on this machine (i9-13900H + Iris Xe, 16 GB)
+
+- **Ollama runs 100% CPU here** (`ollama ps`) — the Iris Xe was idle in every experiment above.
+- **llama.cpp Vulkan on the iGPU** (deepseek-r1 8B Q4, same file/build, `llama-bench`):
+  prefill 50.7 → 61.6 tok/s (+21%), decode 4.04 → **5.83 tok/s (+44%)**. Real but modest:
+  on UMA systems the iGPU shares the CPU's memory bus, and decode is bandwidth-bound. Side
+  benefit: CPU cores freed.
+- **Token count beats backend**: orchestration reduced output tokens ~14× (direct+tools vs
+  CoT); the backend lever is 1.4×. Optimize tokens first, silicon second.
+- **Speculative decoding (e2b drafts e4b): blocked by RAM** — both models together need
+  ~15.6 GB of a 16 GB machine. Viable on larger hosts, and best with a ~10× smaller draft
+  model, which the gemma4 family doesn't ship yet.
+- **Ecosystem catch:** Ollama's gemma4 e-variant blobs are new-engine-only ("wrong number of
+  tensors" in upstream llama.cpp — the MatFormer/PLE layout is reconstructed by Ollama's own
+  runner). Serving gemma4 via llama.cpp (GPU, logprobs, grammars) requires a community GGUF
+  from HuggingFace.
+- **Logprobs verified working** via `llama-server` `/v1/chat/completions` with
+  `logprobs: true` — per-token probabilities returned (e.g. "First" at p=84.4%). The
+  confidence-router signal Ollama hides is one server swap away. (Windows note: the server
+  binds 127.0.0.1; health-check that address, not `localhost`, which resolves to ::1.)
+- Phone equivalents of these levers: LiteRT-LM NPU path on Qualcomm (speed + battery);
+  Vulkan-based runtimes (llama.cpp Vulkan / MLC) where Exynos OpenCL is broken; prompt-prefix
+  KV caching; smaller quants ∝ faster decode.
+
+## 13. Next ideas
 
 - **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a
   clean free-form pass (the data says this beats any feedback variant on misconceptions).
