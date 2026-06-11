@@ -121,7 +121,36 @@ Findings:
   sally-sisters, river-crossing, coins, rooster, spell-backwards (e4b doesn't). A shared
   escalation policy still worked: the loop fixed 5 of e2b's 11 direct failures.
 
-## 7. Next ideas
+## 7. "Are you sure?" — doubt is not a method
+
+The simplest possible refinement: keep one growing conversation and append
+"Are you sure? Double-check your answer carefully" after each response (2 rounds, direct
+answers, temp 0, full classic battery, both models — `exp-challenge-*.json`):
+
+| Model | Baseline | After 2 challenge rounds | Fixed | Broken |
+|---|---|---|---|---|
+| gemma4:e4b | 15/22 | 15/22 | 0 | 0 |
+| gemma4:e2b | 11/22 | **10/22** | 0 | 1 (+2 wrong→differently-wrong) |
+
+- **e4b is completely inert under doubt**: all 22 answers identical through both rounds.
+  Its own prior answer sits in the conversation as an anchor (section 5), and a bare
+  expression of doubt gives no procedure to overcome it — the anchor wins, and you pay
+  3× the tokens for nothing.
+- **e2b is sycophantic under doubt**: it abandoned a correct answer (Alice's sisters,
+  5 → 4), churned two wrong answers into different wrong answers (2 → 3, 3 → 7), and
+  fixed nothing. Doubt adds noise, not signal.
+
+Contrast with the fresh-context loop (sections 2–4): same models, same problems — it fixed
+2 (e4b) / 5 (e2b) and broke zero. The difference is structural: the loop restarts with a
+small fresh context (weakening the anchor) and gives a re-derivation *procedure*
+("solve it from scratch, then compare"), not just an emotion. Asking a model to doubt
+itself without telling it how to re-check is either ignored or obeyed blindly.
+
+Footnote on determinism: two same-seed temp-0 runs of e2b differed on 3/22 baseline answers
+(GPU reduction nondeterminism) — treat single-problem deltas of ±1 across runs as noise;
+the directional findings above are consistent across all runs.
+
+## 8. Next ideas
 
 - **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a
   clean free-form pass (the data says this beats any feedback variant on misconceptions).

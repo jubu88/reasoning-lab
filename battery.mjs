@@ -90,10 +90,10 @@ export function normalizeAnswer(s) {
   return s.toLowerCase().replace(/[^a-z0-9.\- ]/g, "").replace(/\s+/g, " ").trim();
 }
 
-export async function ask({ model, prompt, think = false, temperature = 0, seed = 7, numPredict = 2048, timeoutMs = 300_000 }) {
+export async function ask({ model, prompt, messages, think = false, temperature = 0, seed = 7, numPredict = 2048, timeoutMs = 300_000 }) {
   const body = {
     model,
-    messages: [{ role: "user", content: prompt }],
+    messages: messages ?? [{ role: "user", content: prompt }],
     stream: false,
     think,
     keep_alive: "20m",

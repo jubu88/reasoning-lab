@@ -10,6 +10,8 @@ import expTemp from "../data/exp-temp-revisions.json";
 import expHybrid from "../data/exp-hybrid.json";
 import expStudent from "../data/exp-student-framing.json";
 import compareE2b from "../data/compare-e2b.json";
+import challengeE4b from "../data/exp-challenge-e4b.json";
+import challengeE2b from "../data/exp-challenge-e2b.json";
 
 interface ProbeResult {
   id: string;
@@ -75,6 +77,20 @@ const EXPERIMENTS: Experiment[] = [
     takeaway:
       "Identical 3/5 — the anchor is the mere presence of a proposed answer, not self-attribution. On instant wrong convergence, a fresh no-feedback reasoning pass beats any feedback variant.",
     results: (expStudent as any).results,
+  },
+  {
+    title: '"Are you sure?" challenge — e4b',
+    config: "one growing conversation · 2 doubt rounds appended · direct answers",
+    takeaway:
+      "Completely inert: all 22 answers identical through both rounds (15/22 stays 15/22). Doubt without a re-derivation procedure loses to the anchor of the model's own visible answer — at 3× the token cost.",
+    results: (challengeE4b as any).results,
+  },
+  {
+    title: '"Are you sure?" challenge — e2b',
+    config: "one growing conversation · 2 doubt rounds appended · direct answers",
+    takeaway:
+      "Sycophantic: 11/22 drops to 10/22 — it abandoned a correct answer (Alice's sisters 5 → 4), churned two wrong answers into different wrong answers, and fixed nothing. Compare the fresh-context loop: fixed 2–5, broke zero.",
+    results: (challengeE2b as any).results,
   },
 ];
 
@@ -262,7 +278,10 @@ node experiment.mjs --style direct --revisionStyle free --rounds 3 \\
 # de-anchoring variant + cross-model frontier
 node experiment.mjs --style direct --revisionStyle free --framing student --rounds 3 \\
   --only count-r-strawberry,arithmetic-chain,widow-marry,count-words,monty-random-host
-node compare.mjs --models gemma4:e2b,gemma4:e4b --rounds 3`}</pre>
+node compare.mjs --models gemma4:e2b,gemma4:e4b --rounds 3
+
+# "are you sure?" challenge (growing conversation, doubt rounds)
+node experiment.mjs --mode challenge --style direct --rounds 2 --model gemma4:e4b`}</pre>
         </div>
       </div>
     </>

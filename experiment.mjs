@@ -32,6 +32,9 @@ const BASE_TEMP = Number(args.temp ?? 0);
 const REV_TEMP = Number(args.revisionTemp ?? BASE_TEMP); // jitter revisions with --revisionTemp 0.8
 const FEEDBACK = args.feedback ?? "full"; // full | answer
 const FRAMING = args.framing ?? "self"; // self ("your previous attempt") | student (de-anchored third-person)
+// fresh: each round is a new context with the problem + previous attempt (the default loop)
+// challenge: one growing conversation where each round just appends "Are you sure?"
+const MODE = args.mode ?? "fresh";
 const SET = args.set ?? "classic";
 const ONLY = args.only ? args.only.split(",").map((s) => s.trim()) : null;
 const OUT = args.out ?? "experiment-results.json";
@@ -71,7 +74,7 @@ function revisionPrompt(problemPrompt, prevContent, prevExtracted) {
 }
 
 console.log(
-  `Experiment: ${MODEL} | style=${STYLE} | revisions=${REV_STYLE}@temp${REV_TEMP} | framing=${FRAMING} | think=${THINK} | rounds=${ROUNDS} | feedback=${FEEDBACK} | set=${SET}${ONLY ? ` (only: ${ONLY.join(",")})` : ""} | ${problems.length} problems\n`
+  `Experiment: ${MODEL} | mode=${MODE} | style=${STYLE} | revisions=${REV_STYLE}@temp${REV_TEMP} | framing=${FRAMING} | think=${THINK} | rounds=${ROUNDS} | feedback=${FEEDBACK} | set=${SET}${ONLY ? ` (only: ${ONLY.join(",")})` : ""} | ${problems.length} problems\n`
 );
 
 const out = [];
@@ -83,18 +86,33 @@ for (const p of problems) {
   let errored = false;
   try {
     for (let i = 0; i <= ROUNDS; i++) {
-      const prompt =
-        i === 0
-          ? p.prompt + instructionFor(STYLE)
-          : revisionPrompt(p.prompt, iterations[i - 1].content, iterations[i - 1].extracted);
       const t0 = Date.now();
-      const resp = await ask({
-        model: MODEL,
-        prompt,
-        think: THINK,
-        seed: 7 + i,
-        temperature: i === 0 ? BASE_TEMP : REV_TEMP,
-      });
+      let resp;
+      if (i > 0 && MODE === "challenge") {
+        const convo = [{ role: "user", content: p.prompt + instructionFor(STYLE) }];
+        for (let j = 0; j < i; j++) {
+          convo.push({ role: "assistant", content: iterations[j].content });
+          convo.push({
+            role: "user",
+            content:
+              "Are you sure? Double-check your answer carefully and give your final answer." +
+              instructionFor(REV_STYLE),
+          });
+        }
+        resp = await ask({ model: MODEL, messages: convo, think: THINK, seed: 7 + i, temperature: REV_TEMP });
+      } else {
+        const prompt =
+          i === 0
+            ? p.prompt + instructionFor(STYLE)
+            : revisionPrompt(p.prompt, iterations[i - 1].content, iterations[i - 1].extracted);
+        resp = await ask({
+          model: MODEL,
+          prompt,
+          think: THINK,
+          seed: 7 + i,
+          temperature: i === 0 ? BASE_TEMP : REV_TEMP,
+        });
+      }
       const content = resp.message?.content ?? "";
       const verdict = checkAnswer(p, content);
       iterations.push({
@@ -166,6 +184,6 @@ console.log(`broken by iteration: ${ok.filter((r) => r.baselineCorrect && !r.con
 const fs = await import("node:fs");
 fs.writeFileSync(
   OUT,
-  JSON.stringify({ model: MODEL, style: STYLE, revisionStyle: REV_STYLE, revisionTemp: REV_TEMP, framing: FRAMING, think: THINK, rounds: ROUNDS, feedback: FEEDBACK, set: SET, when: new Date().toISOString(), results: out }, null, 2)
+  JSON.stringify({ model: MODEL, mode: MODE, style: STYLE, revisionStyle: REV_STYLE, revisionTemp: REV_TEMP, framing: FRAMING, think: THINK, rounds: ROUNDS, feedback: FEEDBACK, set: SET, when: new Date().toISOString(), results: out }, null, 2)
 );
 console.log(`\nWrote ${OUT}`);
