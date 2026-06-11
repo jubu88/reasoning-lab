@@ -240,7 +240,34 @@ Same battery, direct answers, plus a generic toolbox (`calculate`, `count_occurr
 - **Accuracy-per-token king**: 18/22 at ~18 output tokens/problem. For on-device use, a 4-line
   JS toolbox buys more than 3,000 tokens of chain-of-thought.
 
-## 11. Next ideas
+## 11. Stacking everything: components don't compose
+
+Full pipeline (tools everywhere + restart loop + fresh-CoT escalation, `pipeline.mjs`,
+`pipeline-e4b.json`): **19/22 at 5,707 output tokens** — worse than the best individual
+configurations on both axes.
+
+| Stage | Accuracy | Cumulative tokens |
+|---|---|---|
+| 1. direct + tools | **19/22** (best direct-mode score recorded) | 1,226 |
+| 2. + restart loop | 18/22 — **net negative** (fixed weekday, broke apples & widow) | 2,988 |
+| 3. + fresh-CoT escalation | 19/22 (fixed height-order; apples unrecoverable) | 5,707 |
+
+The culprit is the aggressive tool system prompt ("whenever a question involves arithmetic,
+USE A TOOL"). It acts as a **global interpretation modifier**, even on problems where no tool
+is called: it recasts the apples trick question as a subtraction (3−2=1), and the loop's
+"watch for traps" re-examination turns into "find the arithmetic" — the first loop regressions
+ever observed (previously 0 breaks across hundreds of revision rounds). Even fresh-CoT
+escalation can't recover, because the priming sits in every call's context.
+
+Lessons: (1) each technique's win came from a *specific* failure class — adding them
+indiscriminately lets their side effects collide; (2) system-prompt affordances reshape problem
+reading globally — "you have a calculator" makes everything look like a calculation; (3) the
+right architecture is a **router**, not a stack: classify the problem type first (does it
+involve counting/arithmetic? is it multi-premise? did the answer destabilize?), then apply
+exactly one technique. Untested fix: a neutral tool prompt ("tools are available; use them only
+when the question literally asks for counting or arithmetic").
+
+## 12. Next ideas
 
 - **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a
   clean free-form pass (the data says this beats any feedback variant on misconceptions).
