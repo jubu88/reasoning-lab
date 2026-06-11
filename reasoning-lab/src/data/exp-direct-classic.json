@@ -1,0 +1,1705 @@
+{
+  "model": "gemma4:latest",
+  "style": "direct",
+  "think": false,
+  "rounds": 4,
+  "feedback": "full",
+  "set": "classic",
+  "when": "2026-06-11T05:18:29.220Z",
+  "results": [
+    {
+      "id": "count-e-mercilessness",
+      "category": "counting",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "3",
+          "ok": true,
+          "s": 7
+        },
+        {
+          "i": 1,
+          "a": "3",
+          "ok": true,
+          "s": 15.4
+        },
+        {
+          "i": 2,
+          "a": "3",
+          "ok": true,
+          "s": 19.1
+        },
+        {
+          "i": 3,
+          "a": "3",
+          "ok": true,
+          "s": 14.3
+        },
+        {
+          "i": 4,
+          "a": "3",
+          "ok": true,
+          "s": 14.7
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "3",
+          "correct": true,
+          "seconds": 7.047,
+          "content": "FINAL: 3"
+        },
+        {
+          "index": 1,
+          "extracted": "3",
+          "correct": true,
+          "seconds": 15.387,
+          "content": "FINAL: 3"
+        },
+        {
+          "index": 2,
+          "extracted": "3",
+          "correct": true,
+          "seconds": 19.101,
+          "content": "FINAL: 3"
+        },
+        {
+          "index": 3,
+          "extracted": "3",
+          "correct": true,
+          "seconds": 14.287,
+          "content": "FINAL: 3"
+        },
+        {
+          "index": 4,
+          "extracted": "3",
+          "correct": true,
+          "seconds": 14.72,
+          "content": "FINAL: 3"
+        }
+      ]
+    },
+    {
+      "id": "count-r-strawberry",
+      "category": "counting",
+      "baselineCorrect": false,
+      "convergedCorrect": false,
+      "convergedAt": 1,
+      "finalCorrect": false,
+      "answers": [
+        {
+          "i": 0,
+          "a": "2",
+          "ok": false,
+          "s": 12.8
+        },
+        {
+          "i": 1,
+          "a": "2",
+          "ok": false,
+          "s": 35.3
+        },
+        {
+          "i": 2,
+          "a": "2",
+          "ok": false,
+          "s": 16.9
+        },
+        {
+          "i": 3,
+          "a": "2",
+          "ok": false,
+          "s": 16.2
+        },
+        {
+          "i": 4,
+          "a": "2",
+          "ok": false,
+          "s": 14.1
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "2",
+          "correct": false,
+          "seconds": 12.794,
+          "content": "FINAL: 2"
+        },
+        {
+          "index": 1,
+          "extracted": "2",
+          "correct": false,
+          "seconds": 35.321,
+          "content": "FINAL: 2"
+        },
+        {
+          "index": 2,
+          "extracted": "2",
+          "correct": false,
+          "seconds": 16.872,
+          "content": "FINAL: 2"
+        },
+        {
+          "index": 3,
+          "extracted": "2",
+          "correct": false,
+          "seconds": 16.151,
+          "content": "FINAL: 2"
+        },
+        {
+          "index": 4,
+          "extracted": "2",
+          "correct": false,
+          "seconds": 14.05,
+          "content": "FINAL: 2"
+        }
+      ]
+    },
+    {
+      "id": "apples-yesterday",
+      "category": "trick",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "3",
+          "ok": true,
+          "s": 9.7
+        },
+        {
+          "i": 1,
+          "a": "3",
+          "ok": true,
+          "s": 22.9
+        },
+        {
+          "i": 2,
+          "a": "3",
+          "ok": true,
+          "s": 15.7
+        },
+        {
+          "i": 3,
+          "a": "3",
+          "ok": true,
+          "s": 16.3
+        },
+        {
+          "i": 4,
+          "a": "3",
+          "ok": true,
+          "s": 15.5
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "3",
+          "correct": true,
+          "seconds": 9.736,
+          "content": "FINAL: 3"
+        },
+        {
+          "index": 1,
+          "extracted": "3",
+          "correct": true,
+          "seconds": 22.922,
+          "content": "FINAL: 3"
+        },
+        {
+          "index": 2,
+          "extracted": "3",
+          "correct": true,
+          "seconds": 15.666,
+          "content": "FINAL: 3"
+        },
+        {
+          "index": 3,
+          "extracted": "3",
+          "correct": true,
+          "seconds": 16.296,
+          "content": "FINAL: 3"
+        },
+        {
+          "index": 4,
+          "extracted": "3",
+          "correct": true,
+          "seconds": 15.549,
+          "content": "FINAL: 3"
+        }
+      ]
+    },
+    {
+      "id": "alice-sisters",
+      "category": "family-logic",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "5",
+          "ok": true,
+          "s": 9
+        },
+        {
+          "i": 1,
+          "a": "5",
+          "ok": true,
+          "s": 15.5
+        },
+        {
+          "i": 2,
+          "a": "5",
+          "ok": true,
+          "s": 17.7
+        },
+        {
+          "i": 3,
+          "a": "5",
+          "ok": true,
+          "s": 20.5
+        },
+        {
+          "i": 4,
+          "a": "5",
+          "ok": true,
+          "s": 15.1
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "5",
+          "correct": true,
+          "seconds": 8.977,
+          "content": "FINAL: 5"
+        },
+        {
+          "index": 1,
+          "extracted": "5",
+          "correct": true,
+          "seconds": 15.548,
+          "content": "FINAL: 5"
+        },
+        {
+          "index": 2,
+          "extracted": "5",
+          "correct": true,
+          "seconds": 17.73,
+          "content": "FINAL: 5"
+        },
+        {
+          "index": 3,
+          "extracted": "5",
+          "correct": true,
+          "seconds": 20.463,
+          "content": "FINAL: 5"
+        },
+        {
+          "index": 4,
+          "extracted": "5",
+          "correct": true,
+          "seconds": 15.076,
+          "content": "FINAL: 5"
+        }
+      ]
+    },
+    {
+      "id": "sally-sisters",
+      "category": "family-logic",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "1",
+          "ok": true,
+          "s": 7.5
+        },
+        {
+          "i": 1,
+          "a": "1",
+          "ok": true,
+          "s": 14.8
+        },
+        {
+          "i": 2,
+          "a": "1",
+          "ok": true,
+          "s": 14.6
+        },
+        {
+          "i": 3,
+          "a": "1",
+          "ok": true,
+          "s": 15.9
+        },
+        {
+          "i": 4,
+          "a": "1",
+          "ok": true,
+          "s": 13.4
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "1",
+          "correct": true,
+          "seconds": 7.524,
+          "content": "FINAL: 1"
+        },
+        {
+          "index": 1,
+          "extracted": "1",
+          "correct": true,
+          "seconds": 14.783,
+          "content": "FINAL: 1"
+        },
+        {
+          "index": 2,
+          "extracted": "1",
+          "correct": true,
+          "seconds": 14.589,
+          "content": "FINAL: 1"
+        },
+        {
+          "index": 3,
+          "extracted": "1",
+          "correct": true,
+          "seconds": 15.881,
+          "content": "FINAL: 1"
+        },
+        {
+          "index": 4,
+          "extracted": "1",
+          "correct": true,
+          "seconds": 13.373,
+          "content": "FINAL: 1"
+        }
+      ]
+    },
+    {
+      "id": "dead-cat",
+      "category": "trick",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "0",
+          "ok": true,
+          "s": 7.7
+        },
+        {
+          "i": 1,
+          "a": "0",
+          "ok": true,
+          "s": 12.1
+        },
+        {
+          "i": 2,
+          "a": "0",
+          "ok": true,
+          "s": 12.1
+        },
+        {
+          "i": 3,
+          "a": "0",
+          "ok": true,
+          "s": 13.8
+        },
+        {
+          "i": 4,
+          "a": "0",
+          "ok": true,
+          "s": 13.7
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "0",
+          "correct": true,
+          "seconds": 7.72,
+          "content": "FINAL: 0"
+        },
+        {
+          "index": 1,
+          "extracted": "0",
+          "correct": true,
+          "seconds": 12.131,
+          "content": "FINAL: 0"
+        },
+        {
+          "index": 2,
+          "extracted": "0",
+          "correct": true,
+          "seconds": 12.109,
+          "content": "FINAL: 0"
+        },
+        {
+          "index": 3,
+          "extracted": "0",
+          "correct": true,
+          "seconds": 13.779,
+          "content": "FINAL: 0"
+        },
+        {
+          "index": 4,
+          "extracted": "0",
+          "correct": true,
+          "seconds": 13.676,
+          "content": "FINAL: 0"
+        }
+      ]
+    },
+    {
+      "id": "river-one-item",
+      "category": "trick",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "1",
+          "ok": true,
+          "s": 8.5
+        },
+        {
+          "i": 1,
+          "a": "1",
+          "ok": true,
+          "s": 13.4
+        },
+        {
+          "i": 2,
+          "a": "1",
+          "ok": true,
+          "s": 13.5
+        },
+        {
+          "i": 3,
+          "a": "1",
+          "ok": true,
+          "s": 13.9
+        },
+        {
+          "i": 4,
+          "a": "1",
+          "ok": true,
+          "s": 13.8
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "1",
+          "correct": true,
+          "seconds": 8.453,
+          "content": "FINAL: 1"
+        },
+        {
+          "index": 1,
+          "extracted": "1",
+          "correct": true,
+          "seconds": 13.426,
+          "content": "FINAL: 1"
+        },
+        {
+          "index": 2,
+          "extracted": "1",
+          "correct": true,
+          "seconds": 13.474,
+          "content": "FINAL: 1"
+        },
+        {
+          "index": 3,
+          "extracted": "1",
+          "correct": true,
+          "seconds": 13.941,
+          "content": "FINAL: 1"
+        },
+        {
+          "index": 4,
+          "extracted": "1",
+          "correct": true,
+          "seconds": 13.808,
+          "content": "FINAL: 1"
+        }
+      ]
+    },
+    {
+      "id": "days-before-friday",
+      "category": "date-math",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "Wednesday",
+          "ok": true,
+          "s": 6.2
+        },
+        {
+          "i": 1,
+          "a": "Wednesday",
+          "ok": true,
+          "s": 11.3
+        },
+        {
+          "i": 2,
+          "a": "Wednesday",
+          "ok": true,
+          "s": 12.7
+        },
+        {
+          "i": 3,
+          "a": "Wednesday",
+          "ok": true,
+          "s": 11.7
+        },
+        {
+          "i": 4,
+          "a": "Wednesday",
+          "ok": true,
+          "s": 11.6
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "Wednesday",
+          "correct": true,
+          "seconds": 6.231,
+          "content": "FINAL: Wednesday"
+        },
+        {
+          "index": 1,
+          "extracted": "Wednesday",
+          "correct": true,
+          "seconds": 11.321,
+          "content": "FINAL: Wednesday"
+        },
+        {
+          "index": 2,
+          "extracted": "Wednesday",
+          "correct": true,
+          "seconds": 12.65,
+          "content": "FINAL: Wednesday"
+        },
+        {
+          "index": 3,
+          "extracted": "Wednesday",
+          "correct": true,
+          "seconds": 11.724,
+          "content": "FINAL: Wednesday"
+        },
+        {
+          "index": 4,
+          "extracted": "Wednesday",
+          "correct": true,
+          "seconds": 11.568,
+          "content": "FINAL: Wednesday"
+        }
+      ]
+    },
+    {
+      "id": "decimal-compare",
+      "category": "numeric",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "9.9",
+          "ok": true,
+          "s": 7.5
+        },
+        {
+          "i": 1,
+          "a": "9.9",
+          "ok": true,
+          "s": 12
+        },
+        {
+          "i": 2,
+          "a": "9.9",
+          "ok": true,
+          "s": 12.9
+        },
+        {
+          "i": 3,
+          "a": "9.9",
+          "ok": true,
+          "s": 12.9
+        },
+        {
+          "i": 4,
+          "a": "9.9",
+          "ok": true,
+          "s": 12.6
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "9.9",
+          "correct": true,
+          "seconds": 7.536,
+          "content": "FINAL: 9.9"
+        },
+        {
+          "index": 1,
+          "extracted": "9.9",
+          "correct": true,
+          "seconds": 11.977,
+          "content": "FINAL: 9.9"
+        },
+        {
+          "index": 2,
+          "extracted": "9.9",
+          "correct": true,
+          "seconds": 12.871,
+          "content": "FINAL: 9.9"
+        },
+        {
+          "index": 3,
+          "extracted": "9.9",
+          "correct": true,
+          "seconds": 12.906,
+          "content": "FINAL: 9.9"
+        },
+        {
+          "index": 4,
+          "extracted": "9.9",
+          "correct": true,
+          "seconds": 12.647,
+          "content": "FINAL: 9.9"
+        }
+      ]
+    },
+    {
+      "id": "inclusive-days",
+      "category": "date-math",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "26",
+          "ok": true,
+          "s": 7.9
+        },
+        {
+          "i": 1,
+          "a": "26",
+          "ok": true,
+          "s": 16
+        },
+        {
+          "i": 2,
+          "a": "26",
+          "ok": true,
+          "s": 12
+        },
+        {
+          "i": 3,
+          "a": "26",
+          "ok": true,
+          "s": 12.2
+        },
+        {
+          "i": 4,
+          "a": "26",
+          "ok": true,
+          "s": 12
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "26",
+          "correct": true,
+          "seconds": 7.922,
+          "content": "FINAL: 26"
+        },
+        {
+          "index": 1,
+          "extracted": "26",
+          "correct": true,
+          "seconds": 16.003,
+          "content": "FINAL: 26"
+        },
+        {
+          "index": 2,
+          "extracted": "26",
+          "correct": true,
+          "seconds": 12.029,
+          "content": "FINAL: 26"
+        },
+        {
+          "index": 3,
+          "extracted": "26",
+          "correct": true,
+          "seconds": 12.211,
+          "content": "FINAL: 26"
+        },
+        {
+          "index": 4,
+          "extracted": "26",
+          "correct": true,
+          "seconds": 12.039,
+          "content": "FINAL: 26"
+        }
+      ]
+    },
+    {
+      "id": "multiply-2digit",
+      "category": "arithmetic",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "3901",
+          "ok": true,
+          "s": 9.1
+        },
+        {
+          "i": 1,
+          "a": "3901",
+          "ok": true,
+          "s": 12.5
+        },
+        {
+          "i": 2,
+          "a": "3901",
+          "ok": true,
+          "s": 11.3
+        },
+        {
+          "i": 3,
+          "a": "3901",
+          "ok": true,
+          "s": 11.3
+        },
+        {
+          "i": 4,
+          "a": "3901",
+          "ok": true,
+          "s": 11.5
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "3901",
+          "correct": true,
+          "seconds": 9.103,
+          "content": "FINAL: 3901"
+        },
+        {
+          "index": 1,
+          "extracted": "3901",
+          "correct": true,
+          "seconds": 12.464,
+          "content": "FINAL: 3901"
+        },
+        {
+          "index": 2,
+          "extracted": "3901",
+          "correct": true,
+          "seconds": 11.273,
+          "content": "FINAL: 3901"
+        },
+        {
+          "index": 3,
+          "extracted": "3901",
+          "correct": true,
+          "seconds": 11.288,
+          "content": "FINAL: 3901"
+        },
+        {
+          "index": 4,
+          "extracted": "3901",
+          "correct": true,
+          "seconds": 11.519,
+          "content": "FINAL: 3901"
+        }
+      ]
+    },
+    {
+      "id": "arithmetic-chain",
+      "category": "arithmetic",
+      "baselineCorrect": false,
+      "convergedCorrect": false,
+      "convergedAt": 1,
+      "finalCorrect": false,
+      "answers": [
+        {
+          "i": 0,
+          "a": "39",
+          "ok": false,
+          "s": 7.1
+        },
+        {
+          "i": 1,
+          "a": "39",
+          "ok": false,
+          "s": 14.1
+        },
+        {
+          "i": 2,
+          "a": "39",
+          "ok": false,
+          "s": 13.5
+        },
+        {
+          "i": 3,
+          "a": "39",
+          "ok": false,
+          "s": 13.8
+        },
+        {
+          "i": 4,
+          "a": "39",
+          "ok": false,
+          "s": 13.4
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "39",
+          "correct": false,
+          "seconds": 7.105,
+          "content": "FINAL: 39"
+        },
+        {
+          "index": 1,
+          "extracted": "39",
+          "correct": false,
+          "seconds": 14.083,
+          "content": "FINAL: 39"
+        },
+        {
+          "index": 2,
+          "extracted": "39",
+          "correct": false,
+          "seconds": 13.517,
+          "content": "FINAL: 39"
+        },
+        {
+          "index": 3,
+          "extracted": "39",
+          "correct": false,
+          "seconds": 13.795,
+          "content": "FINAL: 39"
+        },
+        {
+          "index": 4,
+          "extracted": "39",
+          "correct": false,
+          "seconds": 13.426,
+          "content": "FINAL: 39"
+        }
+      ]
+    },
+    {
+      "id": "month-children",
+      "category": "trick",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "John",
+          "ok": true,
+          "s": 7.9
+        },
+        {
+          "i": 1,
+          "a": "John",
+          "ok": true,
+          "s": 17.9
+        },
+        {
+          "i": 2,
+          "a": "John",
+          "ok": true,
+          "s": 10.6
+        },
+        {
+          "i": 3,
+          "a": "John",
+          "ok": true,
+          "s": 10.4
+        },
+        {
+          "i": 4,
+          "a": "John",
+          "ok": true,
+          "s": 10.9
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "John",
+          "correct": true,
+          "seconds": 7.911,
+          "content": "FINAL: John"
+        },
+        {
+          "index": 1,
+          "extracted": "John",
+          "correct": true,
+          "seconds": 17.852,
+          "content": "FINAL: John"
+        },
+        {
+          "index": 2,
+          "extracted": "John",
+          "correct": true,
+          "seconds": 10.643,
+          "content": "FINAL: John"
+        },
+        {
+          "index": 3,
+          "extracted": "John",
+          "correct": true,
+          "seconds": 10.435,
+          "content": "FINAL: John"
+        },
+        {
+          "index": 4,
+          "extracted": "John",
+          "correct": true,
+          "seconds": 10.891,
+          "content": "FINAL: John"
+        }
+      ]
+    },
+    {
+      "id": "coins-30-cents",
+      "category": "trick",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "Quarter and nickel",
+          "ok": true,
+          "s": 7.4
+        },
+        {
+          "i": 1,
+          "a": "Quarter and nickel",
+          "ok": true,
+          "s": 11.9
+        },
+        {
+          "i": 2,
+          "a": "Quarter and nickel",
+          "ok": true,
+          "s": 14.9
+        },
+        {
+          "i": 3,
+          "a": "Quarter and nickel",
+          "ok": true,
+          "s": 11.9
+        },
+        {
+          "i": 4,
+          "a": "Quarter and nickel",
+          "ok": true,
+          "s": 14.5
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "Quarter and nickel",
+          "correct": true,
+          "seconds": 7.409,
+          "content": "FINAL: Quarter and nickel"
+        },
+        {
+          "index": 1,
+          "extracted": "Quarter and nickel",
+          "correct": true,
+          "seconds": 11.857,
+          "content": "FINAL: Quarter and nickel"
+        },
+        {
+          "index": 2,
+          "extracted": "Quarter and nickel",
+          "correct": true,
+          "seconds": 14.876,
+          "content": "FINAL: Quarter and nickel"
+        },
+        {
+          "index": 3,
+          "extracted": "Quarter and nickel",
+          "correct": true,
+          "seconds": 11.866,
+          "content": "FINAL: Quarter and nickel"
+        },
+        {
+          "index": 4,
+          "extracted": "Quarter and nickel",
+          "correct": true,
+          "seconds": 14.457,
+          "content": "FINAL: Quarter and nickel"
+        }
+      ]
+    },
+    {
+      "id": "rooster-egg",
+      "category": "trick",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "roosters do not lay eggs",
+          "ok": true,
+          "s": 9.4
+        },
+        {
+          "i": 1,
+          "a": "roosters do not lay eggs",
+          "ok": true,
+          "s": 14.2
+        },
+        {
+          "i": 2,
+          "a": "roosters do not lay eggs",
+          "ok": true,
+          "s": 14.6
+        },
+        {
+          "i": 3,
+          "a": "roosters do not lay eggs",
+          "ok": true,
+          "s": 14.3
+        },
+        {
+          "i": 4,
+          "a": "roosters do not lay eggs",
+          "ok": true,
+          "s": 14.4
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "roosters do not lay eggs",
+          "correct": true,
+          "seconds": 9.389,
+          "content": "FINAL: roosters do not lay eggs"
+        },
+        {
+          "index": 1,
+          "extracted": "roosters do not lay eggs",
+          "correct": true,
+          "seconds": 14.173,
+          "content": "FINAL: roosters do not lay eggs"
+        },
+        {
+          "index": 2,
+          "extracted": "roosters do not lay eggs",
+          "correct": true,
+          "seconds": 14.583,
+          "content": "FINAL: roosters do not lay eggs"
+        },
+        {
+          "index": 3,
+          "extracted": "roosters do not lay eggs",
+          "correct": true,
+          "seconds": 14.328,
+          "content": "FINAL: roosters do not lay eggs"
+        },
+        {
+          "index": 4,
+          "extracted": "roosters do not lay eggs",
+          "correct": true,
+          "seconds": 14.364,
+          "content": "FINAL: roosters do not lay eggs"
+        }
+      ]
+    },
+    {
+      "id": "spell-backwards",
+      "category": "string",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "popillol",
+          "ok": true,
+          "s": 6.3
+        },
+        {
+          "i": 1,
+          "a": "popillol",
+          "ok": true,
+          "s": 11.6
+        },
+        {
+          "i": 2,
+          "a": "popillol",
+          "ok": true,
+          "s": 12.1
+        },
+        {
+          "i": 3,
+          "a": "popillol",
+          "ok": true,
+          "s": 11.8
+        },
+        {
+          "i": 4,
+          "a": "popillol",
+          "ok": true,
+          "s": 11.6
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "popillol",
+          "correct": true,
+          "seconds": 6.261,
+          "content": "FINAL: popillol"
+        },
+        {
+          "index": 1,
+          "extracted": "popillol",
+          "correct": true,
+          "seconds": 11.56,
+          "content": "FINAL: popillol"
+        },
+        {
+          "index": 2,
+          "extracted": "popillol",
+          "correct": true,
+          "seconds": 12.053,
+          "content": "FINAL: popillol"
+        },
+        {
+          "index": 3,
+          "extracted": "popillol",
+          "correct": true,
+          "seconds": 11.822,
+          "content": "FINAL: popillol"
+        },
+        {
+          "index": 4,
+          "extracted": "popillol",
+          "correct": true,
+          "seconds": 11.575,
+          "content": "FINAL: popillol"
+        }
+      ]
+    },
+    {
+      "id": "height-order",
+      "category": "logic",
+      "baselineCorrect": false,
+      "convergedCorrect": true,
+      "convergedAt": 4,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "Emma",
+          "ok": false,
+          "s": 7
+        },
+        {
+          "i": 1,
+          "a": "Carl",
+          "ok": false,
+          "s": 12
+        },
+        {
+          "i": 2,
+          "a": "Ben",
+          "ok": true,
+          "s": 12.3
+        },
+        {
+          "i": 3,
+          "a": "Carl",
+          "ok": false,
+          "s": 11.8
+        },
+        {
+          "i": 4,
+          "a": "Ben",
+          "ok": true,
+          "s": 11.6
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "Emma",
+          "correct": false,
+          "seconds": 6.96,
+          "content": "FINAL: Emma"
+        },
+        {
+          "index": 1,
+          "extracted": "Carl",
+          "correct": false,
+          "seconds": 11.958,
+          "content": "FINAL: Carl"
+        },
+        {
+          "index": 2,
+          "extracted": "Ben",
+          "correct": true,
+          "seconds": 12.309,
+          "content": "FINAL: Ben"
+        },
+        {
+          "index": 3,
+          "extracted": "Carl",
+          "correct": false,
+          "seconds": 11.782,
+          "content": "FINAL: Carl"
+        },
+        {
+          "index": 4,
+          "extracted": "Ben",
+          "correct": true,
+          "seconds": 11.648,
+          "content": "FINAL: Ben"
+        }
+      ]
+    },
+    {
+      "id": "widow-marry",
+      "category": "trick",
+      "baselineCorrect": false,
+      "convergedCorrect": false,
+      "convergedAt": 1,
+      "finalCorrect": false,
+      "answers": [
+        {
+          "i": 0,
+          "a": "Yes",
+          "ok": false,
+          "s": 6.4
+        },
+        {
+          "i": 1,
+          "a": "Yes",
+          "ok": false,
+          "s": 11.5
+        },
+        {
+          "i": 2,
+          "a": "Yes",
+          "ok": false,
+          "s": 11.5
+        },
+        {
+          "i": 3,
+          "a": "Yes",
+          "ok": false,
+          "s": 11.5
+        },
+        {
+          "i": 4,
+          "a": "Yes",
+          "ok": false,
+          "s": 11.4
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "Yes",
+          "correct": false,
+          "seconds": 6.351,
+          "content": "FINAL: Yes"
+        },
+        {
+          "index": 1,
+          "extracted": "Yes",
+          "correct": false,
+          "seconds": 11.496,
+          "content": "FINAL: Yes"
+        },
+        {
+          "index": 2,
+          "extracted": "Yes",
+          "correct": false,
+          "seconds": 11.468,
+          "content": "FINAL: Yes"
+        },
+        {
+          "index": 3,
+          "extracted": "Yes",
+          "correct": false,
+          "seconds": 11.539,
+          "content": "FINAL: Yes"
+        },
+        {
+          "index": 4,
+          "extracted": "Yes",
+          "correct": false,
+          "seconds": 11.443,
+          "content": "FINAL: Yes"
+        }
+      ]
+    },
+    {
+      "id": "cupcakes-distractor",
+      "category": "word-problem",
+      "baselineCorrect": true,
+      "convergedCorrect": true,
+      "convergedAt": 1,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "6",
+          "ok": true,
+          "s": 8.4
+        },
+        {
+          "i": 1,
+          "a": "6",
+          "ok": true,
+          "s": 13.1
+        },
+        {
+          "i": 2,
+          "a": "6",
+          "ok": true,
+          "s": 13
+        },
+        {
+          "i": 3,
+          "a": "6",
+          "ok": true,
+          "s": 13.3
+        },
+        {
+          "i": 4,
+          "a": "6",
+          "ok": true,
+          "s": 12.9
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "6",
+          "correct": true,
+          "seconds": 8.392,
+          "content": "FINAL: 6"
+        },
+        {
+          "index": 1,
+          "extracted": "6",
+          "correct": true,
+          "seconds": 13.058,
+          "content": "FINAL: 6"
+        },
+        {
+          "index": 2,
+          "extracted": "6",
+          "correct": true,
+          "seconds": 12.983,
+          "content": "FINAL: 6"
+        },
+        {
+          "index": 3,
+          "extracted": "6",
+          "correct": true,
+          "seconds": 13.255,
+          "content": "FINAL: 6"
+        },
+        {
+          "index": 4,
+          "extracted": "6",
+          "correct": true,
+          "seconds": 12.95,
+          "content": "FINAL: 6"
+        }
+      ]
+    },
+    {
+      "id": "count-words",
+      "category": "counting",
+      "baselineCorrect": false,
+      "convergedCorrect": false,
+      "convergedAt": 1,
+      "finalCorrect": false,
+      "answers": [
+        {
+          "i": 0,
+          "a": "12",
+          "ok": false,
+          "s": 7.3
+        },
+        {
+          "i": 1,
+          "a": "12",
+          "ok": false,
+          "s": 12.1
+        },
+        {
+          "i": 2,
+          "a": "12",
+          "ok": false,
+          "s": 12.3
+        },
+        {
+          "i": 3,
+          "a": "12",
+          "ok": false,
+          "s": 12.2
+        },
+        {
+          "i": 4,
+          "a": "12",
+          "ok": false,
+          "s": 12.3
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "12",
+          "correct": false,
+          "seconds": 7.286,
+          "content": "FINAL: 12"
+        },
+        {
+          "index": 1,
+          "extracted": "12",
+          "correct": false,
+          "seconds": 12.059,
+          "content": "FINAL: 12"
+        },
+        {
+          "index": 2,
+          "extracted": "12",
+          "correct": false,
+          "seconds": 12.341,
+          "content": "FINAL: 12"
+        },
+        {
+          "index": 3,
+          "extracted": "12",
+          "correct": false,
+          "seconds": 12.168,
+          "content": "FINAL: 12"
+        },
+        {
+          "index": 4,
+          "extracted": "12",
+          "correct": false,
+          "seconds": 12.3,
+          "content": "FINAL: 12"
+        }
+      ]
+    },
+    {
+      "id": "monty-random-host",
+      "category": "probability",
+      "baselineCorrect": false,
+      "convergedCorrect": false,
+      "convergedAt": 1,
+      "finalCorrect": false,
+      "answers": [
+        {
+          "i": 0,
+          "a": "Switch to door 2",
+          "ok": false,
+          "s": 10.3
+        },
+        {
+          "i": 1,
+          "a": "Switch to door 2",
+          "ok": false,
+          "s": 15.1
+        },
+        {
+          "i": 2,
+          "a": "Switch to door 2",
+          "ok": false,
+          "s": 15.7
+        },
+        {
+          "i": 3,
+          "a": "Switch to door 2",
+          "ok": false,
+          "s": 15
+        },
+        {
+          "i": 4,
+          "a": "Switch to door 2",
+          "ok": false,
+          "s": 15.5
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "Switch to door 2",
+          "correct": false,
+          "seconds": 10.286,
+          "content": "FINAL: Switch to door 2"
+        },
+        {
+          "index": 1,
+          "extracted": "Switch to door 2",
+          "correct": false,
+          "seconds": 15.07,
+          "content": "FINAL: Switch to door 2"
+        },
+        {
+          "index": 2,
+          "extracted": "Switch to door 2",
+          "correct": false,
+          "seconds": 15.672,
+          "content": "FINAL: Switch to door 2"
+        },
+        {
+          "index": 3,
+          "extracted": "Switch to door 2",
+          "correct": false,
+          "seconds": 14.985,
+          "content": "FINAL: Switch to door 2"
+        },
+        {
+          "index": 4,
+          "extracted": "Switch to door 2",
+          "correct": false,
+          "seconds": 15.456,
+          "content": "FINAL: Switch to door 2"
+        }
+      ]
+    },
+    {
+      "id": "weekday-feb14",
+      "category": "date-math",
+      "baselineCorrect": false,
+      "convergedCorrect": true,
+      "convergedAt": 2,
+      "finalCorrect": true,
+      "answers": [
+        {
+          "i": 0,
+          "a": "Thursday",
+          "ok": false,
+          "s": 7.3
+        },
+        {
+          "i": 1,
+          "a": "Saturday",
+          "ok": true,
+          "s": 12.1
+        },
+        {
+          "i": 2,
+          "a": "Saturday",
+          "ok": true,
+          "s": 12.9
+        },
+        {
+          "i": 3,
+          "a": "Saturday",
+          "ok": true,
+          "s": 12.4
+        },
+        {
+          "i": 4,
+          "a": "Saturday",
+          "ok": true,
+          "s": 12.3
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "Thursday",
+          "correct": false,
+          "seconds": 7.323,
+          "content": "FINAL: Thursday"
+        },
+        {
+          "index": 1,
+          "extracted": "Saturday",
+          "correct": true,
+          "seconds": 12.115,
+          "content": "FINAL: Saturday"
+        },
+        {
+          "index": 2,
+          "extracted": "Saturday",
+          "correct": true,
+          "seconds": 12.851,
+          "content": "FINAL: Saturday"
+        },
+        {
+          "index": 3,
+          "extracted": "Saturday",
+          "correct": true,
+          "seconds": 12.387,
+          "content": "FINAL: Saturday"
+        },
+        {
+          "index": 4,
+          "extracted": "Saturday",
+          "correct": true,
+          "seconds": 12.267,
+          "content": "FINAL: Saturday"
+        }
+      ]
+    }
+  ]
+}

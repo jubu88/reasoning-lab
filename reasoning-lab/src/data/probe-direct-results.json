@@ -1,0 +1,291 @@
+{
+  "model": "gemma4:latest",
+  "think": false,
+  "temp": 0,
+  "style": "direct",
+  "when": "2026-06-11T04:35:35.283Z",
+  "results": [
+    {
+      "id": "count-e-mercilessness",
+      "category": "counting",
+      "pass": true,
+      "extracted": "3",
+      "expected": 3,
+      "seconds": 88.3,
+      "content": "FINAL: 3",
+      "thinking": null
+    },
+    {
+      "id": "count-r-strawberry",
+      "category": "counting",
+      "pass": false,
+      "extracted": "2",
+      "expected": 3,
+      "seconds": 8.2,
+      "content": "FINAL: 2",
+      "thinking": null
+    },
+    {
+      "id": "apples-yesterday",
+      "category": "trick",
+      "pass": true,
+      "extracted": "3",
+      "expected": 3,
+      "seconds": 10.2,
+      "content": "FINAL: 3",
+      "thinking": null
+    },
+    {
+      "id": "alice-sisters",
+      "category": "family-logic",
+      "pass": true,
+      "extracted": "5",
+      "expected": 5,
+      "seconds": 9.6,
+      "content": "FINAL: 5",
+      "thinking": null
+    },
+    {
+      "id": "sally-sisters",
+      "category": "family-logic",
+      "pass": true,
+      "extracted": "1",
+      "expected": 1,
+      "seconds": 9.7,
+      "content": "FINAL: 1",
+      "thinking": null
+    },
+    {
+      "id": "dead-cat",
+      "category": "trick",
+      "pass": true,
+      "extracted": "0",
+      "expected": 0,
+      "seconds": 10.2,
+      "content": "FINAL: 0",
+      "thinking": null
+    },
+    {
+      "id": "river-one-item",
+      "category": "trick",
+      "pass": true,
+      "extracted": "1",
+      "expected": 1,
+      "seconds": 10,
+      "content": "FINAL: 1",
+      "thinking": null
+    },
+    {
+      "id": "days-before-friday",
+      "category": "date-math",
+      "pass": true,
+      "extracted": "Wednesday",
+      "expected": "wednesday",
+      "seconds": 5.9,
+      "content": "FINAL: Wednesday",
+      "thinking": null
+    },
+    {
+      "id": "decimal-compare",
+      "category": "numeric",
+      "pass": true,
+      "extracted": "9.9",
+      "expected": "9.9",
+      "seconds": 6.5,
+      "content": "FINAL: 9.9",
+      "thinking": null
+    },
+    {
+      "id": "inclusive-days",
+      "category": "date-math",
+      "pass": true,
+      "extracted": "26",
+      "expected": 26,
+      "seconds": 6.8,
+      "content": "FINAL: 26",
+      "thinking": null
+    },
+    {
+      "id": "multiply-2digit",
+      "category": "arithmetic",
+      "pass": true,
+      "extracted": "3901",
+      "expected": 3901,
+      "seconds": 6.8,
+      "content": "FINAL: 3901",
+      "thinking": null
+    },
+    {
+      "id": "arithmetic-chain",
+      "category": "arithmetic",
+      "pass": false,
+      "extracted": "39",
+      "expected": 64,
+      "seconds": 6.7,
+      "content": "FINAL: 39",
+      "thinking": null
+    },
+    {
+      "id": "month-children",
+      "category": "trick",
+      "pass": true,
+      "extracted": "John",
+      "expected": "john",
+      "seconds": 8.5,
+      "content": "FINAL: John",
+      "thinking": null
+    },
+    {
+      "id": "coins-30-cents",
+      "category": "trick",
+      "pass": true,
+      "extracted": "Quarter and nickel",
+      "expected": [
+        [
+          "quarter",
+          "nickel"
+        ]
+      ],
+      "seconds": 6.5,
+      "content": "FINAL: Quarter and nickel",
+      "thinking": null
+    },
+    {
+      "id": "rooster-egg",
+      "category": "trick",
+      "pass": true,
+      "extracted": "roosters do not lay eggs",
+      "expected": [
+        [
+          "don't lay"
+        ],
+        [
+          "do not lay"
+        ],
+        [
+          "doesn't lay"
+        ],
+        [
+          "does not lay"
+        ],
+        [
+          "can't lay"
+        ],
+        [
+          "cannot lay"
+        ],
+        [
+          "neither"
+        ]
+      ],
+      "seconds": 5.6,
+      "content": "FINAL: roosters do not lay eggs",
+      "thinking": null
+    },
+    {
+      "id": "spell-backwards",
+      "category": "string",
+      "pass": true,
+      "extracted": "popillol",
+      "expected": "popillol",
+      "seconds": 4,
+      "content": "FINAL: popillol",
+      "thinking": null
+    },
+    {
+      "id": "height-order",
+      "category": "logic",
+      "pass": false,
+      "extracted": "Emma",
+      "expected": "ben",
+      "seconds": 4.6,
+      "content": "FINAL: Emma",
+      "thinking": null
+    },
+    {
+      "id": "widow-marry",
+      "category": "trick",
+      "pass": false,
+      "extracted": "Yes, provided there are no other legal impediments such as existing marriage bonds or prohibitions within the relevant jurisdiction's laws.",
+      "expected": [
+        [
+          "dead"
+        ],
+        [
+          "deceased"
+        ],
+        [
+          "died"
+        ]
+      ],
+      "seconds": 9.1,
+      "content": "FINAL: Yes, provided there are no other legal impediments such as existing marriage bonds or prohibitions within the relevant jurisdiction's laws.",
+      "thinking": null
+    },
+    {
+      "id": "cupcakes-distractor",
+      "category": "word-problem",
+      "pass": true,
+      "extracted": "6",
+      "expected": 6,
+      "seconds": 5.4,
+      "content": "FINAL: 6",
+      "thinking": null
+    },
+    {
+      "id": "count-words",
+      "category": "counting",
+      "pass": false,
+      "extracted": "12",
+      "expected": 13,
+      "seconds": 4.3,
+      "content": "FINAL: 12",
+      "thinking": null
+    },
+    {
+      "id": "monty-random-host",
+      "category": "probability",
+      "pass": false,
+      "extracted": "Switch to door 2",
+      "expected": [
+        [
+          "not matter"
+        ],
+        [
+          "doesn't matter"
+        ],
+        [
+          "no advantage"
+        ],
+        [
+          "50/50"
+        ],
+        [
+          "50-50"
+        ],
+        [
+          "same chance"
+        ],
+        [
+          "equal chance"
+        ],
+        [
+          "either"
+        ]
+      ],
+      "seconds": 6.1,
+      "content": "FINAL: Switch to door 2",
+      "thinking": null
+    },
+    {
+      "id": "weekday-feb14",
+      "category": "date-math",
+      "pass": false,
+      "extracted": "Thursday",
+      "expected": "saturday",
+      "seconds": 4.6,
+      "content": "FINAL: Thursday",
+      "thinking": null
+    }
+  ]
+}

@@ -1,0 +1,533 @@
+{
+  "model": "gemma4:latest",
+  "style": "direct",
+  "revisionStyle": "direct",
+  "revisionTemp": 0.8,
+  "think": false,
+  "rounds": 6,
+  "feedback": "full",
+  "set": "classic",
+  "when": "2026-06-11T08:26:45.053Z",
+  "results": [
+    {
+      "id": "count-r-strawberry",
+      "category": "counting",
+      "baselineCorrect": false,
+      "convergedCorrect": false,
+      "convergedAt": 1,
+      "finalCorrect": false,
+      "majorityCorrect": false,
+      "answers": [
+        {
+          "i": 0,
+          "a": "2",
+          "ok": false,
+          "s": 42.5
+        },
+        {
+          "i": 1,
+          "a": "2",
+          "ok": false,
+          "s": 11.3
+        },
+        {
+          "i": 2,
+          "a": "2",
+          "ok": false,
+          "s": 10.8
+        },
+        {
+          "i": 3,
+          "a": "2",
+          "ok": false,
+          "s": 9.2
+        },
+        {
+          "i": 4,
+          "a": "2",
+          "ok": false,
+          "s": 9.9
+        },
+        {
+          "i": 5,
+          "a": "2",
+          "ok": false,
+          "s": 9.2
+        },
+        {
+          "i": 6,
+          "a": "2",
+          "ok": false,
+          "s": 8.7
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "2",
+          "correct": false,
+          "seconds": 42.481,
+          "content": "FINAL: 2"
+        },
+        {
+          "index": 1,
+          "extracted": "2",
+          "correct": false,
+          "seconds": 11.308,
+          "content": "FINAL: 2"
+        },
+        {
+          "index": 2,
+          "extracted": "2",
+          "correct": false,
+          "seconds": 10.796,
+          "content": "FINAL: 2"
+        },
+        {
+          "index": 3,
+          "extracted": "2",
+          "correct": false,
+          "seconds": 9.188,
+          "content": "FINAL: 2"
+        },
+        {
+          "index": 4,
+          "extracted": "2",
+          "correct": false,
+          "seconds": 9.854,
+          "content": "FINAL: 2"
+        },
+        {
+          "index": 5,
+          "extracted": "2",
+          "correct": false,
+          "seconds": 9.167,
+          "content": "FINAL: 2"
+        },
+        {
+          "index": 6,
+          "extracted": "2",
+          "correct": false,
+          "seconds": 8.667,
+          "content": "FINAL: 2"
+        }
+      ]
+    },
+    {
+      "id": "arithmetic-chain",
+      "category": "arithmetic",
+      "baselineCorrect": false,
+      "convergedCorrect": false,
+      "convergedAt": 1,
+      "finalCorrect": false,
+      "majorityCorrect": false,
+      "answers": [
+        {
+          "i": 0,
+          "a": "39",
+          "ok": false,
+          "s": 4.6
+        },
+        {
+          "i": 1,
+          "a": "39",
+          "ok": false,
+          "s": 8
+        },
+        {
+          "i": 2,
+          "a": "39",
+          "ok": false,
+          "s": 6.7
+        },
+        {
+          "i": 3,
+          "a": "39",
+          "ok": false,
+          "s": 7.1
+        },
+        {
+          "i": 4,
+          "a": "39",
+          "ok": false,
+          "s": 6.9
+        },
+        {
+          "i": 5,
+          "a": "39",
+          "ok": false,
+          "s": 7.1
+        },
+        {
+          "i": 6,
+          "a": "39",
+          "ok": false,
+          "s": 8
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "39",
+          "correct": false,
+          "seconds": 4.638,
+          "content": "FINAL: 39"
+        },
+        {
+          "index": 1,
+          "extracted": "39",
+          "correct": false,
+          "seconds": 8.006,
+          "content": "FINAL: 39"
+        },
+        {
+          "index": 2,
+          "extracted": "39",
+          "correct": false,
+          "seconds": 6.69,
+          "content": "FINAL: 39"
+        },
+        {
+          "index": 3,
+          "extracted": "39",
+          "correct": false,
+          "seconds": 7.121,
+          "content": "FINAL: 39"
+        },
+        {
+          "index": 4,
+          "extracted": "39",
+          "correct": false,
+          "seconds": 6.88,
+          "content": "FINAL: 39"
+        },
+        {
+          "index": 5,
+          "extracted": "39",
+          "correct": false,
+          "seconds": 7.057,
+          "content": "FINAL: 39"
+        },
+        {
+          "index": 6,
+          "extracted": "39",
+          "correct": false,
+          "seconds": 8.039,
+          "content": "FINAL: 39"
+        }
+      ]
+    },
+    {
+      "id": "widow-marry",
+      "category": "trick",
+      "baselineCorrect": false,
+      "convergedCorrect": false,
+      "convergedAt": 1,
+      "finalCorrect": false,
+      "majorityCorrect": false,
+      "answers": [
+        {
+          "i": 0,
+          "a": "Yes",
+          "ok": false,
+          "s": 4
+        },
+        {
+          "i": 1,
+          "a": "Yes",
+          "ok": false,
+          "s": 7
+        },
+        {
+          "i": 2,
+          "a": "Yes",
+          "ok": false,
+          "s": 6.4
+        },
+        {
+          "i": 3,
+          "a": "Yes",
+          "ok": false,
+          "s": 6.4
+        },
+        {
+          "i": 4,
+          "a": "Yes",
+          "ok": false,
+          "s": 6.5
+        },
+        {
+          "i": 5,
+          "a": "Yes",
+          "ok": false,
+          "s": 6.5
+        },
+        {
+          "i": 6,
+          "a": "Yes",
+          "ok": false,
+          "s": 6.4
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "Yes",
+          "correct": false,
+          "seconds": 4.024,
+          "content": "FINAL: Yes"
+        },
+        {
+          "index": 1,
+          "extracted": "Yes",
+          "correct": false,
+          "seconds": 6.986,
+          "content": "FINAL: Yes"
+        },
+        {
+          "index": 2,
+          "extracted": "Yes",
+          "correct": false,
+          "seconds": 6.405,
+          "content": "FINAL: Yes"
+        },
+        {
+          "index": 3,
+          "extracted": "Yes",
+          "correct": false,
+          "seconds": 6.386,
+          "content": "FINAL: Yes"
+        },
+        {
+          "index": 4,
+          "extracted": "Yes",
+          "correct": false,
+          "seconds": 6.526,
+          "content": "FINAL: Yes"
+        },
+        {
+          "index": 5,
+          "extracted": "Yes",
+          "correct": false,
+          "seconds": 6.504,
+          "content": "FINAL: Yes"
+        },
+        {
+          "index": 6,
+          "extracted": "Yes",
+          "correct": false,
+          "seconds": 6.424,
+          "content": "FINAL: Yes"
+        }
+      ]
+    },
+    {
+      "id": "count-words",
+      "category": "counting",
+      "baselineCorrect": false,
+      "convergedCorrect": false,
+      "convergedAt": 1,
+      "finalCorrect": false,
+      "majorityCorrect": false,
+      "answers": [
+        {
+          "i": 0,
+          "a": "12",
+          "ok": false,
+          "s": 3.8
+        },
+        {
+          "i": 1,
+          "a": "12",
+          "ok": false,
+          "s": 6.8
+        },
+        {
+          "i": 2,
+          "a": "12",
+          "ok": false,
+          "s": 7
+        },
+        {
+          "i": 3,
+          "a": "12",
+          "ok": false,
+          "s": 9.3
+        },
+        {
+          "i": 4,
+          "a": "12",
+          "ok": false,
+          "s": 8.5
+        },
+        {
+          "i": 5,
+          "a": "12",
+          "ok": false,
+          "s": 7.4
+        },
+        {
+          "i": 6,
+          "a": "12",
+          "ok": false,
+          "s": 7
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "12",
+          "correct": false,
+          "seconds": 3.83,
+          "content": "FINAL: 12"
+        },
+        {
+          "index": 1,
+          "extracted": "12",
+          "correct": false,
+          "seconds": 6.763,
+          "content": "FINAL: 12"
+        },
+        {
+          "index": 2,
+          "extracted": "12",
+          "correct": false,
+          "seconds": 7.044,
+          "content": "FINAL: 12"
+        },
+        {
+          "index": 3,
+          "extracted": "12",
+          "correct": false,
+          "seconds": 9.35,
+          "content": "FINAL: 12"
+        },
+        {
+          "index": 4,
+          "extracted": "12",
+          "correct": false,
+          "seconds": 8.514,
+          "content": "FINAL: 12"
+        },
+        {
+          "index": 5,
+          "extracted": "12",
+          "correct": false,
+          "seconds": 7.352,
+          "content": "FINAL: 12"
+        },
+        {
+          "index": 6,
+          "extracted": "12",
+          "correct": false,
+          "seconds": 7.035,
+          "content": "FINAL: 12"
+        }
+      ]
+    },
+    {
+      "id": "monty-random-host",
+      "category": "probability",
+      "baselineCorrect": false,
+      "convergedCorrect": false,
+      "convergedAt": 1,
+      "finalCorrect": false,
+      "majorityCorrect": false,
+      "answers": [
+        {
+          "i": 0,
+          "a": "Switch to door 2",
+          "ok": false,
+          "s": 5.4
+        },
+        {
+          "i": 1,
+          "a": "Switch to door 2",
+          "ok": false,
+          "s": 8.5
+        },
+        {
+          "i": 2,
+          "a": "Switch to door 2",
+          "ok": false,
+          "s": 8.3
+        },
+        {
+          "i": 3,
+          "a": "Switch to door 2",
+          "ok": false,
+          "s": 8.3
+        },
+        {
+          "i": 4,
+          "a": "Switch to door 2",
+          "ok": false,
+          "s": 8.1
+        },
+        {
+          "i": 5,
+          "a": "Switch to door 2",
+          "ok": false,
+          "s": 8.3
+        },
+        {
+          "i": 6,
+          "a": "Switch to door 2",
+          "ok": false,
+          "s": 8.1
+        }
+      ],
+      "iterations": [
+        {
+          "index": 0,
+          "extracted": "Switch to door 2",
+          "correct": false,
+          "seconds": 5.399,
+          "content": "FINAL: Switch to door 2"
+        },
+        {
+          "index": 1,
+          "extracted": "Switch to door 2",
+          "correct": false,
+          "seconds": 8.506,
+          "content": "FINAL: Switch to door 2"
+        },
+        {
+          "index": 2,
+          "extracted": "Switch to door 2",
+          "correct": false,
+          "seconds": 8.273,
+          "content": "FINAL: Switch to door 2"
+        },
+        {
+          "index": 3,
+          "extracted": "Switch to door 2",
+          "correct": false,
+          "seconds": 8.274,
+          "content": "FINAL: Switch to door 2"
+        },
+        {
+          "index": 4,
+          "extracted": "Switch to door 2",
+          "correct": false,
+          "seconds": 8.059,
+          "content": "FINAL: Switch to door 2"
+        },
+        {
+          "index": 5,
+          "extracted": "Switch to door 2",
+          "correct": false,
+          "seconds": 8.255,
+          "content": "FINAL: Switch to door 2"
+        },
+        {
+          "index": 6,
+          "extracted": "Switch to door 2",
+          "correct": false,
+          "seconds": 8.082,
+          "content": "FINAL: Switch to door 2"
+        }
+      ]
+    }
+  ]
+}

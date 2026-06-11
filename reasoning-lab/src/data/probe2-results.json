@@ -1,0 +1,135 @@
+{
+  "model": "gemma4:latest",
+  "think": false,
+  "temp": 0,
+  "style": "free",
+  "when": "2026-06-11T04:54:17.857Z",
+  "results": [
+    {
+      "id": "count-s-possessionlessness",
+      "category": "counting",
+      "pass": true,
+      "extracted": "8",
+      "expected": 8,
+      "seconds": 20.3,
+      "content": "Let's count the occurrences of the letter 's' in \"possessionlessness\":\n\np o s s e s s i o n l e s s n e s s\n\n1. p o **s** (1)\n2. **s** (2)\n3. e **s** (3)\n4. **s** (4)\n5. i o n l e **s** (5)\n6. **s** (6)\n7. n e **s** (7)\n8. **s** (8)\n\nThe letter 's' appears 8 times.\n\nFINAL: 8"
+    },
+    {
+      "id": "count-t-sentence",
+      "category": "counting",
+      "pass": false,
+      "extracted": "13",
+      "expected": 15,
+      "seconds": 56.8,
+      "content": "Let's count the occurrences of 't' and 'T' in the sentence: \"The turtle trotted to the tiny town toting two tomatoes\"\n\n1. **Th**e (1)\n2. **t**ur**tl**e (1, 1) - Wait, let's be systematic.\n   * The: 1 ('T')\n   * tur**t**le: 1 ('t')\n   * **t**ro**tt**ed: 3 ('t', 't', 't')\n   * **t**o: 1 ('t')\n   * **th**e: 1 ('t')\n   * **t**iny: 1 ('t')\n   * **t**own: 1 ('t')\n   * **t**oing: 1 ('t')\n   * **t**wo: 1 ('t')\n   * **t**omatoes: 2 ('t', 't')\n\nTotal count: $1 + 1 + 3 + 1 + 1 + 1 + 1 + 1 + 1 + 2 = 13$\n\nLet's re-verify by scanning the sentence:\n\"**T**he **t**ur**tl**e **t**ro**tt**ed **t**o **th**e **t**iny **t**own **t**oing **t**wo **t**omatoes\"\n\n1. T (The)\n2. t (turtle)\n3. t (trotted)\n4. t (trotted)\n5. t (trotted)\n6. t (to)\n7. t (the)\n8. t (tiny)\n9. t (town)\n10. t (toting)\n11. t (two)\n12. t (tomatoes)\n13. t (tomatoes)\n\nThe count is 13.\n\nFINAL: 13"
+    },
+    {
+      "id": "liar-puzzle",
+      "category": "logic",
+      "pass": true,
+      "extracted": "Bob",
+      "expected": "bob",
+      "seconds": 100.1,
+      "content": "Let $A$ be the statement \"Alice is truthful\", $B$ be the statement \"Bob is truthful\", and $C$ be the statement \"Carol is truthful\".\nWe are given the following statements:\nAlice says: \"Bob is a liar\" (i.e., $\\neg B$)\nBob says: \"Carol is a liar\" (i.e., $\\neg C$)\nCarol says: \"Alice and Bob are both liars\" (i.e., $\\neg A \\land \\neg B$)\n\nSince each person is either always truthful or always a liar, their statement is true if and only if they are truthful. This gives us the following equivalences:\n1. $A \\iff (\\text{Alice's statement is true}) \\iff (\\neg B)$\n2. $B \\iff (\\text{Bob's statement is true}) \\iff (\\neg C)$\n3. $C \\iff (\\text{Carol's statement is true}) \\iff (\\neg A \\land \\neg B)$\n\nFrom (1), we have $A = \\neg B$. This means Alice and Bob must have opposite truth values: if one is truthful, the other is a liar, and vice versa.\n\nFrom (2), we have $B = \\neg C$. This means Bob and Carol must have opposite truth values.\n\nCombining these two results:\nSince $A = \\neg B$ and $C = \\neg B$, it follows that $A = C$. Alice and Carol must have the same truth value.\n\nNow substitute these relationships into (3):\n$C \\iff (\\neg A \\land \\neg B)$\nSince $A=C$, we replace $C$ with $A$:\n$A \\iff (\\neg A \\land \\neg B)$\n\nWe also know from $A = \\neg B$ that $\\neg B = A$. Substitute this into the right side of the equivalence:\n$A \\iff (\\neg A \\land A)$\n\nThe statement $(\\neg A \\land A)$ is a contradiction, which is always False (F).\nSo, the equation becomes:\n$A \\iff F$\n\nThis means $A$ must be False. Alice is a liar ($\\neg A$).\n\nIf $A$ is False:\n1. From $A = \\neg B$, we have $F = \\neg B$, which implies $B$ is True. Bob is truthful.\n2. From $C = A$, we have $C = F$. Carol is a liar.\n\nLet's check for consistency with the original statements and derived truth values: $(A, B, C) = (F, T, F)$.\n\nAlice ($A=F$): Says $\\neg B$. Since $B=T$, $\\neg B = F$. Alice says False, which is consistent with her being a liar.\nBob ($B=T$): Says $\\neg C$. Since $C=F$, $\\neg C = T$. Bob says True, which is consistent with him being truthful.\nCarol ($C=F$): Says $\\neg A \\land \\neg B$. Since $A=F$ and $B=T$, $\\neg A = T$ and $\\neg B = F$. So, Carol says $T \\land F = F$. Carol says False, which is consistent with her being a liar.\n\nThe only consistent solution is that Alice is a liar, Bob is truthful, and Carol is a liar.\nThe question asks who is truthful. Only Bob is truthful.\n\nFINAL: Bob"
+    },
+    {
+      "id": "conditional-prob",
+      "category": "probability",
+      "pass": true,
+      "extracted": "2/11",
+      "expected": "2/11",
+      "seconds": 120.5,
+      "content": "Let $D_1$ and $D_2$ be the outcomes of the two fair six-sided dice. The sample space $\\Omega$ has $6 \\times 6 = 36$ equally likely outcomes.\n\nWe are given that at least one die shows a 5. Let $A$ be the event that at least one die shows a 5.\nThe outcomes in $A$ are:\n\\begin{itemize}\n    \\item $D_1=5$: (5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (5, 6) (6 outcomes)\n    \\item $D_2=5$ and $D_1 \\neq 5$: (1, 5), (2, 5), (3, 5), (4, 5), (6, 5) (5 outcomes)\n\\end{itemize}\nThe total number of outcomes in $A$ is $|A| = 6 + 5 = 11$.\nThe outcomes are: $\\{(5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (5, 6), (1, 5), (2, 5), (3, 5), (4, 5), (6, 5)\\}$.\n\nWe want to find the probability that the sum is 9, given that event $A$ has occurred. Let $B$ be the event that the sum is 9, i.e., $D_1 + D_2 = 9$.\nThe outcomes in $B$ are: (3, 6), (4, 5), (5, 4), (6, 3).\n\nWe need to find the intersection of $A$ and $B$, denoted by $A \\cap B$. These are the outcomes where the sum is 9 AND at least one die shows a 5.\nChecking the outcomes in $B$:\n\\begin{itemize}\n    \\item (3, 6): No 5. Not in $A$.\n    \\item (4, 5): Contains a 5. In $A$.\n    \\item (5, 4): Contains a 5. In $A$.\n    \\item (6, 3): No 5. Not in $A$.\n\\end{itemize}\nSo, the outcomes in $A \\cap B$ are $\\{(4, 5), (5, 4)\\}$.\nThe number of outcomes in $A \\cap B$ is $|A \\cap B| = 2$.\n\nWe want to calculate the conditional probability $P(B | A) = \\frac{P(A \\cap B)}{P(A)}$. Since all outcomes are equally likely, this is equivalent to:\n$$P(B | A) = \\frac{|A \\cap B|}{|A|} = \\frac{2}{11}$$\n\nFINAL: 2/11"
+    },
+    {
+      "id": "age-puzzle",
+      "category": "algebra",
+      "pass": true,
+      "extracted": "18",
+      "expected": 18,
+      "seconds": 65.5,
+      "content": "Let $T$ be Tom's current age, and $S$ be Sarah's current age.\nWe are given that $T = 24$.\n\nThe problem states: \"Tom is twice as old as Sarah was when Tom was as old as Sarah is now.\"\n\n1. **\"Sarah is now\"**: Sarah's current age is $S$.\n2. **\"When Tom was as old as Sarah is now\"**: This means we are looking at a time in the past when Tom's age was $S$.\n   The time elapsed since then is $T - S = 24 - S$ years ago.\n3. **Sarah's age at that time**: If this event happened $24 - S$ years ago, Sarah's age at that time was her current age minus the time elapsed:\n   Sarah's past age $= S - (24 - S) = 2S - 24$.\n\nThe problem states that Tom's current age ($T=24$) is twice this past age of Sarah:\n$$T = 2 \\times (\\text{Sarah's past age})$$\n$$24 = 2 \\times (2S - 24)$$\n\nNow, we solve for $S$:\n$$12 = 2S - 24$$\n$$12 + 24 = 2S$$\n$$36 = 2S$$\n$$S = 18$$\n\nSarah is currently 18 years old.\n\nCheck:\nIf Sarah is 18, the time when Tom was as old as Sarah is now (i.e., Tom was 18) was $24 - 18 = 6$ years ago.\nAt that time, Sarah's age was $18 - 6 = 12$.\nThe problem states Tom's current age (24) is twice this past age of Sarah: $2 \\times 12 = 24$. This matches.\n\nFINAL: 18"
+    },
+    {
+      "id": "clock-angle",
+      "category": "geometry",
+      "pass": true,
+      "extracted": "7.5",
+      "expected": 7.5,
+      "seconds": 59,
+      "content": "To find the angle between the hour hand and the minute hand at 3:15, we need to calculate the position of both hands in degrees from the 12 o'clock position.\n\n**1. Position of the Minute Hand:**\nThe minute hand moves $360^\\circ$ in 60 minutes, so its speed is $\\frac{360^\\circ}{60 \\text{ min}} = 6^\\circ$ per minute.\nAt 15 minutes, the angle of the minute hand ($\\theta_m$) is:\n$$\\theta_m = 15 \\text{ minutes} \\times 6^\\circ/\\text{minute} = 90^\\circ$$\n\n**2. Position of the Hour Hand:**\nThe hour hand moves $360^\\circ$ in 12 hours, so its speed is $\\frac{360^\\circ}{12 \\text{ hours}} = 30^\\circ$ per hour. It also moves due to the minutes passed.\nThe position of the hour hand ($\\theta_h$) can be calculated using the formula:\n$$\\theta_h = (H \\times 30^\\circ) + (M \\times 0.5^\\circ)$$\nWhere $H$ is the hour (3) and $M$ is the minutes (15).\n\n$$\\theta_h = (3 \\times 30^\\circ) + (15 \\times 0.5^\\circ)$$\n$$\\theta_h = 90^\\circ + 7.5^\\circ$$\n$$\\theta_h = 97.5^\\circ$$\n\n**3. Angle Between the Hands:**\nThe angle between the hands is the absolute difference between their positions:\n$$\\text{Angle} = |\\theta_h - \\theta_m|$$\n$$\\text{Angle} = |97.5^\\circ - 90^\\circ|$$\n$$\\text{Angle} = 7.5^\\circ$$\n\nThe angle between the hour hand and the minute hand at 3:15 is $7.5$ degrees.\n\nFINAL: 7.5"
+    },
+    {
+      "id": "div-3-or-5",
+      "category": "number-theory",
+      "pass": true,
+      "extracted": "47",
+      "expected": 47,
+      "seconds": 97.8,
+      "content": "Let $S$ be the set of integers between 1 and 100 inclusive. We want to find the number of elements in $S$ that are divisible by 3 or by 5.\n\nWe can use the Principle of Inclusion-Exclusion.\nLet $A$ be the set of integers in $S$ divisible by 3.\nLet $B$ be the set of integers in $S$ divisible by 5.\nWe want to find $|A \\cup B| = |A| + |B| - |A \\cap B|$.\n\n1. **Find the number of integers divisible by 3 ($|A|$):**\nThe multiples of 3 up to 100 are $3 \\times 1, 3 \\times 2, \\dots, 3 \\times k$, where $3k \\le 100$.\n$k = \\lfloor \\frac{100}{3} \\rfloor = 33$.\nSo, $|A| = 33$.\n\n2. **Find the number of integers divisible by 5 ($|B|$):**\nThe multiples of 5 up to 100 are $5 \\times 1, 5 \\times 2, \\dots, 5 \\times m$, where $5m \\le 100$.\n$m = \\lfloor \\frac{100}{5} \\rfloor = 20$.\nSo, $|B| = 20$.\n\n3. **Find the number of integers divisible by both 3 and 5 ($|A \\cap B|$):**\nAn integer divisible by both 3 and 5 must be divisible by their least common multiple, which is $\\text{lcm}(3, 5) = 15$.\nThe multiples of 15 up to 100 are $15 \\times 1, 15 \\times 2, \\dots, 15 \\times n$, where $15n \\le 100$.\n$n = \\lfloor \\frac{100}{15} \\rfloor = \\lfloor 6.66... \\rfloor = 6$.\nSo, $|A \\cap B| = 6$.\n\n4. **Apply the Principle of Inclusion-Exclusion:**\n$|A \\cup B| = |A| + |B| - |A \\cap B|$\n$|A \\cup B| = 33 + 20 - 6$\n$|A \\cup B| = 53 - 6$\n$|A \\cup B| = 47$.\n\nThere are 47 integers between 1 and 100 inclusive that are divisible by 3 or by 5.\n\nFINAL: 47"
+    },
+    {
+      "id": "last-digit-7pow7",
+      "category": "number-theory",
+      "pass": true,
+      "extracted": "3",
+      "expected": 3,
+      "seconds": 67.3,
+      "content": "To find the last digit of $7^7$, we need to examine the pattern of the last digits of powers of 7:\n\n$7^1 = 7$ (Last digit is 7)\n$7^2 = 49$ (Last digit is 9)\n$7^3 = 49 \\times 7 = 343$ (Last digit is 3)\n$7^4 = 343 \\times 7 = 2401$ (Last digit is 1)\n$7^5 = 2401 \\times 7 = 16807$ (Last digit is 7)\n\nThe pattern of the last digits repeats in a cycle: $7, 9, 3, 1$. The length of this cycle is 4.\n\nTo find the last digit of $7^7$, we need to find the remainder when the exponent (7) is divided by the cycle length (4):\n$$7 \\div 4 = 1 \\text{ with a remainder of } 3$$\n\nThe remainder of 3 means that the last digit of $7^7$ will be the same as the third digit in the pattern.\n\nThe pattern positions correspond to the remainders:\nRemainder 1 $\\rightarrow$ Last digit is 7 ($7^1$)\nRemainder 2 $\\rightarrow$ Last digit is 9 ($7^2$)\nRemainder 3 $\\rightarrow$ Last digit is 3 ($7^3$)\nRemainder 0 (or 4) $\\rightarrow$ Last digit is 1 ($7^4$)\n\nSince the remainder is 3, the last digit of $7^7$ is 3.\n\nFINAL: 3"
+    },
+    {
+      "id": "digit-sum",
+      "category": "arithmetic",
+      "pass": true,
+      "extracted": "81",
+      "expected": 81,
+      "seconds": 85.7,
+      "content": "We are asked to find the sum of the digits of $999,999,999 \\times 2$.\n\nFirst, let's calculate the product:\n$$999,999,999 \\times 2$$\n\nWe can use the property that $999,999,999 = 1,000,000,000 - 1$.\nSo, the expression becomes:\n$$(1,000,000,000 - 1) \\times 2$$\n\nDistributing the 2:\n$$1,000,000,000 \\times 2 - 1 \\times 2$$\n$$2,000,000,000 - 2$$\n\nSubtracting 2 from $2,000,000,000$:\n$$2,000,000,000 - 2 = 1,999,999,998$$\n\nThe number is $1,999,999,998$.\n\nNext, we need to find the sum of the digits of this number. The digits are 1, followed by eight 9s, and ending with an 8.\nSum of the digits = $1 + (9 \\times 8) + 8$\nSum of the digits = $1 + 72 + 8$\nSum of the digits = $73 + 8$\nSum of the digits = $81$\n\nAlternatively, we can observe that $999,999,999 \\times 2 = 1,999,999,998$.\nThe number has 10 digits. The sum is:\n$1 + (9+9+9+9+9+9+9+9) + 8$\nThere are eight 9s.\nSum $= 1 + (8 \\times 9) + 8$\nSum $= 1 + 72 + 8$\nSum $= 81$\n\nFINAL: 81"
+    },
+    {
+      "id": "zebra-mini",
+      "category": "logic",
+      "pass": true,
+      "extracted": "Priya",
+      "expected": "priya",
+      "seconds": 115.1,
+      "content": "Let's use a table and logical deduction to solve this puzzle.\n\nThe people are: Maya (M), Noor (N), Priya (P)\nThe pets are: Cat (C), Dog (D), Fish (F)\nThe drinks are: Tea (T), Coffee (Co), Juice (J)\n\nWe have the following clues:\n1. The dog owner drinks coffee. ($\\text{Pet}=\\text{Dog} \\implies \\text{Drink}=\\text{Coffee}$)\n2. Maya doesn't drink tea. ($M \\neq T$)\n3. Noor has the fish. ($N = F$)\n4. Priya doesn't have the dog. ($P \\neq D$)\n5. The fish owner doesn't drink juice. ($\\text{Pet}=\\text{Fish} \\implies \\text{Drink} \\neq \\text{Juice}$)\n\n**Step 1: Use Clue 3 and Clue 5.**\nNoor has the fish ($N=F$).\nThe fish owner doesn't drink juice. Therefore, Noor does not drink juice. ($N \\neq J$)\n\n**Step 2: Determine Noor's drink.**\nNoor cannot drink Juice (from Step 1).\nWe need to check if Noor can drink Tea or Coffee.\n\n**Step 3: Use Clue 4 and Pet assignments.**\nPriya doesn't have the dog ($P \\neq D$).\nSince Noor has the fish ($N=F$), Priya must have either the Cat or the Dog. Since $P \\neq D$, **Priya must have the cat ($P=C$)**.\nThis leaves Maya with the dog ($M=D$).\n\n**Step 4: Determine drinks based on pets (using Clue 1).**\nSince Maya has the dog ($M=D$), and the dog owner drinks coffee, **Maya drinks coffee ($M=Co$)**.\n\n**Step 5: Determine Noor's drink again.**\nWe know $N \\neq J$ (from Step 1) and $M=Co$. The remaining drinks are Tea and Juice. Since Maya has Coffee, Noor must have either Tea or Juice. But we established $N \\neq J$. Therefore, **Noor must drink tea ($N=T$)**.\n\n**Step 6: Determine Priya's drink.**\nThe only person left is Priya, and the only drink left is Juice. Therefore, **Priya drinks juice ($P=J$)**.\n\n**Verification:**\n*   Maya (Dog, Coffee) - Consistent with Clue 1.\n*   Noor (Fish, Tea) - Consistent with Clue 5 ($\\text{Fish} \\neq \\text{Juice}$).\n*   Priya (Cat, Juice) - Consistent with Clue 4 ($P \\neq D$).\n*   Maya $\\neq$ Tea (True, Maya drinks Coffee).\n\nThe question asks: Who drinks juice? Priya drinks juice.\n\nFINAL: Priya"
+    },
+    {
+      "id": "look-and-say",
+      "category": "pattern",
+      "pass": true,
+      "extracted": "312211",
+      "expected": "312211",
+      "seconds": 38,
+      "content": "This sequence is generated by the \"Look-and-Say\" process. To get the next term, you describe the digits in the current term.\n\n1. **1** $\\rightarrow$ One 1 $\\rightarrow$ **11**\n2. **11** $\\rightarrow$ Two 1s $\\rightarrow$ **21**\n3. **21** $\\rightarrow$ One 2, then one 1 $\\rightarrow$ **1211**\n4. **1211** $\\rightarrow$ One 1, then one 2, then two 1s $\\rightarrow$ **111221**\n5. **111221** $\\rightarrow$ Three 1s, then two 2s, then one 1 $\\rightarrow$ **312211**\n\nFINAL: 312211"
+    },
+    {
+      "id": "crt-remainders",
+      "category": "number-theory",
+      "pass": true,
+      "extracted": "23",
+      "expected": 23,
+      "seconds": 101.3,
+      "content": "Let $x$ be the positive integer we are looking for. We are given the following congruences:\n1. $x \\equiv 2 \\pmod{3}$\n2. $x \\equiv 3 \\pmod{5}$\n3. $x \\equiv 2 \\pmod{7}$\n\nFrom the first and third congruences, we have:\n$x \\equiv 2 \\pmod{3}$\n$x \\equiv 2 \\pmod{7}$\nSince $\\text{gcd}(3, 7) = 1$, this implies that $x \\equiv 2 \\pmod{3 \\cdot 7}$, so\n$x \\equiv 2 \\pmod{21}$.\n\nThis means that $x$ can be written in the form:\n$x = 21k + 2$ for some non-negative integer $k$.\n\nNow we use the second congruence:\n$x \\equiv 3 \\pmod{5}$\nSubstitute the expression for $x$:\n$21k + 2 \\equiv 3 \\pmod{5}$\n\nSimplify the coefficients modulo 5:\nSince $21 = 4 \\cdot 5 + 1$, we have $21 \\equiv 1 \\pmod{5}$.\nThe congruence becomes:\n$1k + 2 \\equiv 3 \\pmod{5}$\n$k \\equiv 3 - 2 \\pmod{5}$\n$k \\equiv 1 \\pmod{5}$\n\nThis means that $k$ can be written in the form:\n$k = 5j + 1$ for some non-negative integer $j$.\n\nSubstitute this expression for $k$ back into the equation for $x$:\n$x = 21k + 2$\n$x = 21(5j + 1) + 2$\n$x = 105j + 21 + 2$\n$x = 105j + 23$\n\nWe are looking for the smallest positive integer, which occurs when $j=0$.\nFor $j=0$:\n$x = 105(0) + 23$\n$x = 23$\n\nLet's verify the remainders:\n1. $23 \\div 3 = 7$ remainder $2$. (Correct)\n2. $23 \\div 5 = 4$ remainder $3$. (Correct)\n3. $23 \\div 7 = 3$ remainder $2$. (Correct)\n\nThe smallest positive integer is 23.\n\nFINAL: 23"
+    },
+    {
+      "id": "harmonic-speed",
+      "category": "rates",
+      "pass": true,
+      "extracted": "40",
+      "expected": 40,
+      "seconds": 138.1,
+      "content": "Here's how to solve the problem:\n\n1.  **Define variables:**\n    *   Speed from A to B ($v_1$): 30 mph\n    *   Speed from B to A ($v_2$): 60 mph\n    *   Let $d$ be the distance between Town A and Town B (one way).\n\n2.  **Calculate time for each leg:**\n    Time = Distance / Speed\n    *   Time from A to B ($t_1$): $\\frac{d}{30}$ hours\n    *   Time from B to A ($t_2$): $\\frac{d}{60}$ hours\n\n3.  **Calculate total distance and total time:**\n    *   Total Distance ($D_{total}$): $d + d = 2d$\n    *   Total Time ($T_{total}$): $t_1 + t_2 = \\frac{d}{30} + \\frac{d}{60}$\n\n4.  **Calculate the average speed:**\n    Average Speed ($\\bar{v}$) = $\\frac{\\text{Total Distance}}{\\text{Total Time}}$\n\n    First, find a common denominator for the time calculation (which is 60):\n    $$T_{total} = \\frac{d \\cdot 2}{30 \\cdot 2} + \\frac{d}{60} = \\frac{2d}{60} + \\frac{d}{60} = \\frac{3d}{60} = \\frac{d}{20}$$\n\n    Now, calculate the average speed:\n    $$\\bar{v} = \\frac{2d}{\\frac{d}{20}}$$\n    $$\\bar{v} = 2d \\cdot \\frac{20}{d}$$\n    The distance $d$ cancels out:\n    $$\\bar{v} = 2 \\cdot 20$$\n    $$\\bar{v} = 40 \\text{ mph}$$\n\n*Alternatively, you can use the formula for average speed when distances are equal:*\n$$\\text{Average Speed} = \\frac{2 v_1 v_2}{v_1 + v_2}$$\n$$\\text{Average Speed} = \\frac{2 (30)(60)}{30 + 60}$$\n$$\\text{Average Speed} = \\frac{3600}{90}$$\n$$\\text{Average Speed} = 40 \\text{ mph}$$\n\nFINAL: 40"
+    },
+    {
+      "id": "bookstore-stock",
+      "category": "word-problem",
+      "pass": true,
+      "extracted": "120",
+      "expected": 120,
+      "seconds": 56.5,
+      "content": "Here's the step-by-step calculation:\n\n1. **Starting stock:** The bookstore began with 120 books.\n\n2. **Monday's sales:** They sold $1/3$ of the books.\n   Sales on Monday = $\\frac{1}{3} \\times 120 = 40$ books.\n   Remaining after Monday = $120 - 40 = 80$ books.\n\n3. **Tuesday's sales:** They sold $1/4$ of what remained (which was 80).\n   Sales on Tuesday = $\\frac{1}{4} \\times 80 = 20$ books.\n   Remaining after Tuesday = $80 - 20 = 60$ books.\n\n4. **Wednesday's shipment:** They received a shipment that doubled their current stock (which was 60).\n   New stock = Current stock + Shipment\n   Shipment amount = $60$ (doubling means adding another 60)\n   Total after Wednesday = $60 + (2 \\times 60)$ OR simply $60 \\times 2 = 120$ books.\n\nThey have 120 books now.\n\nFINAL: 120"
+    }
+  ]
+}
