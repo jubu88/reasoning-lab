@@ -184,9 +184,16 @@ Findings:
   detectable and cheaply fixable; confident errors are invisible without ground truth. The
   missing piece is a confidence signal, e.g. token logprobs via llama.cpp's server — which
   Ollama does not expose.
-- **The widow riddle survives every strategy on both models** (direct, loop, all escalations,
-  inline CoT, thinking mode): the false premise ("his widow" = he is dead) is simply invisible
-  to this model family at inference time. Some failures are training-level, full stop.
+- **The widow riddle survives every gemma4 strategy** (direct, loop, all escalations, inline
+  CoT, thinking mode, and an explicit premise-check system prompt): gemma4's reading silently
+  repairs "his widow's sister" into "his late wife's sister" before reasoning starts — the
+  false premise never reaches the reasoning layer. Inference-time techniques can buy back
+  computation, but not perception.
+- **A different model family covers the blind spot.** deepseek-r1 (8B, also local) solves the
+  widow riddle outright — its thinking trace states "for a man to have a widow, he must be
+  dead… logically inconsistent" → No (≈4,700 thinking tokens, `deepseek-widow.mjs`). So 22/22
+  is reachable at inference time via a cross-model referee as the top escalation rung:
+  different priors see through different illusions.
 
 ## 9. Next ideas
 
