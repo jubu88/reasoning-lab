@@ -296,7 +296,32 @@ when the question literally asks for counting or arithmetic").
   Vulkan-based runtimes (llama.cpp Vulkan / MLC) where Exynos OpenCL is broken; prompt-prefix
   KV caching; smaller quants ∝ faster decode.
 
-## 13. Next ideas
+## 13. The confidence router: deployable escalation, no answer key
+
+Served the community GGUF (`unsloth/gemma-4-E4B-it-Q4_K_M`) via llama-server (Vulkan iGPU),
+ran the battery in direct mode collecting per-token logprobs, and scored each answer's
+confidence as the minimum token probability after "FINAL:" — `router.mjs`,
+`router-results.json`:
+
+- **Correct answers: minP avg 0.913. Wrong answers: minP avg 0.553.** The separation is real.
+- Best threshold (escalate if minP < ~0.94): **catches 6/6 wrong answers, misses none**,
+  escalating 9/22 (3 false alarms — borderline-but-right riddles). With fresh-CoT escalation
+  behind it, the no-oracle pipeline projects to ~20–21/22.
+- **Greedy decoding hides uncertainty.** Random-host Monty Hall — behaviorally immovable
+  through every loop and temperature jitter — sits at p≈0.53 at the logit level. The same
+  token wins every sample while the model nearly coin-flips underneath. This is why every
+  behavioral routing signal failed and logprobs work.
+- Caveats: n=22, threshold fitted to the sample (one correct answer sits at 0.938 vs the
+  0.939 threshold); the 41% escalation rate reflects an adversarial battery and would be far
+  lower on normal traffic. The community GGUF scores 16/22 one-shot (vs 15/22 for Ollama's
+  blobs) with a shuffled borderline set — conversion/template differences move ±1-class
+  problems, consistent with §7's nondeterminism footnote.
+- Practical notes: llama-server's chat template auto-enables gemma4's thinking channel
+  (empty `content` under small token caps) — disable with
+  `chat_template_kwargs: {"enable_thinking": false}`; health-check `127.0.0.1`, not
+  `localhost` (IPv6 resolution).
+
+## 14. Next ideas
 
 - **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a
   clean free-form pass (the data says this beats any feedback variant on misconceptions).

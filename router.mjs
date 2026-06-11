@@ -28,9 +28,12 @@ async function askWithLogprobs(prompt) {
       model: "gemma4",
       messages: [{ role: "user", content: prompt }],
       temperature: 0,
-      max_tokens: 96,
+      max_tokens: 128,
       logprobs: true,
       top_logprobs: 1,
+      // the GGUF chat template enables gemma4's thinking channel by default,
+      // which swallows the token budget and leaves content empty
+      chat_template_kwargs: { enable_thinking: false },
     }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
