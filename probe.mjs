@@ -280,6 +280,11 @@ for (const p of PROBLEMS) {
       extracted: verdict.extracted,
       expected: p.expected ?? p.expectedKeywords,
       seconds: Number(secs),
+      evalTokens: resp.eval_count ?? null,
+      tokPerSec:
+        resp.eval_count && resp.eval_duration
+          ? Number((resp.eval_count / (resp.eval_duration / 1e9)).toFixed(1))
+          : null,
       content,
       thinking: resp.message?.thinking ?? null,
     });

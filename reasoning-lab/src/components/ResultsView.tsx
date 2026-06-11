@@ -8,6 +8,7 @@ import probeHard from "../data/probe2-results.json";
 import expDirect from "../data/exp-direct-classic.json";
 import expTemp from "../data/exp-temp-revisions.json";
 import expHybrid from "../data/exp-hybrid.json";
+import expStudent from "../data/exp-student-framing.json";
 
 interface ProbeResult {
   id: string;
@@ -66,6 +67,13 @@ const EXPERIMENTS: Experiment[] = [
     takeaway:
       "3/5 fixed, each stable after one reasoning round. The two survivors (widow, Monty Hall) are anchoring: the model confirms its own wrong answer even though it solves both one-shot.",
     results: (expHybrid as any).results,
+  },
+  {
+    title: "De-anchoring — previous attempt framed as a student's",
+    config: "same as Escalation B, but feedback presented as another student's answer",
+    takeaway:
+      "Identical 3/5 — the anchor is the mere presence of a proposed answer, not self-attribution. On instant wrong convergence, a fresh no-feedback reasoning pass beats any feedback variant.",
+    results: (expStudent as any).results,
   },
 ];
 

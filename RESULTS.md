@@ -81,11 +81,23 @@ phenomenon: **anchoring**. Free-form *one-shot* solves both — but in a revisio
 its own wrong answer in the prompt, the model talks itself into confirming it instead.
 Feedback helps the model catch slips, but it *entrenches* misconceptions.
 
-## 5. Next ideas
+## 5. De-anchoring attempt: it's answer-presence bias, not self-bias
 
-- **De-anchored revisions** — present the previous attempt as "a student's answer" rather than
-  "your previous attempt", or use answer-only feedback, and see if the misconception problems
-  stop self-confirming.
+We re-ran escalation B with the previous attempt framed as **"another student's attempt"**
+(including an explicit warning that students often fall for trick questions): **3/5 — identical
+to self-framing.** The widow riddle and random-host Monty Hall still self-confirm every round,
+even though the model solves both one-shot with no prior answer in the prompt.
+
+So the anchor is not "I said this" — it is the mere presence of *any* proposed answer in the
+context. For misconception-type failures, showing the model a candidate answer (anyone's)
+biases its reasoning toward confirming it. Practical consequence for refinement pipelines:
+when the loop converges instantly on round 1, the cheapest reliable fix is a **fresh one-shot
+reasoning pass with no feedback at all**, not another feedback round.
+
+## 6. Next ideas
+
+- **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a
+  clean free-form pass (the data says this beats any feedback variant on misconceptions).
 - **Loop-signature router** — instant convergence on round 1 = suspicious; only those problems
   get the expensive escalation. The data above says this router would be nearly optimal.
 - **Cross-model refereeing** — let deepseek-r1 (also installed) judge between gemma4's baseline

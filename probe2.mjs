@@ -195,7 +195,13 @@ for (const p of PROBLEMS) {
     const secs = ((Date.now() - t0) / 1000).toFixed(1);
     results.push({
       id: p.id, category: p.category, pass: verdict.pass,
-      extracted: verdict.extracted, expected: p.expected, seconds: Number(secs), content,
+      extracted: verdict.extracted, expected: p.expected, seconds: Number(secs),
+      evalTokens: resp.eval_count ?? null,
+      tokPerSec:
+        resp.eval_count && resp.eval_duration
+          ? Number((resp.eval_count / (resp.eval_duration / 1e9)).toFixed(1))
+          : null,
+      content,
     });
     console.log(
       `${verdict.pass ? "PASS" : "FAIL"}  ${p.id.padEnd(28)} ${secs}s  -> "${verdict.extracted.slice(0, 70)}"` +
