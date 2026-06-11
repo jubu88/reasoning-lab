@@ -19,6 +19,9 @@ import challengeE4b from "../data/exp-challenge-e4b.json";
 import challengeE2b from "../data/exp-challenge-e2b.json";
 import freshResample from "../data/exp-fresh-resample-e4b.json";
 import compareE2b from "../data/compare-e2b.json";
+import primeE4bDirect from "../data/probe-prime-e4b-direct.json";
+import primeE2bDirect from "../data/probe-prime-e2b-direct.json";
+import primeE4bFree from "../data/probe-prime-e4b-free.json";
 import toolsNeutral from "../data/tools-e4b-neutral.json";
 import dripV2 from "../data/drip-e4b-v2.json";
 import pipelineE4b from "../data/pipeline-e4b.json";
@@ -132,6 +135,7 @@ const TOC = [
   { id: "sec-baselines", label: "Baselines" },
   { id: "sec-loop", label: "Restart loop" },
   { id: "sec-escalation", label: "Escalation" },
+  { id: "sec-doubt", label: "Doubt" },
   { id: "sec-addons", label: "Tools & drip" },
   { id: "sec-combos", label: "Combinations" },
   { id: "sec-size", label: "Size & speed" },
@@ -309,6 +313,46 @@ export default function ResultsView({
           {ESCALATION_EXPS.map((exp) => (
             <ExpCard key={exp.title} exp={exp} onLoadScenario={onLoadScenario} />
           ))}
+        </Section>
+
+        <Section
+          id="sec-doubt"
+          title="The vigilance prime — fictional doubt as a system prompt"
+          lesson='Injecting "YOUR PREVIOUS ATTEMPT WAS WRONG" with no actual attempt: zero fixes in 66 runs, breaks right answers everywhere, ~2× slower in free mode. The first answer is the model&apos;s best guess — unconditional doubt orders deviation from it. Doubt only works attached to a real, examinable previous answer.'
+        >
+          <div className="card" style={{ marginBottom: 14 }}>
+            <table className="bench">
+              <thead>
+                <tr><th>Configuration</th><th>Baseline</th><th>+ vigilance prime</th><th>Broke</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>e4b · direct</td>
+                  <td>15/22</td>
+                  <td className="bench-answer">{(primeE4bDirect as any).results.filter((r: any) => r.pass).length}/22</td>
+                  <td className="bench-expected">alice-sisters, rooster-egg</td>
+                </tr>
+                <tr>
+                  <td>e2b · direct</td>
+                  <td>11/22</td>
+                  <td className="bench-answer">{(primeE2bDirect as any).results.filter((r: any) => r.pass).length}/22</td>
+                  <td className="bench-expected">seven of its correct answers</td>
+                </tr>
+                <tr>
+                  <td>e4b · free-form</td>
+                  <td>21/22</td>
+                  <td className="bench-answer">{(primeE4bFree as any).results.filter((r: any) => r.pass).length}/22</td>
+                  <td className="bench-expected">strawberry → "4", spelling → "popillop", 2 timeouts</td>
+                </tr>
+              </tbody>
+            </table>
+            <div className="exp-takeaway">
+              The doubt spectrum, complete: "are you sure?" (sees answer + pressure) → inert or sycophantic;
+              vigilance prime (sees a verdict, no answer) → breaks right answers; restart loop (sees a candidate +
+              a procedure) → fixes slips, breaks nothing; fresh resample (sees nothing) → fixes misconceptions.
+              Assert less, let it re-derive more.
+            </div>
+          </div>
         </Section>
 
         <Section

@@ -1,0 +1,335 @@
+{
+  "model": "gemma4:e2b",
+  "think": false,
+  "temp": 0,
+  "style": "direct",
+  "when": "2026-06-11T18:10:28.861Z",
+  "results": [
+    {
+      "id": "count-e-mercilessness",
+      "category": "counting",
+      "pass": false,
+      "extracted": "6",
+      "expected": 3,
+      "seconds": 21.9,
+      "evalTokens": 5,
+      "tokPerSec": 16,
+      "content": "FINAL: 6",
+      "thinking": null
+    },
+    {
+      "id": "count-r-strawberry",
+      "category": "counting",
+      "pass": true,
+      "extracted": "3",
+      "expected": 3,
+      "seconds": 3.1,
+      "evalTokens": 5,
+      "tokPerSec": 13.9,
+      "content": "FINAL: 3",
+      "thinking": null
+    },
+    {
+      "id": "apples-yesterday",
+      "category": "trick",
+      "pass": false,
+      "extracted": "1",
+      "expected": 3,
+      "seconds": 3.3,
+      "evalTokens": 5,
+      "tokPerSec": 15,
+      "content": "FINAL: 1",
+      "thinking": null
+    },
+    {
+      "id": "alice-sisters",
+      "category": "family-logic",
+      "pass": false,
+      "extracted": "3",
+      "expected": 5,
+      "seconds": 3.5,
+      "evalTokens": 5,
+      "tokPerSec": 14.8,
+      "content": "FINAL: 3",
+      "thinking": null
+    },
+    {
+      "id": "sally-sisters",
+      "category": "family-logic",
+      "pass": false,
+      "extracted": "2",
+      "expected": 1,
+      "seconds": 3.3,
+      "evalTokens": 5,
+      "tokPerSec": 13.7,
+      "content": "FINAL: 2",
+      "thinking": null
+    },
+    {
+      "id": "dead-cat",
+      "category": "trick",
+      "pass": false,
+      "extracted": "1",
+      "expected": 0,
+      "seconds": 4.3,
+      "evalTokens": 5,
+      "tokPerSec": 12.8,
+      "content": "FINAL: 1",
+      "thinking": null
+    },
+    {
+      "id": "river-one-item",
+      "category": "trick",
+      "pass": false,
+      "extracted": "3",
+      "expected": 1,
+      "seconds": 5.4,
+      "evalTokens": 5,
+      "tokPerSec": 13.8,
+      "content": "FINAL: 3",
+      "thinking": null
+    },
+    {
+      "id": "days-before-friday",
+      "category": "date-math",
+      "pass": false,
+      "extracted": "Tuesday",
+      "expected": "wednesday",
+      "seconds": 3.2,
+      "evalTokens": 4,
+      "tokPerSec": 15.1,
+      "content": "FINAL: Tuesday",
+      "thinking": null
+    },
+    {
+      "id": "decimal-compare",
+      "category": "numeric",
+      "pass": true,
+      "extracted": "9.9",
+      "expected": "9.9",
+      "seconds": 3,
+      "evalTokens": 7,
+      "tokPerSec": 15.6,
+      "content": "FINAL: 9.9",
+      "thinking": null
+    },
+    {
+      "id": "inclusive-days",
+      "category": "date-math",
+      "pass": true,
+      "extracted": "26",
+      "expected": 26,
+      "seconds": 3.4,
+      "evalTokens": 6,
+      "tokPerSec": 14.4,
+      "content": "FINAL: 26",
+      "thinking": null
+    },
+    {
+      "id": "multiply-2digit",
+      "category": "arithmetic",
+      "pass": true,
+      "extracted": "3901",
+      "expected": 3901,
+      "seconds": 2.9,
+      "evalTokens": 8,
+      "tokPerSec": 16.1,
+      "content": "FINAL: 3901",
+      "thinking": null
+    },
+    {
+      "id": "arithmetic-chain",
+      "category": "arithmetic",
+      "pass": false,
+      "extracted": "53",
+      "expected": 64,
+      "seconds": 3.3,
+      "evalTokens": 6,
+      "tokPerSec": 15.5,
+      "content": "FINAL: 53",
+      "thinking": null
+    },
+    {
+      "id": "month-children",
+      "category": "trick",
+      "pass": false,
+      "extracted": "June",
+      "expected": "john",
+      "seconds": 3.1,
+      "evalTokens": 4,
+      "tokPerSec": 16.2,
+      "content": "FINAL: June",
+      "thinking": null
+    },
+    {
+      "id": "coins-30-cents",
+      "category": "trick",
+      "pass": false,
+      "extracted": "penny and quarter",
+      "expected": [
+        [
+          "quarter",
+          "nickel"
+        ]
+      ],
+      "seconds": 3.2,
+      "evalTokens": 6,
+      "tokPerSec": 16,
+      "content": "FINAL: penny and quarter",
+      "thinking": null
+    },
+    {
+      "id": "rooster-egg",
+      "category": "trick",
+      "pass": false,
+      "extracted": "west",
+      "expected": [
+        [
+          "don't lay"
+        ],
+        [
+          "do not lay"
+        ],
+        [
+          "doesn't lay"
+        ],
+        [
+          "does not lay"
+        ],
+        [
+          "can't lay"
+        ],
+        [
+          "cannot lay"
+        ],
+        [
+          "neither"
+        ]
+      ],
+      "seconds": 3.2,
+      "evalTokens": 4,
+      "tokPerSec": 11.9,
+      "content": "FINAL: west",
+      "thinking": null
+    },
+    {
+      "id": "spell-backwards",
+      "category": "string",
+      "pass": false,
+      "extracted": "oppilol",
+      "expected": "popillol",
+      "seconds": 2.7,
+      "evalTokens": 6,
+      "tokPerSec": 14.7,
+      "content": "FINAL: oppilol",
+      "thinking": null
+    },
+    {
+      "id": "height-order",
+      "category": "logic",
+      "pass": false,
+      "extracted": "Carl",
+      "expected": "ben",
+      "seconds": 3.2,
+      "evalTokens": 4,
+      "tokPerSec": 13.9,
+      "content": "FINAL: Carl",
+      "thinking": null
+    },
+    {
+      "id": "widow-marry",
+      "category": "trick",
+      "pass": false,
+      "extracted": "Yes, it is generally legal as there are no specific prohibitions against such marriages in most jurisdictions.",
+      "expected": [
+        [
+          "dead"
+        ],
+        [
+          "deceased"
+        ],
+        [
+          "died"
+        ]
+      ],
+      "seconds": 5.2,
+      "evalTokens": 22,
+      "tokPerSec": 9.6,
+      "content": "FINAL: Yes, it is generally legal as there are no specific prohibitions against such marriages in most jurisdictions.",
+      "thinking": null
+    },
+    {
+      "id": "cupcakes-distractor",
+      "category": "word-problem",
+      "pass": true,
+      "extracted": "6",
+      "expected": 6,
+      "seconds": 4.6,
+      "evalTokens": 5,
+      "tokPerSec": 9.9,
+      "content": "FINAL: 6",
+      "thinking": null
+    },
+    {
+      "id": "count-words",
+      "category": "counting",
+      "pass": true,
+      "extracted": "13",
+      "expected": 13,
+      "seconds": 3.9,
+      "evalTokens": 6,
+      "tokPerSec": 9.9,
+      "content": "FINAL: 13",
+      "thinking": null
+    },
+    {
+      "id": "monty-random-host",
+      "category": "probability",
+      "pass": false,
+      "extracted": "Switch to door 2",
+      "expected": [
+        [
+          "not matter"
+        ],
+        [
+          "doesn't matter"
+        ],
+        [
+          "no advantage"
+        ],
+        [
+          "50/50"
+        ],
+        [
+          "50-50"
+        ],
+        [
+          "same chance"
+        ],
+        [
+          "equal chance"
+        ],
+        [
+          "either"
+        ]
+      ],
+      "seconds": 5.9,
+      "evalTokens": 8,
+      "tokPerSec": 7.7,
+      "content": "FINAL: Switch to door 2",
+      "thinking": null
+    },
+    {
+      "id": "weekday-feb14",
+      "category": "date-math",
+      "pass": false,
+      "extracted": "Tuesday",
+      "expected": "saturday",
+      "seconds": 4.1,
+      "evalTokens": 4,
+      "tokPerSec": 10.4,
+      "content": "FINAL: Tuesday",
+      "thinking": null
+    }
+  ]
+}
