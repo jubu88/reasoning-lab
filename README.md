@@ -7,30 +7,50 @@ the answer stabilizes.**
 
 Tested on **gemma4:latest (8B, Q4_K_M)** via Ollama, temperature 0, thinking mode off.
 
-## Headline results (22-problem trick battery, direct answers — no visible reasoning)
+## Headline results (22-problem trick battery, exact output tokens)
 
-| Pipeline stage | Accuracy | Cost per problem |
+| Pipeline stage | Accuracy | Output tokens |
 |---|---|---|
-| One-shot, direct answer | 15/22 | ~5 s |
-| + refinement loop (4 rounds, honest convergence stop) | 17/22 | ~15–40 s |
-| + free-form reasoning in revision rounds only | **20/22** | reasoning spent only on flagged problems |
-| Reference: free-form reasoning every time | 21/22 | 10–160 s |
+| One-shot, direct answer | 15/22 | ~120 |
+| + restart loop (fresh context, converge stop) | 17/22 | 252 |
+| + fresh-CoT escalation (clean re-ask, reasoning allowed) | **21/22** | 3,428 |
+| + cross-model referee (deepseek-r1 for the blind spot) | **22/22** | +~4,700 once |
+| Reference: reasoning on every problem (inline CoT / thinking) | 21/22 | 5,549 / 7,276 |
 
-Three findings worth knowing:
+Bonus rows: **direct + a 4-function toolbox = 19/22 at 574 tokens** (best accuracy-per-token
+measured), and **e2b + the loop ≈ e4b one-shot at 1.9× decode speed**.
 
-1. **The loop is safe.** Across 60 opportunities to second-guess a correct answer, iteration
-   never flipped one to wrong.
-2. **Sampling jitter does nothing.** At revision temperature 0.8 the model reproduced the
-   *identical* wrong answer six rounds straight on every stuck problem. Confidently-wrong
-   answers are the model's strong mode, not noise — but letting it *reason* during revisions
-   fixes most of them in a single round.
-3. **Feedback anchors misconceptions.** The model solves the widow riddle and the random-host
-   Monty Hall one-shot when reasoning freely — but shown its own wrong answer, it talks itself
-   into confirming it. Re-feeding answers helps the model catch slips and *entrenches* its
-   misconceptions.
+## What we learned (each claim verified causally — see EXPERIMENTS.md)
 
-Full write-up with per-problem trails: [RESULTS.md](RESULTS.md).
+1. **The restart loop is the only free lunch.** +2 accuracy, *zero* correct answers broken in
+   hundreds of revision rounds, 29× cheaper than thinking mode. Its fresh-context design is
+   the mechanism: every variant that kept history failed.
+2. **Visible answers anchor.** Shown any previous answer — its own or "a student's" — the
+   model confirms it instead of re-deriving. Escalation must be a **clean re-ask**: fresh
+   resample fixed 4/5 stuck problems; every feedback variant fixed 0/5 on misconceptions.
+3. **"Are you sure?" is not a method.** Inert on the bigger model (anchor wins), harmful on
+   the smaller one (sycophantic flips). Doubt without a re-derivation procedure does nothing.
+4. **Temperature can't fix correctness.** Confidently-wrong answers are the mode, not noise —
+   identical wrong tokens at temp 0.8, six rounds straight.
+5. **Tools delete failure classes** (counting, arithmetic, string ops) — but command them
+   gently: a pushy tool prompt recast trick questions as calculations and caused the loop's
+   only regressions ever. Route techniques per failure class; don't stack them blindly.
+6. **Greedy decoding hides uncertainty.** Monty Hall's wrong answer never moved under any
+   behavioral pressure, yet sits at p≈0.53 in the logits. Answer-token logprobs caught **6/6
+   wrong answers** with no answer key — the deployable escalation router.
+7. **Small models shouldn't trust their own reasoning.** Free-form CoT made e2b *worse* than
+   direct answering on several problems (it talks itself out of memorized correct answers).
+8. **Some failures live in the weights.** gemma4 silently "repairs" the widow riddle's
+   impossible premise while reading it — no prompt can arrive early enough. A different model
+   family (deepseek-r1) sees through it instantly: different priors, different blind spots.
+9. **Optimize tokens before silicon.** Orchestration cut latency ~14×; GPU backends gave
+   1.4× on a laptop iGPU and were a net *loss* on Exynos phones
+   ([EXYNOS-VULKAN.md](EXYNOS-VULKAN.md)).
+
+Full numbers and per-problem trails: [RESULTS.md](RESULTS.md).
 What each experiment does and the mechanism behind it: [EXPERIMENTS.md](EXPERIMENTS.md).
+The app's **Results** tab shows everything interactively, organized per method, with
+"re-run live" buttons that reproduce any recorded scenario against your local Ollama.
 
 ## Repo layout
 
