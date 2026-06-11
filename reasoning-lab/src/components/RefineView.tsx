@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { Settings } from "../App";
+import type { Scenario, Settings } from "../App";
 import type { CheckType, Problem } from "../lib/checker";
 import { PROBLEMS } from "../lib/problems";
 import {
@@ -9,7 +9,13 @@ import {
   type StopMode,
 } from "../lib/refine";
 
-export default function RefineView({ settings }: { settings: Settings }) {
+export default function RefineView({
+  settings,
+  scenario,
+}: {
+  settings: Settings;
+  scenario?: Scenario | null;
+}) {
   // default to the problem where direct-mode iteration demonstrably self-corrects
   const [selectedId, setSelectedId] = useState("weekday-feb14");
   const [customPrompt, setCustomPrompt] = useState("");
@@ -36,6 +42,24 @@ export default function RefineView({ settings }: { settings: Settings }) {
     setRecords([]);
     setError("");
   }, [selectedId]);
+
+  // a scenario loaded from the Results tab configures the lab exactly like the recorded run
+  const runRef = useRef<() => void>(() => {});
+  useEffect(() => {
+    if (!scenario) return;
+    abortRef.current?.abort();
+    setSelectedId(scenario.problemId);
+    setMaxIterations(scenario.maxIterations);
+    setStopMode(scenario.stopMode);
+    setFeedbackMode(scenario.feedbackMode);
+    setEscalate(scenario.escalate);
+    setRevisionTemp(scenario.revisionTemp);
+    if (scenario.autoRun) {
+      // run after React commits the state above; runRef always points at the latest run()
+      const t = setTimeout(() => runRef.current(), 400);
+      return () => clearTimeout(t);
+    }
+  }, [scenario?.seq]);
 
   // keep the streaming card scrolled to the newest tokens during long generations
   useEffect(() => {
@@ -120,6 +144,8 @@ export default function RefineView({ settings }: { settings: Settings }) {
       abortRef.current = null;
     }
   };
+
+  runRef.current = run;
 
   const baseline = records.find((r) => r.index === 0);
   const final = records.length > 0 ? records[records.length - 1] : undefined;
@@ -312,6 +338,17 @@ export default function RefineView({ settings }: { settings: Settings }) {
                     <span>
                       Final answer only
                       <small>forces a fresh derivation, minimal context</small>
+                    </span>
+                  </label>
+                  <label className="radio-item">
+                    <input
+                      type="radio"
+                      checked={feedbackMode === "none"}
+                      onChange={() => setFeedbackMode("none")}
+                    />
+                    <span>
+                      No feedback (fresh re-ask)
+                      <small>strongest fix for anchored answers — clean resample</small>
                     </span>
                   </label>
                 </div>

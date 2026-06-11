@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { checkConnection, listModels, type ModelInfo } from "./api/ollama";
 import type { AnswerStyle } from "./lib/checker";
+import type { FeedbackMode, StopMode } from "./lib/refine";
 import Sidebar from "./components/Sidebar";
 import ChatView from "./components/ChatView";
 import BenchmarkView from "./components/BenchmarkView";
@@ -18,6 +19,20 @@ export interface Settings {
   answerStyle: AnswerStyle;
 }
 
+/** a recorded experiment configuration, loadable into the Refine Lab for live re-runs */
+export interface Scenario {
+  problemId: string;
+  answerStyle: AnswerStyle;
+  maxIterations: number;
+  stopMode: StopMode;
+  feedbackMode: FeedbackMode;
+  escalate: boolean;
+  revisionTemp: number;
+  autoRun?: boolean;
+  /** changes every load so the same scenario can be re-applied */
+  seq: number;
+}
+
 export default function App() {
   const [view, setView] = useState<ViewId>("chat");
   const [models, setModels] = useState<ModelInfo[]>([]);
@@ -29,6 +44,14 @@ export default function App() {
     numCtx: 8192,
     answerStyle: "free",
   });
+  const [scenario, setScenario] = useState<Scenario | null>(null);
+
+  const loadScenario = (s: Omit<Scenario, "seq">) => {
+    // recorded runs were all baseline temp 0, thinking off
+    setSettings((prev) => ({ ...prev, answerStyle: s.answerStyle, temperature: 0, think: false }));
+    setScenario({ ...s, seq: Date.now() });
+    setView("refine");
+  };
 
   useEffect(() => {
     let alive = true;
@@ -74,10 +97,10 @@ export default function App() {
           <BenchmarkView settings={settings} />
         </div>
         <div className={`view ${view === "refine" ? "" : "hidden"}`}>
-          <RefineView settings={settings} />
+          <RefineView settings={settings} scenario={scenario} />
         </div>
         <div className={`view ${view === "results" ? "" : "hidden"}`}>
-          <ResultsView />
+          <ResultsView onLoadScenario={loadScenario} />
         </div>
       </main>
     </div>

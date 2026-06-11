@@ -2,6 +2,8 @@
 // This view needs no Ollama connection; it exists so the findings are reproducible
 // and inspectable anywhere the app runs.
 
+import type { Scenario } from "../App";
+import { getProblem } from "../lib/problems";
 import probeFree from "../data/probe-results.json";
 import probeDirect from "../data/probe-direct-results.json";
 import probeHard from "../data/probe2-results.json";
@@ -37,11 +39,15 @@ interface ExpResult {
   error?: boolean;
 }
 
+type ScenarioBase = Omit<Scenario, "seq" | "problemId">;
+
 interface Experiment {
   title: string;
   config: string;
   takeaway: string;
   results: ExpResult[];
+  /** when set, each row gets a button that loads this exact config into the Refine Lab */
+  scenario?: ScenarioBase;
 }
 
 const PROBES = [
@@ -57,6 +63,7 @@ const EXPERIMENTS: Experiment[] = [
     takeaway:
       "Fixed the weekday slip and (luckily) the height ordering; never broke a correct answer. Confidently-wrong answers did not budge.",
     results: (expDirect as any).results,
+    scenario: { answerStyle: "direct", maxIterations: 4, stopMode: "converge", feedbackMode: "full-response", escalate: false, revisionTemp: 0, autoRun: true },
   },
   {
     title: "Escalation A — temperature 0.8 revisions",
@@ -64,6 +71,7 @@ const EXPERIMENTS: Experiment[] = [
     takeaway:
       "0/5 fixed. The identical wrong answer reappeared every round — these failures are the model's strong mode, not sampling noise.",
     results: (expTemp as any).results,
+    scenario: { answerStyle: "direct", maxIterations: 6, stopMode: "converge", feedbackMode: "full-response", escalate: false, revisionTemp: 0.8, autoRun: true },
   },
   {
     title: "Escalation B — reasoning in revisions",
@@ -71,6 +79,7 @@ const EXPERIMENTS: Experiment[] = [
     takeaway:
       "3/5 fixed, each stable after one reasoning round. The two survivors (widow, Monty Hall) are anchoring: the model confirms its own wrong answer even though it solves both one-shot.",
     results: (expHybrid as any).results,
+    scenario: { answerStyle: "direct", maxIterations: 3, stopMode: "converge", feedbackMode: "full-response", escalate: true, revisionTemp: 0, autoRun: true },
   },
   {
     title: "De-anchoring — previous attempt framed as a student's",
@@ -99,6 +108,7 @@ const EXPERIMENTS: Experiment[] = [
     takeaway:
       "4/5 fixed including random-host Monty Hall, which feedback revisions fixed 0/5 across three variants. Removing the previous answer from the prompt removes the anchor. Only the widow riddle survives — that one fails every strategy on both models, including thinking mode.",
     results: (freshResample as any).results,
+    scenario: { answerStyle: "direct", maxIterations: 2, stopMode: "converge", feedbackMode: "none", escalate: true, revisionTemp: 0, autoRun: true },
   },
 ];
 
@@ -114,7 +124,11 @@ function pct(pass: number, total: number) {
   return `${pass}/${total}`;
 }
 
-export default function ResultsView() {
+export default function ResultsView({
+  onLoadScenario,
+}: {
+  onLoadScenario: (s: Omit<Scenario, "seq">) => void;
+}) {
   return (
     <>
       <div className="view-header">
@@ -177,6 +191,7 @@ export default function ResultsView() {
                   <th>Problem</th>
                   <th>Answer trail (attempt 0 → revisions)</th>
                   <th>Outcome</th>
+                  {exp.scenario && <th></th>}
                 </tr>
               </thead>
               <tbody>
@@ -208,6 +223,19 @@ export default function ResultsView() {
                           <span className="badge fail">still wrong</span>
                         )}
                       </td>
+                      {exp.scenario && (
+                        <td>
+                          {getProblem(r.id) && (
+                            <button
+                              className="btn small"
+                              title="Load this exact configuration into the Refine Lab and run it live"
+                              onClick={() => onLoadScenario({ ...exp.scenario!, problemId: r.id })}
+                            >
+                              ↻ re-run live
+                            </button>
+                          )}
+                        </td>
+                      )}
                     </tr>
                   ))}
               </tbody>

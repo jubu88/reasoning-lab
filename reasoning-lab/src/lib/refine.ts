@@ -16,7 +16,7 @@ import {
 } from "./checker";
 
 export type StopMode = "fixed" | "converge" | "oracle";
-export type FeedbackMode = "full-response" | "answer-only";
+export type FeedbackMode = "full-response" | "answer-only" | "none";
 
 export interface RefineConfig {
   model: string;
@@ -66,6 +66,9 @@ function revisionPrompt(
   mode: FeedbackMode,
   style: AnswerStyle
 ): string {
+  // fresh resample: any visible prior answer anchors the model toward confirming
+  // it, so the strongest revision is a clean re-ask
+  if (mode === "none") return problemPrompt + instructionFor(style);
   const prevText =
     mode === "full-response"
       ? previous.content.length > 4000
