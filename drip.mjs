@@ -19,7 +19,7 @@ const STYLE = args.style ?? "direct";
 const OUT = args.out ?? "drip-results.json";
 
 const SYS =
-  "I will give you a problem one sentence at a time. After each sentence, reply with ONE short sentence noting what you now know. Do not try to solve anything until I ask the final question.";
+  "I will give you a problem one sentence at a time. After each sentence, reply with ONE short sentence noting what you now know. When I say 'Now the final question', stop acknowledging and answer the question directly.";
 
 function splitSentences(text) {
   const parts = text.match(/[^.!?]+[.!?]+["')]?(?:\s+|$)|[^.!?]+$/g) ?? [text];
@@ -35,8 +35,8 @@ for (const p of BATTERY_CLASSIC) {
   let outTokens = 0;
   const turns = [];
   try {
-    const messages = [{ role: "system", content: SYS }];
-    // feed all sentences except the last (the question) one at a time
+    // single-sentence problems have nothing to drip — plain one-shot
+    const messages = sents.length > 1 ? [{ role: "system", content: SYS }] : [];
     for (let i = 0; i < sents.length - 1; i++) {
       messages.push({ role: "user", content: sents[i] });
       const resp = await ask({ model: MODEL, messages, seed: 7, numPredict: 150 });
@@ -45,8 +45,11 @@ for (const p of BATTERY_CLASSIC) {
       messages.push({ role: "assistant", content: ack });
       turns.push({ sentence: sents[i], ack });
     }
-    // final question with the answer-style instruction
-    messages.push({ role: "user", content: sents[sents.length - 1] + instructionFor(STYLE) });
+    const finalPrefix = sents.length > 1 ? "Now the final question: " : "";
+    messages.push({
+      role: "user",
+      content: finalPrefix + sents[sents.length - 1] + instructionFor(STYLE),
+    });
     const fin = await ask({ model: MODEL, messages, seed: 7, numPredict: 1024 });
     outTokens += fin.eval_count ?? 0;
     const content = fin.message?.content ?? "";

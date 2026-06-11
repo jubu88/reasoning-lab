@@ -1,0 +1,386 @@
+{
+  "model": "gemma4:e4b",
+  "style": "direct",
+  "when": "2026-06-11T11:43:44.577Z",
+  "results": [
+    {
+      "id": "count-e-mercilessness",
+      "sentences": 1,
+      "dripped": false,
+      "pass": true,
+      "extracted": "3",
+      "outTokens": 5,
+      "seconds": 2.9,
+      "turns": [],
+      "finalContent": "FINAL: 3"
+    },
+    {
+      "id": "count-r-strawberry",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "2",
+      "outTokens": 5,
+      "seconds": 2.9,
+      "turns": [],
+      "finalContent": "FINAL: 2"
+    },
+    {
+      "id": "apples-yesterday",
+      "sentences": 3,
+      "dripped": true,
+      "pass": true,
+      "extracted": "3",
+      "outTokens": 18,
+      "seconds": 13.4,
+      "turns": [
+        {
+          "sentence": "I have 3 apples today.",
+          "ack": "You possess three apples."
+        },
+        {
+          "sentence": "Yesterday I ate 2 apples.",
+          "ack": "You ate two apples yesterday."
+        }
+      ],
+      "finalContent": "FINAL: 3"
+    },
+    {
+      "id": "alice-sisters",
+      "sentences": 2,
+      "dripped": true,
+      "pass": true,
+      "extracted": "5",
+      "outTokens": 10,
+      "seconds": 7.8,
+      "turns": [
+        {
+          "sentence": "Alice has 4 sisters and 1 brother.",
+          "ack": "Alice is female."
+        }
+      ],
+      "finalContent": "FINAL: 5"
+    },
+    {
+      "id": "sally-sisters",
+      "sentences": 3,
+      "dripped": true,
+      "pass": true,
+      "extracted": "1",
+      "outTokens": 22,
+      "seconds": 13.1,
+      "turns": [
+        {
+          "sentence": "Sally (a girl) has 3 brothers.",
+          "ack": "Sally has three brothers."
+        },
+        {
+          "sentence": "Each brother has 2 sisters.",
+          "ack": "The number of sisters is consistent for all brothers."
+        }
+      ],
+      "finalContent": "FINAL: 1"
+    },
+    {
+      "id": "dead-cat",
+      "sentences": 4,
+      "dripped": true,
+      "pass": true,
+      "extracted": "0",
+      "outTokens": 27,
+      "seconds": 18.9,
+      "turns": [
+        {
+          "sentence": "A dead cat is placed into a box along with a nuclear isotope, a vial of poison and a radiation detector.",
+          "ack": "The box contains several items."
+        },
+        {
+          "sentence": "If the detector senses radiation, it releases the poison.",
+          "ack": "Radiation triggers the poison release."
+        },
+        {
+          "sentence": "The box is opened one day later.",
+          "ack": "Time has passed since the setup."
+        }
+      ],
+      "finalContent": "FINAL: 0"
+    },
+    {
+      "id": "river-one-item",
+      "sentences": 3,
+      "dripped": true,
+      "pass": true,
+      "extracted": "1",
+      "outTokens": 22,
+      "seconds": 13.5,
+      "turns": [
+        {
+          "sentence": "A farmer is standing on one side of a river with only a goat.",
+          "ack": "The farmer has a goat."
+        },
+        {
+          "sentence": "He has a boat that can carry himself and one animal.",
+          "ack": "The boat capacity is limited to two occupants."
+        }
+      ],
+      "finalContent": "FINAL: 1"
+    },
+    {
+      "id": "days-before-friday",
+      "sentences": 1,
+      "dripped": false,
+      "pass": true,
+      "extracted": "Wednesday",
+      "outTokens": 4,
+      "seconds": 3.4,
+      "turns": [],
+      "finalContent": "FINAL: Wednesday"
+    },
+    {
+      "id": "decimal-compare",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "9",
+      "outTokens": 5,
+      "seconds": 3.1,
+      "turns": [],
+      "finalContent": "FINAL: 9"
+    },
+    {
+      "id": "inclusive-days",
+      "sentences": 1,
+      "dripped": false,
+      "pass": true,
+      "extracted": "26",
+      "outTokens": 6,
+      "seconds": 3.8,
+      "turns": [],
+      "finalContent": "FINAL: 26"
+    },
+    {
+      "id": "multiply-2digit",
+      "sentences": 1,
+      "dripped": false,
+      "pass": true,
+      "extracted": "3901",
+      "outTokens": 8,
+      "seconds": 3.6,
+      "turns": [],
+      "finalContent": "FINAL: 3901"
+    },
+    {
+      "id": "arithmetic-chain",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "39",
+      "outTokens": 6,
+      "seconds": 3.6,
+      "turns": [],
+      "finalContent": "FINAL: 39"
+    },
+    {
+      "id": "month-children",
+      "sentences": 4,
+      "dripped": true,
+      "pass": true,
+      "extracted": "John",
+      "outTokens": 28,
+      "seconds": 16.9,
+      "turns": [
+        {
+          "sentence": "John's mother has three children.",
+          "ack": "The mother has multiple offspring."
+        },
+        {
+          "sentence": "The first child is named April.",
+          "ack": "One of the children is named April."
+        },
+        {
+          "sentence": "The second child is named May.",
+          "ack": "Two of the children have names."
+        }
+      ],
+      "finalContent": "FINAL: John"
+    },
+    {
+      "id": "coins-30-cents",
+      "sentences": 4,
+      "dripped": true,
+      "pass": true,
+      "extracted": "Quarter and Nickel",
+      "outTokens": 45,
+      "seconds": 20.5,
+      "turns": [
+        {
+          "sentence": "I have two coins that add up to 30 cents.",
+          "ack": "You know the total value of two coins is 30 cents."
+        },
+        {
+          "sentence": "One of them is not a nickel.",
+          "ack": "You know at least one coin is not a nickel."
+        },
+        {
+          "sentence": "What are the two coins?",
+          "ack": "The two coins must be a quarter and a nickel."
+        }
+      ],
+      "finalContent": "FINAL: Quarter and Nickel"
+    },
+    {
+      "id": "rooster-egg",
+      "sentences": 3,
+      "dripped": true,
+      "pass": true,
+      "extracted": "Roosters do not lay eggs.",
+      "outTokens": 28,
+      "seconds": 14,
+      "turns": [
+        {
+          "sentence": "A rooster sits on the peak of a barn roof facing north.",
+          "ack": "The rooster is positioned on a barn roof."
+        },
+        {
+          "sentence": "The wind blows east at 10 mph.",
+          "ack": "Wind direction and speed are known."
+        }
+      ],
+      "finalContent": "FINAL: Roosters do not lay eggs."
+    },
+    {
+      "id": "spell-backwards",
+      "sentences": 1,
+      "dripped": false,
+      "pass": true,
+      "extracted": "popillol",
+      "outTokens": 6,
+      "seconds": 3.2,
+      "turns": [],
+      "finalContent": "FINAL: popillol"
+    },
+    {
+      "id": "height-order",
+      "sentences": 5,
+      "dripped": true,
+      "pass": true,
+      "extracted": "Ben",
+      "outTokens": 46,
+      "seconds": 23.6,
+      "turns": [
+        {
+          "sentence": "Anna is shorter than Ben.",
+          "ack": "Anna is shorter than Ben."
+        },
+        {
+          "sentence": "Carl is taller than Ben.",
+          "ack": "Ben's height is between Anna's and Carl's."
+        },
+        {
+          "sentence": "Dana is shorter than Anna.",
+          "ack": "Dana is the shortest person mentioned so far."
+        },
+        {
+          "sentence": "Emma is taller than Carl.",
+          "ack": "Emma is the tallest person mentioned so far."
+        }
+      ],
+      "finalContent": "FINAL: Ben"
+    },
+    {
+      "id": "widow-marry",
+      "sentences": 2,
+      "dripped": true,
+      "pass": false,
+      "extracted": "Yes",
+      "outTokens": 25,
+      "seconds": 9.6,
+      "turns": [
+        {
+          "sentence": "Is it possible for a living man to marry his widow's sister?",
+          "ack": "This is a question of marital law and cultural custom.\nI know the query concerns marriage legality."
+        }
+      ],
+      "finalContent": "FINAL: Yes"
+    },
+    {
+      "id": "cupcakes-distractor",
+      "sentences": 4,
+      "dripped": true,
+      "pass": true,
+      "extracted": "6",
+      "outTokens": 33,
+      "seconds": 19,
+      "turns": [
+        {
+          "sentence": "A baker bakes 24 cupcakes.",
+          "ack": "The baker made twenty-four cupcakes."
+        },
+        {
+          "sentence": "He sells 6 in the morning at $2 each and 8 in the afternoon at $3 each.",
+          "ack": "I know how much money he earned from sales."
+        },
+        {
+          "sentence": "He gives 4 to his neighbor for free.",
+          "ack": "The baker gave away four cupcakes."
+        }
+      ],
+      "finalContent": "FINAL: 6"
+    },
+    {
+      "id": "count-words",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "12",
+      "outTokens": 6,
+      "seconds": 3.7,
+      "turns": [],
+      "finalContent": "FINAL: 12"
+    },
+    {
+      "id": "monty-random-host",
+      "sentences": 4,
+      "dripped": true,
+      "pass": false,
+      "extracted": "Switch to door 2",
+      "outTokens": 46,
+      "seconds": 22,
+      "turns": [
+        {
+          "sentence": "On a game show there are 3 doors; one hides a car, two hide goats.",
+          "ack": "I know there are three doors with one car and two goats."
+        },
+        {
+          "sentence": "You pick door 1.",
+          "ack": "The player has selected Door 1."
+        },
+        {
+          "sentence": "The host, who does NOT know where the car is, opens door 3 completely at random, and it happens to reveal a goat.",
+          "ack": "Door 3 has been opened by the host and contains a goat."
+        }
+      ],
+      "finalContent": "FINAL: Switch to door 2"
+    },
+    {
+      "id": "weekday-feb14",
+      "sentences": 3,
+      "dripped": true,
+      "pass": false,
+      "extracted": "Tuesday",
+      "outTokens": 38,
+      "seconds": 15.4,
+      "turns": [
+        {
+          "sentence": "January 1, 2026 was a Thursday.",
+          "ack": "The day of the week for January 1, 2026 is known."
+        },
+        {
+          "sentence": "What day of the week was February 14, 2026?",
+          "ack": "February 14, 2026 was a Tuesday."
+        }
+      ],
+      "finalContent": "FINAL: Tuesday"
+    }
+  ]
+}

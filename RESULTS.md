@@ -195,7 +195,28 @@ Findings:
   is reachable at inference time via a cross-model referee as the top escalation rung:
   different priors see through different illusions.
 
-## 9. Next ideas
+## 9. Drip-feed: one premise per turn
+
+Splitting the problem into sentences and feeding them one per conversation turn (the model
+acknowledges each premise in one line before the final question; final answer stays direct) —
+`drip.mjs`, `drip-e4b-v2.json`:
+
+- Overall 15/22 — equal to direct one-shot, at ~20 output tokens/problem (439 total).
+- On multi-sentence problems: **10/13 vs direct's 9/13** — it fixed **height-order** (the
+  5-constraint ordering chain) for 46 tokens, the cheapest fix for that problem class we
+  measured, and broke nothing.
+- It does not touch perception failures, misconceptions, or arithmetic — those don't fail at
+  premise-reading.
+- v1 of the harness showed the hazard: with a sloppy protocol the acknowledgment turns can
+  make premise numbers more salient than derived answers (sally-sisters echoed "2" from the
+  premise despite a correct acknowledgment). A clean "now the final question" marker removed
+  the effect.
+
+Verdict: a near-free structured-attention trick for constraint-integration problems; overlaps
+with what the restart loop already fixes. The measured stack remains: direct → restart loop →
+fresh-CoT escalation → cross-model referee.
+
+## 10. Next ideas
 
 - **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a
   clean free-form pass (the data says this beats any feedback variant on misconceptions).

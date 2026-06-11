@@ -1,0 +1,386 @@
+{
+  "model": "gemma4:e4b",
+  "style": "direct",
+  "when": "2026-06-11T11:38:36.716Z",
+  "results": [
+    {
+      "id": "count-e-mercilessness",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "I know the target word.",
+      "outTokens": 16,
+      "seconds": 42.8,
+      "turns": [],
+      "finalContent": "The word is \"mercilessness\".\nI know the target word."
+    },
+    {
+      "id": "count-r-strawberry",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "I know the target word.",
+      "outTokens": 14,
+      "seconds": 4.7,
+      "turns": [],
+      "finalContent": "The word is \"strawberry\".\nI know the target word."
+    },
+    {
+      "id": "apples-yesterday",
+      "sentences": 3,
+      "dripped": true,
+      "pass": true,
+      "extracted": "3",
+      "outTokens": 18,
+      "seconds": 11.5,
+      "turns": [
+        {
+          "sentence": "I have 3 apples today.",
+          "ack": "You possess three apples."
+        },
+        {
+          "sentence": "Yesterday I ate 2 apples.",
+          "ack": "You consumed two apples yesterday."
+        }
+      ],
+      "finalContent": "FINAL: 3"
+    },
+    {
+      "id": "alice-sisters",
+      "sentences": 2,
+      "dripped": true,
+      "pass": false,
+      "extracted": "The family has at least 6 children.",
+      "outTokens": 15,
+      "seconds": 7.3,
+      "turns": [
+        {
+          "sentence": "Alice has 4 sisters and 1 brother.",
+          "ack": "Alice is female."
+        }
+      ],
+      "finalContent": "The family has at least 6 children."
+    },
+    {
+      "id": "sally-sisters",
+      "sentences": 3,
+      "dripped": true,
+      "pass": false,
+      "extracted": "2",
+      "outTokens": 23,
+      "seconds": 11.2,
+      "turns": [
+        {
+          "sentence": "Sally (a girl) has 3 brothers.",
+          "ack": "Sally has three brothers."
+        },
+        {
+          "sentence": "Each brother has 2 sisters.",
+          "ack": "The brothers have at least two sisters, including Sally."
+        }
+      ],
+      "finalContent": "FINAL: 2"
+    },
+    {
+      "id": "dead-cat",
+      "sentences": 4,
+      "dripped": true,
+      "pass": true,
+      "extracted": "0",
+      "outTokens": 28,
+      "seconds": 17.5,
+      "turns": [
+        {
+          "sentence": "A dead cat is placed into a box along with a nuclear isotope, a vial of poison and a radiation detector.",
+          "ack": "The box contains several items."
+        },
+        {
+          "sentence": "If the detector senses radiation, it releases the poison.",
+          "ack": "Radiation triggers the release of poison."
+        },
+        {
+          "sentence": "The box is opened one day later.",
+          "ack": "An event occurs after a delay."
+        }
+      ],
+      "finalContent": "FINAL: 0"
+    },
+    {
+      "id": "river-one-item",
+      "sentences": 3,
+      "dripped": true,
+      "pass": true,
+      "extracted": "1",
+      "outTokens": 43,
+      "seconds": 15.1,
+      "turns": [
+        {
+          "sentence": "A farmer is standing on one side of a river with only a goat.",
+          "ack": "The initial setup involves a farmer and a goat."
+        },
+        {
+          "sentence": "He has a boat that can carry himself and one animal.",
+          "ack": "The boat's capacity is limited to the farmer and one other item."
+        }
+      ],
+      "finalContent": "The minimum number of river crossings is 1.\nFINAL: 1"
+    },
+    {
+      "id": "days-before-friday",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "The goal is to find a past day of the week.",
+      "outTokens": 53,
+      "seconds": 9.2,
+      "turns": [],
+      "finalContent": "Today is Friday.\nThe current day is known.\n\nIt was exactly 100 days ago.\nA specific time difference is given.\n\nWhat day of the week was it?\nThe goal is to find a past day of the week."
+    },
+    {
+      "id": "decimal-compare",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "I know a number was given.",
+      "outTokens": 16,
+      "seconds": 4.4,
+      "turns": [],
+      "finalContent": "The number 9 is presented.\nI know a number was given."
+    },
+    {
+      "id": "inclusive-days",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "I know to include both endpoints.",
+      "outTokens": 51,
+      "seconds": 9,
+      "turns": [],
+      "finalContent": "The start date is March 3.\nI know the starting date.\nThe end date is March 28.\nI know the ending date.\nBoth dates must be included in the count.\nI know to include both endpoints."
+    },
+    {
+      "id": "multiply-2digit",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "I know the calculation required is $47 \\times 83$.",
+      "outTokens": 32,
+      "seconds": 6.4,
+      "turns": [],
+      "finalContent": "The problem asks for the product of 47 and 83.\nI know the calculation required is $47 \\times 83$."
+    },
+    {
+      "id": "arithmetic-chain",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "I know the full mathematical expression.",
+      "outTokens": 34,
+      "seconds": 6.7,
+      "turns": [],
+      "finalContent": "The expression to compute is ((17 + 28) × 6 − 14) ÷ 4.\nI know the full mathematical expression."
+    },
+    {
+      "id": "month-children",
+      "sentences": 4,
+      "dripped": true,
+      "pass": true,
+      "extracted": "John",
+      "outTokens": 30,
+      "seconds": 15.5,
+      "turns": [
+        {
+          "sentence": "John's mother has three children.",
+          "ack": "The subject is John's mother."
+        },
+        {
+          "sentence": "The first child is named April.",
+          "ack": "One of the children has a name."
+        },
+        {
+          "sentence": "The second child is named May.",
+          "ack": "Two of the children have names."
+        }
+      ],
+      "finalContent": "FINAL: John"
+    },
+    {
+      "id": "coins-30-cents",
+      "sentences": 4,
+      "dripped": true,
+      "pass": true,
+      "extracted": "Quarter and nickel",
+      "outTokens": 38,
+      "seconds": 18.2,
+      "turns": [
+        {
+          "sentence": "I have two coins that add up to 30 cents.",
+          "ack": "The total value of the two coins is known."
+        },
+        {
+          "sentence": "One of them is not a nickel.",
+          "ack": "At least one coin is not a nickel."
+        },
+        {
+          "sentence": "What are the two coins?",
+          "ack": "I must determine the identity of the two coins."
+        }
+      ],
+      "finalContent": "FINAL: Quarter and nickel"
+    },
+    {
+      "id": "rooster-egg",
+      "sentences": 3,
+      "dripped": true,
+      "pass": true,
+      "extracted": "The rooster cannot lay an egg.",
+      "outTokens": 34,
+      "seconds": 13.5,
+      "turns": [
+        {
+          "sentence": "A rooster sits on the peak of a barn roof facing north.",
+          "ack": "The rooster's initial position and orientation are known."
+        },
+        {
+          "sentence": "The wind blows east at 10 mph.",
+          "ack": "The wind's direction and speed have been established."
+        }
+      ],
+      "finalContent": "FINAL: The rooster cannot lay an egg."
+    },
+    {
+      "id": "spell-backwards",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "<your answer>",
+      "outTokens": 70,
+      "seconds": 10.4,
+      "turns": [],
+      "finalContent": "The letters are l-o-l-l-i-p.\nI know the word is \"lollipop\".\n\nSpell the word \"lollipop\" backwards.\nI know I need to reverse the spelling.\n\nAnswer with ONLY one line in exactly this form:\nFINAL: <your answer>\nI know the final output format."
+    },
+    {
+      "id": "height-order",
+      "sentences": 5,
+      "dripped": true,
+      "pass": false,
+      "extracted": "Emma",
+      "outTokens": 83,
+      "seconds": 28.3,
+      "turns": [
+        {
+          "sentence": "Anna is shorter than Ben.",
+          "ack": "Anna is shorter than Ben.\n\nI know Anna's height relative to Ben's."
+        },
+        {
+          "sentence": "Carl is taller than Ben.",
+          "ack": "Carl is taller than Ben.\n\nI now have a comparison involving Carl, Ben, and Anna."
+        },
+        {
+          "sentence": "Dana is shorter than Anna.",
+          "ack": "Dana is shorter than Anna.\n\nI know Dana's height relative to Anna's."
+        },
+        {
+          "sentence": "Emma is taller than Carl.",
+          "ack": "Emma is taller than Carl.\n\nI now have a comparison involving Emma and Carl."
+        }
+      ],
+      "finalContent": "FINAL: Emma"
+    },
+    {
+      "id": "widow-marry",
+      "sentences": 2,
+      "dripped": true,
+      "pass": false,
+      "extracted": "I am waiting for the final question.",
+      "outTokens": 32,
+      "seconds": 9.6,
+      "turns": [
+        {
+          "sentence": "Is it possible for a living man to marry his widow's sister?",
+          "ack": "The law governing this is complex and varies by jurisdiction.\nI know the topic involves legal complexities regarding marriage."
+        }
+      ],
+      "finalContent": "I am waiting for the final question."
+    },
+    {
+      "id": "cupcakes-distractor",
+      "sentences": 4,
+      "dripped": true,
+      "pass": true,
+      "extracted": "6",
+      "outTokens": 30,
+      "seconds": 16.9,
+      "turns": [
+        {
+          "sentence": "A baker bakes 24 cupcakes.",
+          "ack": "The baker made twenty-four cupcakes."
+        },
+        {
+          "sentence": "He sells 6 in the morning at $2 each and 8 in the afternoon at $3 each.",
+          "ack": "Sales occurred in two separate periods."
+        },
+        {
+          "sentence": "He gives 4 to his neighbor for free.",
+          "ack": "The baker gave away four cupcakes."
+        }
+      ],
+      "finalContent": "FINAL: 6"
+    },
+    {
+      "id": "count-words",
+      "sentences": 1,
+      "dripped": false,
+      "pass": false,
+      "extracted": "I know the sentence provided.",
+      "outTokens": 22,
+      "seconds": 5.5,
+      "turns": [],
+      "finalContent": "The cat sat on the mat while the dog slept near the door.\nI know the sentence provided."
+    },
+    {
+      "id": "monty-random-host",
+      "sentences": 4,
+      "dripped": true,
+      "pass": false,
+      "extracted": "Switch to door 2",
+      "outTokens": 41,
+      "seconds": 21,
+      "turns": [
+        {
+          "sentence": "On a game show there are 3 doors; one hides a car, two hide goats.",
+          "ack": "The setup involves three doors and prizes behind them."
+        },
+        {
+          "sentence": "You pick door 1.",
+          "ack": "A contestant has made an initial choice."
+        },
+        {
+          "sentence": "The host, who does NOT know where the car is, opens door 3 completely at random, and it happens to reveal a goat.",
+          "ack": "The host eliminated one incorrect option from the unchosen doors."
+        }
+      ],
+      "finalContent": "FINAL: Switch to door 2"
+    },
+    {
+      "id": "weekday-feb14",
+      "sentences": 3,
+      "dripped": true,
+      "pass": false,
+      "extracted": "The number of days in January is known.",
+      "outTokens": 30,
+      "seconds": 12.9,
+      "turns": [
+        {
+          "sentence": "January 1, 2026 was a Thursday.",
+          "ack": "The starting date and day are known."
+        },
+        {
+          "sentence": "What day of the week was February 14, 2026?",
+          "ack": "A specific future date's weekday is requested."
+        }
+      ],
+      "finalContent": "The number of days in January is known."
+    }
+  ]
+}
