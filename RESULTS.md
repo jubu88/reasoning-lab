@@ -385,6 +385,30 @@ answer (the script judges — the model just solves); cap at 4 attempts; no agre
   access needed) — use the logprobs router where you control the server, agreement-stopping
   where you don't (e.g. phone runtimes).
 
+**Round-5 extension** (`agree-*-r5.json`, fifth distinct angle added so attempts stay
+independent):
+
+| | e4b fresh ×5 | e2b fresh ×5 | e2b chat ×5 |
+|---|---|---|---|
+| Correct | **21/22** | 17/22 | 19/22 |
+| Precision when agreed | **21/21 (100%)** | 17/21 (81%) | 19/22 (86%) |
+| False agreements | **0** | 4 | 3 |
+| Unresolved (honest flag) | 1 (rooster — 5 right answers, 5 phrasings) | 1 | 0 |
+
+- **e4b fresh ×5 cracked the widow riddle** — trail `Yes | No | No`: the "watch for traps"
+  angle caught the false premise on two independent attempts. First gemma4-only fix for the
+  weight-level failure that survived every other strategy including thinking mode. With zero
+  false agreements and the one miss self-flagged, this is the strongest gemma4-only
+  configuration of the project: effectively 22/22 with one escalation flag.
+- **Agreement quality scales with model capability**: e2b's errors are correlated across
+  angles (both attempts "Switch" on Monty, both "east" on rooster), so false verification
+  rises to ~19%. On small models an agreed answer is a *probably*, not a proof.
+- Non-consecutive matching matters (as designed): e2b weekday trail `Saturday | Wednesday |
+  Saturday` — attempts 1 and 3 agree across a wrong middle.
+- Wrinkle: on e2b, chat mode beat fresh (19 vs 17) — inverted from e4b. Hypothesis: anchoring
+  stabilizes the small model's noisy phrasing faster than it corrupts; within n=22 noise,
+  unconfirmed.
+
 ## 16. Next ideas
 
 - **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a

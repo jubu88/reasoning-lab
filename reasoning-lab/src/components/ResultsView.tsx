@@ -604,9 +604,12 @@ export default function ResultsView({
               ))}
             </div>
             <div className="exp-takeaway">
-              The best oracle-free score recorded (20/22) — needs no logprobs and no special runtime, so it ports
-              to any chat API (including phone runtimes). ~2× the cost of one-shot CoT, in exchange for built-in
-              verification. Use the logprobs router where you control the server; agreement where you don't.
+              Round-5 extension: e4b fresh reached <b>21/22 with 100% precision and zero false agreements</b> —
+              and cracked the widow riddle (trail: Yes | No | No, the "watch for traps" angle caught the false
+              premise twice independently) — the strongest gemma4-only configuration of the project. On e2b,
+              precision drops to 81%: small-model errors correlate across angles, so agreement weakens with model
+              size. Needs no logprobs and no special runtime — ports to any chat API. Use the logprobs router
+              where you control the server; agreement where you don't.
             </div>
           </div>
         </Section>
