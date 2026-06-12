@@ -36,6 +36,7 @@ const ANGLES = [
   "\n\nSolve this carefully step by step, watching for traps or tricks in the wording.",
   "\n\nSolve this using a different approach than the most obvious one.",
   "\n\nSolve this, then verify your result with a second, different method before answering.",
+  "\n\nFirst restate the problem in your own words, then solve it.",
 ];
 
 const RESOLVE_DIFFERENTLY =

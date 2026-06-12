@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { chat, type GenStats } from "../api/ollama";
-import { DIRECT_INSTR, type Problem } from "../lib/checker";
+import {
+  DIRECT_INSTR,
+  FORMAT_INSTR,
+  extractFinal,
+  normalizeAnswer,
+  type Problem,
+} from "../lib/checker";
 import { runRefinement } from "../lib/refine";
 import type { Settings } from "../App";
 
@@ -14,13 +20,22 @@ interface DisplayMessage {
 }
 
 // the measured improvements, applicable per message
-type ChatStrategy = "plain" | "direct" | "loop" | "loop-escalate";
+type ChatStrategy = "plain" | "direct" | "loop" | "loop-escalate" | "agree";
 
 const STRATEGIES: { id: ChatStrategy; label: string; hint: string }[] = [
   { id: "plain", label: "Plain chat", hint: "normal conversation, full history" },
   { id: "direct", label: "Direct answer", hint: "terse answer, no written-out reasoning — fastest" },
   { id: "loop", label: "Restart loop", hint: "answer, then re-derive in fresh contexts until the answer converges" },
   { id: "loop-escalate", label: "Loop + reasoning revisions", hint: "direct first, free-form reasoning in revision rounds" },
+  { id: "agree", label: "Agreement ×2", hint: "ask independently with varied angles until two answers match (max 3 attempts) — verified answers, 95% precision in our tests" },
+];
+
+// independent solving angles for the agreement strategy — different prompts force
+// different computations at temp 0
+const AGREE_ANGLES = [
+  "",
+  "\n\nSolve this carefully step by step, watching for traps or tricks in the wording.",
+  "\n\nSolve this using a different approach than the most obvious one.",
 ];
 
 export default function ChatView({ settings }: { settings: Settings }) {
@@ -52,7 +67,48 @@ export default function ChatView({ settings }: { settings: Settings }) {
     const ctrl = new AbortController();
     abortRef.current = ctrl;
     try {
-      if (strategy === "loop" || strategy === "loop-escalate") {
+      if (strategy === "agree") {
+        // independent attempts (fresh context each, varied angle) until two answers
+        // match — conversational attempts would echo each other (measured: 86% vs 95%)
+        const attempts: { content: string; thinking: string; extracted: string }[] = [];
+        let agreed = false;
+        for (let i = 0; i < AGREE_ANGLES.length; i++) {
+          setDraft({ content: "", thinking: "" });
+          const result = await chat({
+            model: settings.model,
+            messages: [{ role: "user", content: text + AGREE_ANGLES[i] + FORMAT_INSTR }],
+            think: settings.think,
+            temperature: settings.temperature,
+            numCtx: settings.numCtx,
+            signal: ctrl.signal,
+            onDelta: (d) =>
+              setDraft((prev) => ({
+                content: (prev?.content ?? "") + (d.content ?? ""),
+                thinking: (prev?.thinking ?? "") + (d.thinking ?? ""),
+              })),
+          });
+          const extracted = extractFinal(result.content);
+          attempts.push({ content: result.content, thinking: result.thinking, extracted });
+          const n = normalizeAnswer(extracted);
+          if (n !== "" && attempts.slice(0, -1).some((a) => normalizeAnswer(a.extracted) === n)) {
+            agreed = true;
+            break;
+          }
+        }
+        const final = attempts[attempts.length - 1];
+        const trail = attempts.map((a) => a.extracted || "…").join("  |  ");
+        setMessages((ms) => [
+          ...ms,
+          {
+            role: "assistant",
+            content: final.content,
+            thinking: final.thinking || undefined,
+            meta: agreed
+              ? `✓ verified by agreement (${attempts.length} attempts): ${trail}`
+              : `⚠ no agreement in ${attempts.length} independent attempts — low confidence: ${trail}`,
+          },
+        ]);
+      } else if (strategy === "loop" || strategy === "loop-escalate") {
         // the message is treated as a standalone problem: each round restarts with a
         // fresh context holding only the question + the previous attempt
         const problem: Problem = {
