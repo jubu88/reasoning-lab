@@ -50,6 +50,7 @@ measured), and **e2b + the loop ≈ e4b one-shot at 1.9× decode speed**.
 Full numbers and per-problem trails: [RESULTS.md](RESULTS.md).
 What each experiment does, the mechanism behind it, and **how the harness scores answers**
 (batteries, checkers, determinism, caveats): [EXPERIMENTS.md](EXPERIMENTS.md).
+The 36 problems with questions and answer keys: [PROBLEMS.md](PROBLEMS.md).
 The app's **Results** tab shows everything interactively, organized per method, with
 "re-run live" buttons that reproduce any recorded scenario against your local Ollama.
 
@@ -60,6 +61,7 @@ reasoning-lab/     the web app (Vite + React) — Chat, Benchmark, Refine Lab, R
 probe.mjs          one-shot probe, classic 22-problem battery (--style free|direct)
 probe2.mjs         one-shot probe, harder 14-problem battery
 battery.mjs        shared problem definitions + answer checkers
+gen-problems.mjs   regenerates PROBLEMS.md from battery.mjs
 experiment.mjs     the refinement-loop harness (rounds, escalation, framing, scoring policies)
 RESULTS.md         findings write-up
 *.json             recorded probe/experiment outputs (also bundled into the app's Results tab)
