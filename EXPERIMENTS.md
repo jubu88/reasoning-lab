@@ -14,6 +14,81 @@ buying — or failing to buy — extra computation.
 
 ---
 
+## Methodology — how the harness actually works
+
+This section is the "how do I know these numbers are real" layer. The scripts are in the repo
+root; the same logic powers the web app via `reasoning-lab/src/lib/`.
+
+### The loop
+
+Every script does the same thing: send a problem to Ollama's `/api/chat` (or `llama-server`'s
+OpenAI-compatible endpoint for the logprobs work), extract the answer, check it against a key,
+record exact token counts. Problems run **strictly sequentially** — one request at a time, one
+script-leg at a time — so per-problem timings and tok/s are meaningful and the two models never
+fight over the 16 GB of RAM. `keep_alive` holds the current model warm between problems.
+
+### The batteries (`battery.mjs`)
+
+- **Classic — 22 problems.** Trick/reasoning questions, each chosen to probe one failure
+  class: tokenizer-blind counting (`count-r-strawberry`), fixed-depth arithmetic
+  (`arithmetic-chain`), distractor word-problems (`cupcakes-distractor`), trap framing
+  (`apples-yesterday`, `month-children`), constraint integration (`height-order`),
+  memorized-pattern override (`monty-random-host`), and a false-premise riddle (`widow-marry`).
+- **Hard — 14 problems.** Multi-step logic, probability, number theory — for when a model
+  passes the classic battery and you need headroom (`liar-puzzle`, `crt-remainders`,
+  `conditional-prob`, …).
+
+Each problem carries its own answer key and checker type, so scoring is automatic and
+identical across every experiment.
+
+### Answer extraction (`extractFinal`)
+
+Every prompt ends with an instruction to finish with one line, `FINAL: <answer>`. Extraction
+takes the **last** `FINAL:` match in the response (so a model that writes "FINAL:" mid-reasoning
+and again at the end is scored on the end). If there's no `FINAL:` line, it falls back to the
+last non-empty line. The agreement experiments also accept `FINAL ANSWER:`.
+
+### The three checkers (`checkAnswer`)
+
+- **numeric** — pull the first signed decimal from the final line (commas stripped) and compare
+  for exact equality. `47 × 83` must yield exactly `3901`.
+- **word** — case-insensitive substring of the final line must contain `expected` and must
+  **not** contain `forbidden` (e.g. `9.9` present, `9.11` absent). `wholeWord: true` switches to
+  a word-boundary regex so `popillol` is not satisfied by `lpopillol`.
+- **keywords** — passes if **any** group has **all** its keywords present. Searched against the
+  **final line only** by default (`keywordsScope: "full"` to scan the whole response) — because
+  scanning the full text caused false positives where a correct keyword appeared inside wrong
+  reasoning.
+
+For agreement detection, `normalizeAnswer` lowercases, strips punctuation, and collapses
+whitespace, so "Quarter and nickel" and "a quarter and a nickel" are *not* forced equal but
+"9.9" and "9.9." are — matching is deliberately conservative.
+
+### Settings & determinism
+
+Unless a section says otherwise: temperature 0 (greedy/argmax), fixed seeds, thinking off,
+generous `num_predict` so nothing is truncated mid-reasoning (an early "failure" turned out to
+be a 768-token cap cutting off the answer). Even so, runs are **not bit-identical**: GPU
+floating-point reduction order is nondeterministic, so two same-seed temp-0 runs typically
+differ on ~1–3 borderline problems. Treat single-problem deltas of ±1 as noise; the
+directional findings are stable across repeats.
+
+### Honest caveats
+
+- **n = 22.** Every accuracy number is out of a small sample. One problem ≈ 4.5 percentage
+  points. The findings are about *mechanisms and directions*, not leaderboard decimals.
+- **Checker artifacts we caught (and fixed).** The widow keyword checker once scored "Yes …
+  the husband would be dead" as a pass because "dead" appeared in the reasoning — fixed to a
+  yes/no word check. e2b's "lpopillol" was accepted for "popillol" — fixed with `wholeWord`.
+  Where an old recorded run still carries an artifact, RESULTS.md flags it inline (†/‡).
+- **Oracle routing.** Some escalation rows (and the full pipeline's stage 3) decide *which*
+  problems to escalate using the answer key — flagged "oracle-routed". The deployable,
+  no-key versions are the logprobs router (§ Routing) and agreement-stopping (§16).
+- **Custom problems** in the app's Refine Lab with no expected answer are not scored (the
+  verdict shows "—"); only the suite problems and headless batteries produce pass/fail numbers.
+
+---
+
 ## 1. One-shot probes — finding what fails
 
 **Question:** what does the model get wrong with no help at all?

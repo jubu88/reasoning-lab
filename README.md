@@ -48,7 +48,8 @@ measured), and **e2b + the loop ≈ e4b one-shot at 1.9× decode speed**.
    ([EXYNOS-VULKAN.md](EXYNOS-VULKAN.md)).
 
 Full numbers and per-problem trails: [RESULTS.md](RESULTS.md).
-What each experiment does and the mechanism behind it: [EXPERIMENTS.md](EXPERIMENTS.md).
+What each experiment does, the mechanism behind it, and **how the harness scores answers**
+(batteries, checkers, determinism, caveats): [EXPERIMENTS.md](EXPERIMENTS.md).
 The app's **Results** tab shows everything interactively, organized per method, with
 "re-run live" buttons that reproduce any recorded scenario against your local Ollama.
 
