@@ -9,6 +9,7 @@ import {
 } from "../lib/checker";
 import { runRefinement } from "../lib/refine";
 import type { Settings } from "../App";
+import Markdown from "./Markdown";
 
 interface DisplayMessage {
   role: "user" | "assistant";
@@ -250,7 +251,7 @@ export default function ChatView({ settings }: { settings: Settings }) {
               </div>
             )}
             <div className="msg-bubble">
-              {draft.content || <span className="spinner" />}
+              {draft.content ? <Markdown>{draft.content}</Markdown> : <span className="spinner" />}
             </div>
           </div>
         )}
@@ -295,7 +296,9 @@ function MessageBubble({ msg }: { msg: DisplayMessage }) {
           <div className="thinking-block">{msg.thinking}</div>
         </details>
       )}
-      <div className="msg-bubble">{msg.content}</div>
+      <div className="msg-bubble">
+        {msg.role === "assistant" ? <Markdown>{msg.content}</Markdown> : msg.content}
+      </div>
       {msg.meta && <div className="msg-meta">{msg.meta}</div>}
       {msg.stats && (
         <div className="msg-meta">
