@@ -47,7 +47,9 @@ async function askReferee(prompt) {
       messages: [{ role: "user", content: prompt }],
       stream: true,
       keep_alive: "15m",
-      options: { temperature: 0, seed: 7, num_predict: 10000 },
+      // num_ctx must exceed num_predict + prompt, or long thinking overflows the
+      // KV cache and the model rambles incoherently (context loss)
+      options: { temperature: 0, seed: 7, num_predict: 8000, num_ctx: 12288 },
     }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);

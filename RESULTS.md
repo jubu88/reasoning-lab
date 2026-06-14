@@ -447,7 +447,30 @@ nothing.
 
 ## 17. Cross-model referee — different priors, different blind spots
 
-(running — deepseek-r1 re-solves gemma's persistent failures; results below)
+A second model from a different family re-solves the problems gemma can't. deepseek-r1 (8B,
+local) was handed gemma's four persistent hard failures; `referee.mjs`, `referee-hardset.json`:
+
+| Problem | gemma (every method) | deepseek-r1 referee |
+|---|---|---|
+| widow-marry | "Yes" (weight-level premise repair) | **"No" ✓** (4,616 tok) |
+| height-order | "Emma" | **"Ben" ✓** (1,750 tok) |
+| monty-random-host | "Switch" | inconclusive — over-thought past 8,000 tok, never concluded |
+| rooster-egg | wrong / unphrased | "No egg" — right idea, missed the checker's keywords |
+
+- **The referee fixed gemma's two genuine reasoning blind spots**, taking the router pipeline
+  from 18 → **20/22**. The widow riddle — unsolved by every gemma strategy including native
+  thinking mode — falls immediately to a model that simply doesn't share gemma's habit of
+  normalizing "his widow" into "his late wife". Different priors, different blind spots.
+- **Not a universal oracle.** deepseek over-thinks the random-host Monty Hall so badly it never
+  emits an answer (a known failure mode of long-CoT models on adversarial probability), and its
+  correct-in-spirit rooster answer shows the residual is partly *our checker*, not the model.
+- Cost is real: ~5,100 referee tokens per forwarded problem (deepseek thinks hard). A referee
+  is the top, most-expensive escalation rung — reserve it for what the cheaper tiers flag.
+
+**The deployable two-model cascade** these last two sections define:
+`direct + tools → logprobs confidence router (catches 6/6 errors, §13) → deepseek referee
+(fixes the weight-level ones, this section)`. Each rung is justified by a failure class the
+rung below cannot reach; routing never needs the answer key.
 
 ## 18. Next ideas
 

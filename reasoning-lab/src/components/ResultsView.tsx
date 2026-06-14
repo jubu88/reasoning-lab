@@ -24,6 +24,7 @@ import primeE2bDirect from "../data/probe-prime-e2b-direct.json";
 import primeE4bFree from "../data/probe-prime-e4b-free.json";
 import agreeFresh from "../data/agree-fresh-e4b.json";
 import agreeChat from "../data/agree-chat-e4b.json";
+import refereeData from "../data/referee-hardset.json";
 import toolsNeutral from "../data/tools-e4b-neutral.json";
 import dripV2 from "../data/drip-e4b-v2.json";
 import pipelineE4b from "../data/pipeline-e4b.json";
@@ -143,6 +144,7 @@ const TOC = [
   { id: "sec-size", label: "Size & speed" },
   { id: "sec-routing", label: "Routing" },
   { id: "sec-agree", label: "Agreement" },
+  { id: "sec-referee", label: "Referee" },
   { id: "sec-repro", label: "Reproduce" },
 ];
 
@@ -640,6 +642,49 @@ export default function ResultsView({
         </Section>
 
         <Section
+          id="sec-referee"
+          title="Cross-model referee — different priors, different blind spots"
+          lesson="A different model family re-solves what gemma fundamentally can't see. deepseek-r1 cracked the widow riddle and the ordering puzzle — gemma's weight-level failures — taking the pipeline 18 → 20/22. The top, most expensive escalation rung."
+        >
+          <div className="card" style={{ marginBottom: 14 }}>
+            <div className="card-title">deepseek-r1 on gemma's four persistent hard failures</div>
+            <table className="bench" style={{ marginTop: 10 }}>
+              <thead>
+                <tr><th>Problem</th><th>gemma (every method)</th><th>deepseek-r1 referee</th><th></th></tr>
+              </thead>
+              <tbody>
+                {[
+                  { id: "widow-marry", gemma: '"Yes" — premise repair' },
+                  { id: "height-order", gemma: '"Emma"' },
+                  { id: "monty-random-host", gemma: '"Switch"' },
+                  { id: "rooster-egg", gemma: "wrong / unphrased" },
+                ].map((row) => {
+                  const r = (refereeData as any).refereeResults[row.id];
+                  const ans = r?.error ? "(stream error)" : r?.extracted?.trim() ? r.extracted : "(no answer — over-thought)";
+                  return (
+                    <tr key={row.id}>
+                      <td style={{ whiteSpace: "nowrap" }}>{row.id}</td>
+                      <td className="bench-expected">{row.gemma}</td>
+                      <td className="bench-answer">{ans.slice(0, 26)}</td>
+                      <td>{r?.correct ? <span className="badge pass">✓ fixed</span> : <span className="badge fail">✗</span>}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <div className="exp-takeaway">
+              The referee fixed gemma's two genuine reasoning blind spots — including the widow riddle that survived
+              every gemma strategy and native thinking mode. It is not a universal oracle: deepseek over-thinks the
+              random-host Monty Hall past 8,000 tokens without concluding, and its "No egg" rooster answer is
+              right-in-spirit but misses the keyword checker (the residual is partly our checker). ~5,100 tokens per
+              forwarded problem — the top escalation rung, reserved for what cheaper tiers flag. <b>Deployable
+              cascade:</b> direct+tools → logprobs router (catches 6/6 errors) → deepseek referee (fixes the
+              weight-level ones).
+            </div>
+          </div>
+        </Section>
+
+        <Section
           id="sec-repro"
           title="Reproduce"
           lesson="Every number above regenerates from the scripts in the repo root. Full mechanism explainers: EXPERIMENTS.md."
@@ -659,7 +704,9 @@ node tools.mjs --sysprompt neutral                                 # tools (fixe
 node drip.mjs                                                      # drip-feed
 node pipeline.mjs                                                  # the stack
 node compare.mjs --models gemma4:e2b,gemma4:e4b                    # size frontier
-node router.mjs --port 8089                                        # confidence router (llama-server)`}</pre>
+node router.mjs --port 8089                                        # confidence router (llama-server)
+node router-pipeline.mjs                                           # behavioral router (negative result)
+node referee.mjs --ids height-order,monty-random-host,widow-marry,rooster-egg  # cross-model referee`}</pre>
           </div>
         </Section>
       </div>
