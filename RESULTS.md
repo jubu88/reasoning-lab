@@ -409,11 +409,51 @@ independent):
   stabilizes the small model's noisy phrasing faster than it corrupts; within n=22 noise,
   unconfirmed.
 
-## 16. Next ideas
+## 16. Behavioral router — instability routing fails (and why)
 
-- **Fresh-resample escalation** — on instant convergence, drop the feedback entirely and run a
-  clean free-form pass (the data says this beats any feedback variant on misconceptions).
-- **Loop-signature router** — instant convergence on round 1 = suspicious; only those problems
-  get the expensive escalation. The data above says this router would be nearly optimal.
-- **Cross-model refereeing** — let deepseek-r1 (also installed) judge between gemma4's baseline
-  and revision answers when they disagree.
+The deployable dream: route escalation by answer *instability* (no answer key, no logprobs —
+works on any chat API). Pipeline: two cheap direct+tools attempts (varied angle); agree →
+accept; disagree → escalate to one fresh-CoT pass. `router-pipeline.mjs`,
+`router-pipeline-e4b.json`:
+
+| | Result |
+|---|---|
+| Tier-1 only (first attempt) | 19/22 |
+| After behavioral routing | **18/22** — *worse* |
+| Escalated | 3/22 (coins, rooster, widow) |
+| Good escalations (tier-1 was wrong) | 1/3 |
+| Errors missed (stable but wrong) | height-order, monty-random-host |
+
+It went *backwards*, for two compounding reasons:
+
+1. **Confident errors are stable.** Two temp-0 attempts agree even when wrong (we proved this
+   in §3) — so "disagreement" has almost no recall for the systematic failures. height-order
+   ("Emma") and Monty ("Switch") were rock-stable and sailed through unescalated.
+2. **Escalation can break a right answer.** widow's tier-1 was correctly "No" (the tool context
+   helped); the attempts disagreed, so it escalated — and free-form CoT reasoned its way back to
+   the premise-repair "Yes". Routing a correct-but-unstable answer into CoT inherited CoT's own
+   failure mode.
+
+The contrast sharpens the two signals that *do* work:
+- **logprobs** (§13) caught 6/6 because confidence is visible even when the winning token is
+  stable — minP separates right from confidently-wrong; instability cannot.
+- **5-angle agreement** (§15) reached 21/22 because varied angles manufacture the diversity two
+  temp-0 attempts lack, and it *accepts on agreement* rather than *escalating on disagreement* —
+  the safer direction (never routes a good answer into a worse process).
+
+Lesson: instability is a weak error signal on a deterministic model; use logit confidence where
+you control the server, varied-angle agreement where you don't. Two near-identical attempts buy
+nothing.
+
+## 17. Cross-model referee — different priors, different blind spots
+
+(running — deepseek-r1 re-solves gemma's persistent failures; results below)
+
+## 18. Next ideas
+
+- **Two-model deployable cascade** — logprobs router (catches 6/6 errors) → deepseek-r1
+  referee (this section). The pieces that actually work, combined.
+- **Few-shot trap exemplars** — show 2–3 worked trick-question examples before the real one
+  (in-context learning where the abstract "watch for traps" instruction failed).
+- **LoRA / distillation** — the only path to the weight-level failures (widow); train on
+  referee-generated correct traces.

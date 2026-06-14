@@ -565,6 +565,31 @@ export default function ResultsView({
               n=22 — threshold is sample-fitted; treat as proof of signal, not a production constant.
             </div>
           </div>
+
+          <div className="card" style={{ marginBottom: 14 }}>
+            <div className="card-title">The signal that does NOT work — behavioral instability routing</div>
+            <div className="exp-config">
+              two cheap direct attempts; agree → accept, disagree → escalate to CoT (no logprobs, any API)
+            </div>
+            <table className="bench" style={{ marginTop: 10 }}>
+              <thead>
+                <tr><th></th><th>Result</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Tier-1 only (first attempt)</td><td className="bench-answer">19/22</td></tr>
+                <tr><td>After behavioral routing</td><td className="bench-answer">18/22 — worse</td></tr>
+                <tr><td>Escalated</td><td>3/22 — only 1 was actually wrong</td></tr>
+                <tr><td>Missed (stable but wrong)</td><td className="bench-expected">height-order, monty-random-host</td></tr>
+              </tbody>
+            </table>
+            <div className="exp-takeaway">
+              It went backwards. <b>Confident errors are stable</b> — two temp-0 attempts agree even when wrong, so
+              disagreement misses the systematic failures; and escalating an unstable-but-correct answer to CoT can
+              break it (widow: "No" → CoT → "Yes"). Instability is a weak error signal on a deterministic model.
+              Use logit confidence where you control the server, varied-angle agreement (next) where you don't —
+              two near-identical attempts buy nothing.
+            </div>
+          </div>
         </Section>
 
         <Section

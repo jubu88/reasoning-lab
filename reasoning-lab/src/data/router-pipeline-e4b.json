@@ -1,0 +1,227 @@
+{
+  "model": "gemma4:e4b",
+  "totalTokens": 3088,
+  "when": "2026-06-14T01:38:33.491Z",
+  "results": [
+    {
+      "id": "count-e-mercilessness",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "3",
+      "tier1Correct": true,
+      "finalAnswer": "3",
+      "finalCorrect": true,
+      "tokens": 58
+    },
+    {
+      "id": "count-r-strawberry",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "3",
+      "tier1Correct": true,
+      "finalAnswer": "3",
+      "finalCorrect": true,
+      "tokens": 54
+    },
+    {
+      "id": "apples-yesterday",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "3",
+      "tier1Correct": true,
+      "finalAnswer": "3",
+      "finalCorrect": true,
+      "tokens": 10
+    },
+    {
+      "id": "alice-sisters",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "5",
+      "tier1Correct": true,
+      "finalAnswer": "5",
+      "finalCorrect": true,
+      "tokens": 10
+    },
+    {
+      "id": "sally-sisters",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "1",
+      "tier1Correct": true,
+      "finalAnswer": "1",
+      "finalCorrect": true,
+      "tokens": 10
+    },
+    {
+      "id": "dead-cat",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "0",
+      "tier1Correct": true,
+      "finalAnswer": "0",
+      "finalCorrect": true,
+      "tokens": 10
+    },
+    {
+      "id": "river-one-item",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "1",
+      "tier1Correct": true,
+      "finalAnswer": "1",
+      "finalCorrect": true,
+      "tokens": 10
+    },
+    {
+      "id": "days-before-friday",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "Wednesday",
+      "tier1Correct": true,
+      "finalAnswer": "Wednesday",
+      "finalCorrect": true,
+      "tokens": 8
+    },
+    {
+      "id": "decimal-compare",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "9.9",
+      "tier1Correct": true,
+      "finalAnswer": "9.9",
+      "finalCorrect": true,
+      "tokens": 14
+    },
+    {
+      "id": "inclusive-days",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "26",
+      "tier1Correct": true,
+      "finalAnswer": "26",
+      "finalCorrect": true,
+      "tokens": 12
+    },
+    {
+      "id": "multiply-2digit",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "3901",
+      "tier1Correct": true,
+      "finalAnswer": "3901",
+      "finalCorrect": true,
+      "tokens": 52
+    },
+    {
+      "id": "arithmetic-chain",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "64",
+      "tier1Correct": true,
+      "finalAnswer": "64",
+      "finalCorrect": true,
+      "tokens": 74
+    },
+    {
+      "id": "month-children",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "John",
+      "tier1Correct": true,
+      "finalAnswer": "John",
+      "finalCorrect": true,
+      "tokens": 8
+    },
+    {
+      "id": "coins-30-cents",
+      "stable": false,
+      "escalated": true,
+      "tier1Answer": "Quarter and nickel",
+      "tier1Correct": true,
+      "finalAnswer": "Quarter and Nickel",
+      "finalCorrect": true,
+      "tokens": 1471
+    },
+    {
+      "id": "rooster-egg",
+      "stable": false,
+      "escalated": true,
+      "tier1Answer": "It doesn't roll anywhere",
+      "tier1Correct": false,
+      "finalAnswer": "No egg",
+      "finalCorrect": false,
+      "tokens": 344
+    },
+    {
+      "id": "spell-backwards",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "popillol",
+      "tier1Correct": true,
+      "finalAnswer": "popillol",
+      "finalCorrect": true,
+      "tokens": 42
+    },
+    {
+      "id": "height-order",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "Emma",
+      "tier1Correct": false,
+      "finalAnswer": "Emma",
+      "finalCorrect": false,
+      "tokens": 8
+    },
+    {
+      "id": "widow-marry",
+      "stable": false,
+      "escalated": true,
+      "tier1Answer": "No",
+      "tier1Correct": true,
+      "finalAnswer": "Yes",
+      "finalCorrect": false,
+      "tokens": 242
+    },
+    {
+      "id": "cupcakes-distractor",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "6",
+      "tier1Correct": true,
+      "finalAnswer": "6",
+      "finalCorrect": true,
+      "tokens": 10
+    },
+    {
+      "id": "count-words",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "13",
+      "tier1Correct": true,
+      "finalAnswer": "13",
+      "finalCorrect": true,
+      "tokens": 66
+    },
+    {
+      "id": "monty-random-host",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "Switch to door 2",
+      "tier1Correct": false,
+      "finalAnswer": "Switch to door 2",
+      "finalCorrect": false,
+      "tokens": 16
+    },
+    {
+      "id": "weekday-feb14",
+      "stable": true,
+      "escalated": false,
+      "tier1Answer": "Saturday",
+      "tier1Correct": true,
+      "finalAnswer": "Saturday",
+      "finalCorrect": true,
+      "tokens": 559
+    }
+  ]
+}

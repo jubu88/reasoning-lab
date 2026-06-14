@@ -1,0 +1,147 @@
+{
+  "referee": "deepseek-r1:latest",
+  "in": "router-pipeline-e4b.json",
+  "forwarded": [
+    "height-order",
+    "monty-random-host",
+    "widow-marry",
+    "rooster-egg"
+  ],
+  "refereeResults": {
+    "height-order": {
+      "extracted": "Ben",
+      "correct": true,
+      "tokens": 1965
+    },
+    "monty-random-host": {
+      "extracted": "",
+      "correct": false,
+      "tokens": 6144
+    },
+    "widow-marry": {
+      "extracted": "**Answer:** No.",
+      "correct": true,
+      "tokens": 3170
+    },
+    "rooster-egg": {
+      "extracted": "",
+      "correct": false,
+      "tokens": 6144
+    }
+  },
+  "rows": [
+    {
+      "id": "count-e-mercilessness",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "count-r-strawberry",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "apples-yesterday",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "alice-sisters",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "sally-sisters",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "dead-cat",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "river-one-item",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "days-before-friday",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "decimal-compare",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "inclusive-days",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "multiply-2digit",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "arithmetic-chain",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "month-children",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "coins-30-cents",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "rooster-egg",
+      "source": "referee",
+      "correct": false
+    },
+    {
+      "id": "spell-backwards",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "height-order",
+      "source": "gemma",
+      "correct": false
+    },
+    {
+      "id": "widow-marry",
+      "source": "referee",
+      "correct": true
+    },
+    {
+      "id": "cupcakes-distractor",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "count-words",
+      "source": "gemma",
+      "correct": true
+    },
+    {
+      "id": "monty-random-host",
+      "source": "gemma",
+      "correct": false
+    },
+    {
+      "id": "weekday-feb14",
+      "source": "gemma",
+      "correct": true
+    }
+  ],
+  "cascadeCorrect": 19,
+  "total": 22,
+  "when": "2026-06-14T03:37:31.953Z"
+}
