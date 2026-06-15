@@ -25,6 +25,16 @@ The app talks to Ollama at `localhost:11434` through the Vite dev proxy, so no C
 - **Chat** — streaming conversation, optional system prompt, thinking-mode toggle, per-message latency/token stats.
 - **Benchmark** — one-shot accuracy on a suite of trick/reasoning problems with automatic answer checking.
 - **Refine Lab** — run the refinement loop on any suite problem or your own custom problem; every iteration is shown with its prompt, response, extracted answer, and verdict.
+- **Code Lab** — a local model builds a static web app agentically via tool-calling (write/read/list files, web search/fetch, optional image generation). Each build is jailed to its own `code-lab/workspace/projects/<id>/` folder (no overwriting), rendered in a sandboxed iframe, and exportable as a zip. Console errors from the preview can be fed back to the model to fix.
+
+## Optional: local image generation (Code Lab)
+
+Code Lab can let the model generate real images via [stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp). It's optional — without it, `generate_image` simply reports "unavailable" and the rest works. To enable:
+
+1. Download a stable-diffusion.cpp release binary (the **Vulkan** build is ~4× faster than CPU on an Intel iGPU) and an SD 1.5 model (`.safetensors`).
+2. Place them at `sd/vulkan/sd-cli.exe` and `sd/sd-v1-5.safetensors` (repo root), or point `SD_CLI` / `SD_MODEL` env vars at your own paths.
+
+Generation is local and CPU/iGPU-bound — roughly 30–60 s per image on an Iris Xe via Vulkan.
 
 ## Settings that matter
 

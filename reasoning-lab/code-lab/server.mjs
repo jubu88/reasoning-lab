@@ -9,9 +9,17 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { spawn } from "node:child_process";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const PROJECTS = path.resolve(HERE, "workspace", "projects");
+
+// local Stable Diffusion (stable-diffusion.cpp). Vulkan build is ~4x faster than
+// CPU on this iGPU. Paths are overridable via env; feature degrades gracefully if absent.
+const SD_CLI = process.env.SD_CLI || path.resolve(HERE, "../../sd/vulkan/sd-cli.exe");
+const SD_MODEL = process.env.SD_MODEL || path.resolve(HERE, "../../sd/sd-v1-5.safetensors");
+const SD_TIMEOUT_MS = 240_000;
+let sdBusy = false; // SD is heavy — one generation at a time
 
 const MAX_FILE_BYTES = 512 * 1024;
 const MAX_FILES = 80;
@@ -225,6 +233,49 @@ function injectReporter(html) {
   return REPORTER + html;
 }
 
+function clampDim(v, def) {
+  const n = Math.round(Number(v) || def);
+  return Math.max(64, Math.min(512, Math.round(n / 64) * 64));
+}
+
+// generate an image with stable-diffusion.cpp into the project (PNG only).
+// The prompt is passed as a spawn arg (array form) — never through a shell — so
+// there is no command-injection surface.
+async function generateImage(project, rel, prompt, opts = {}) {
+  if (!fs.existsSync(SD_CLI)) throw new Error("image generation unavailable (sd-cli not installed)");
+  if (!fs.existsSync(SD_MODEL)) throw new Error("image generation unavailable (SD model not found)");
+  if (typeof prompt !== "string" || !prompt.trim()) throw new Error("prompt required");
+  if (sdBusy) throw new Error("an image is already generating — try again when it finishes");
+  // force a .png inside the project
+  const safe = String(rel || "image.png").replace(/\.[^./\\]*$/, "") + ".png";
+  const out = safePath(project, safe);
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  const W = clampDim(opts.width, 384);
+  const H = clampDim(opts.height, 384);
+  const steps = Math.max(4, Math.min(20, Math.round(Number(opts.steps) || 14)));
+  const args = ["-m", SD_MODEL, "-p", prompt.slice(0, 500), "-o", out, "--steps", String(steps), "-W", String(W), "-H", String(H), "--cfg-scale", "7"];
+
+  sdBusy = true;
+  const t0 = Date.now();
+  try {
+    await new Promise((resolve, reject) => {
+      const child = spawn(SD_CLI, args, { windowsHide: true });
+      const timer = setTimeout(() => { child.kill(); reject(new Error("image generation timed out")); }, SD_TIMEOUT_MS);
+      let errTail = "";
+      child.stderr.on("data", (d) => { errTail = (errTail + d).slice(-500); });
+      child.on("error", (e) => { clearTimeout(timer); reject(e); });
+      child.on("close", (code) => {
+        clearTimeout(timer);
+        if (code === 0 && fs.existsSync(out)) resolve();
+        else reject(new Error(`sd-cli exited ${code}: ${errTail.slice(-200)}`));
+      });
+    });
+  } finally {
+    sdBusy = false;
+  }
+  return { path: safe, bytes: fs.statSync(out).size, seconds: Math.round((Date.now() - t0) / 1000), width: W, height: H };
+}
+
 function readBody(req) {
   return new Promise((resolve, reject) => {
     let data = "";
@@ -331,6 +382,14 @@ export function codeLabPlugin() {
           if (pathPart === "/codelab/api/web-search" && req.method === "POST") {
             const { query: q } = await readBody(req);
             return sendJson(res, 200, { ok: true, ...(await webSearch(q)) });
+          }
+          if (pathPart === "/codelab/api/generate-image" && req.method === "POST") {
+            const { project, path: rel, prompt, width, height, steps } = await readBody(req);
+            const r = await generateImage(project, rel, prompt, { width, height, steps });
+            return sendJson(res, 200, { ok: true, ...r });
+          }
+          if (pathPart === "/codelab/api/sd-status" && req.method === "GET") {
+            return sendJson(res, 200, { available: fs.existsSync(SD_CLI) && fs.existsSync(SD_MODEL), busy: sdBusy });
           }
 
           res.statusCode = 404;

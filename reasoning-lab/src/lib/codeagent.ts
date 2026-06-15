@@ -103,6 +103,24 @@ export const TOOLS = [
   {
     type: "function",
     function: {
+      name: "generate_image",
+      description:
+        "Generate a photographic image with local Stable Diffusion and save it into the project as a PNG. Use for photos/hero images that real content needs (e.g. furniture, food, people). Reference the saved path in your HTML, e.g. <img src=\"hero.png\">. Slow (~1 minute each) — use sparingly, and prefer CSS/SVG for icons and decorative graphics.",
+      parameters: {
+        type: "object",
+        properties: {
+          path: { type: "string", description: "output filename, e.g. hero.png" },
+          prompt: { type: "string", description: "detailed image description" },
+          width: { type: "number", description: "64-512, default 384" },
+          height: { type: "number", description: "64-512, default 384" },
+        },
+        required: ["path", "prompt"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
       name: "done",
       description:
         "Call this when the app is complete and index.html is written. Provide a one-line summary of what you built.",
@@ -122,6 +140,7 @@ Rules:
 - Write complete, working files with write_file. No placeholders or "TODO" — write the real code.
 - Everything runs in a sandboxed iframe with no network except CDNs you include. No backend, no localStorage guarantees.
 - Keep it to a few files (index.html, optionally style.css and app.js, or inline).
+- For photos the design needs (hero shots, product images), call generate_image to create a real PNG and reference it with <img src="..."> — do NOT invent filenames for images that don't exist. Use CSS gradients or inline SVG for icons, patterns, and decoration. Generating images is slow, so generate only the few that matter.
 - When the app is finished and index.html exists, call done with a short summary.
 - Do not explain at length between tool calls; act.`;
 
@@ -146,6 +165,12 @@ async function callTool(name: string, args: any, project: string): Promise<strin
     if (name === "web_fetch") {
       const r = await (await fetch(`${API}/web-fetch`, post({ url: args.url }))).json();
       return r.ok ? `[${r.status}] ${r.text}` : `error: ${r.error}`;
+    }
+    if (name === "generate_image") {
+      const r = await (
+        await fetch(`${API}/generate-image`, post({ project, path: args.path, prompt: args.prompt, width: args.width, height: args.height }))
+      ).json();
+      return r.ok ? `generated ${r.path} (${r.width}x${r.height}, ${r.seconds}s) — reference it with <img src="${r.path}">` : `error: ${r.error}`;
     }
     if (name === "done") return "done";
     return `error: unknown tool ${name}`;
