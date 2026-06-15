@@ -15,6 +15,7 @@ const NAV: { id: ViewId; icon: string; label: string }[] = [
   { id: "benchmark", icon: "🧪", label: "Benchmark" },
   { id: "refine", icon: "🔁", label: "Refine Lab" },
   { id: "results", icon: "📊", label: "Results" },
+  { id: "codelab", icon: "⌨️", label: "Code Lab" },
 ];
 
 const CTX_OPTIONS = [

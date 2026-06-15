@@ -4,3 +4,5 @@ dist/
 Thumbs.db
 llamacpp/
 llamaserver-*.log
+reasoning-lab/code-lab/workspace/*
+!reasoning-lab/code-lab/workspace/.gitkeep

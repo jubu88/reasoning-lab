@@ -370,6 +370,40 @@ details.iter-prompt summary { font-size: 12px; color: var(--dim); cursor: pointe
   line-height: 1.6; overflow-x: auto; white-space: pre;
 }
 
+/* ---------- code lab ---------- */
+.codelab-grid { display: grid; grid-template-columns: 300px 1fr 1fr; gap: 16px; align-items: start; }
+@media (max-width: 1300px) { .codelab-grid { grid-template-columns: 280px 1fr; } .codelab-right { grid-column: 1 / -1; } }
+.codelab-left, .codelab-mid, .codelab-right { min-width: 0; }
+
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.seg button { background: var(--panel-2); border: none; color: var(--dim); padding: 6px 14px; font-family: inherit; font-size: 13px; cursor: pointer; }
+.seg button.seg-on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+
+.file-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 12.5px; border-bottom: 1px solid var(--border); }
+.file-name { font-family: var(--mono); color: var(--accent); }
+.file-bytes { color: var(--dim); }
+
+.agent-log { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 12px; height: 560px; overflow-y: auto; }
+.agent-step { border-bottom: 1px solid var(--border); padding: 8px 0; }
+.agent-step-head { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 4px; }
+.agent-msg { font-size: 12.5px; color: var(--text); white-space: pre-wrap; margin-bottom: 6px; line-height: 1.5; }
+.tool-call { display: flex; align-items: baseline; gap: 8px; font-size: 12px; padding: 3px 0; flex-wrap: wrap; }
+.tool-call.err .tool-result { color: var(--red); }
+.tool-name { font-family: var(--mono); color: var(--purple); background: var(--panel-3); padding: 1px 7px; border-radius: 5px; flex-shrink: 0; }
+.tool-arg { font-family: var(--mono); color: var(--accent); }
+.tool-result { color: var(--dim); font-family: var(--mono); }
+
+.preview-frame { background: #fff; border: 1px solid var(--border-light); border-radius: 10px; overflow: hidden; height: 460px; }
+.preview-frame iframe { width: 100%; height: 100%; border: none; background: #fff; }
+.preview-empty { height: 100%; display: flex; align-items: center; justify-content: center; color: var(--dim); font-size: 13px; }
+
+.console-out { max-height: 160px; overflow-y: auto; font-family: var(--mono); font-size: 11.5px; }
+.console-line { padding: 2px 0; border-bottom: 1px solid var(--border); word-break: break-word; }
+.console-line .console-type { display: inline-block; min-width: 38px; color: var(--dim); }
+.console-line.error { color: var(--red); }
+.console-line.error .console-type { color: var(--red); }
+.console-line.warn { color: var(--yellow); }
+
 .spinner {
   width: 14px; height: 14px; border-radius: 50%;
   border: 2px solid var(--border-light); border-top-color: var(--accent);

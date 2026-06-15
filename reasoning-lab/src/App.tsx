@@ -7,8 +7,9 @@ import ChatView from "./components/ChatView";
 import BenchmarkView from "./components/BenchmarkView";
 import RefineView from "./components/RefineView";
 import ResultsView from "./components/ResultsView";
+import CodeLabView from "./components/CodeLabView";
 
-export type ViewId = "chat" | "benchmark" | "refine" | "results";
+export type ViewId = "chat" | "benchmark" | "refine" | "results" | "codelab";
 
 export interface Settings {
   model: string;
@@ -101,6 +102,9 @@ export default function App() {
         </div>
         <div className={`view ${view === "results" ? "" : "hidden"}`}>
           <ResultsView onLoadScenario={loadScenario} />
+        </div>
+        <div className={`view ${view === "codelab" ? "" : "hidden"}`}>
+          <CodeLabView settings={settings} />
         </div>
       </main>
     </div>
