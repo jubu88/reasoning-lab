@@ -391,6 +391,16 @@ export function codeLabPlugin() {
           if (pathPart === "/codelab/api/sd-status" && req.method === "GET") {
             return sendJson(res, 200, { available: fs.existsSync(SD_CLI) && fs.existsSync(SD_MODEL), busy: sdBusy });
           }
+          if (pathPart === "/codelab/api/icon" && req.method === "GET") {
+            const name = (query.get("name") || "").replace(/[^a-z0-9-]/gi, "");
+            const set = (query.get("set") || "lucide").replace(/[^a-z0-9-]/gi, "");
+            if (!name) throw new Error("icon name required");
+            // fixed host (Iconify), so no SSRF surface
+            const ic = await fetch(`https://api.iconify.design/${set}/${name}.svg`).catch(() => null);
+            const svg = ic && ic.ok ? await ic.text() : "";
+            if (!svg.startsWith("<svg")) return sendJson(res, 200, { ok: false, error: `icon not found: ${set}:${name}` });
+            return sendJson(res, 200, { ok: true, svg });
+          }
 
           res.statusCode = 404;
           return sendJson(res, 404, { ok: false, error: "unknown codelab route" });

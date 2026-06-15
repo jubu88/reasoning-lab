@@ -319,6 +319,7 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
                       <span className="tool-name">{t.name}</span>
                       {t.name === "write_file" && <span className="tool-arg">{t.args?.path}</span>}
                       {t.name === "get_design_system" && <span className="tool-arg">{t.args?.style}</span>}
+                      {t.name === "get_icon" && <span className="tool-arg">{t.args?.name}</span>}
                       {t.name === "generate_image" && <span className="tool-arg">{t.args?.path}</span>}
                       {t.name === "web_search" && <span className="tool-arg">{t.args?.query}</span>}
                       {t.name === "web_fetch" && <span className="tool-arg">{t.args?.url}</span>}

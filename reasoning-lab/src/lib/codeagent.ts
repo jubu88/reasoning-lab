@@ -154,6 +154,19 @@ export const TOOLS = [
   {
     type: "function",
     function: {
+      name: "get_icon",
+      description:
+        "Get an inline SVG icon (Lucide icon set) by name, to embed directly in HTML instead of emoji. Examples: coffee, menu, star, heart, arrow-right, check, shopping-cart, user, search. The SVG uses currentColor, so set its color and size with CSS (e.g. width:24px; color:var(--primary)).",
+      parameters: {
+        type: "object",
+        properties: { name: { type: "string", description: "kebab-case Lucide icon name, e.g. arrow-right" } },
+        required: ["name"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
       name: "web_search",
       description: "Search the web for documentation or examples. Returns titles and URLs.",
       parameters: {
@@ -216,7 +229,8 @@ Rules:
 - Write complete, working files with write_file. No placeholders or "TODO" — write the real code.
 - Everything runs in a sandboxed iframe with no network except CDNs you include. No backend, no localStorage guarantees.
 - Keep it to a few files (index.html, optionally style.css and app.js, or inline).
-- For photos the design needs (hero shots, product images), call generate_image to create a real PNG and reference it with <img src="..."> — do NOT invent filenames for images that don't exist. Use CSS gradients or inline SVG for icons, patterns, and decoration. Generating images is slow, so generate only the few that matter.
+- For icons, call get_icon (returns inline SVG from the Lucide set) and paste the SVG inline — never use emoji as icons.
+- For photos the design needs (hero shots, product images), call generate_image to create a real PNG and reference it with <img src="..."> — do NOT invent filenames for images that don't exist. Use CSS gradients for backgrounds/decoration. Generating images is slow, so generate only the few that matter.
 - When the app is finished and index.html exists, call done with a short summary.
 - Do not explain at length between tool calls; act.`;
 
@@ -225,6 +239,10 @@ async function callTool(name: string, args: any, project: string): Promise<strin
     if (name === "get_design_system") {
       const key = String(args.style || "").toLowerCase();
       return DESIGN_SYSTEMS[key] ?? `Unknown style "${args.style}". Available: ${Object.keys(DESIGN_SYSTEMS).join(", ")}. ${DESIGN_SYSTEMS["modern-saas"]}`;
+    }
+    if (name === "get_icon") {
+      const r = await (await fetch(`${API}/icon?name=${encodeURIComponent(args.name)}`)).json();
+      return r.ok ? r.svg : `error: ${r.error}`;
     }
     if (name === "list_files") {
       const r = await (await fetch(`${API}/list?project=${encodeURIComponent(project)}`)).json();
