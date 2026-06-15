@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Settings } from "../App";
-import { resetWorkspace, runAgent, type AgentProgress, type AgentStep } from "../lib/codeagent";
+import { createProject, listProjects, runAgent, type AgentProgress, type AgentStep, type ProjectInfo } from "../lib/codeagent";
 
 const BENCHMARKS: { label: string; task: string }[] = [
   {
@@ -36,6 +36,8 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
   const [hasIndex, setHasIndex] = useState(false);
   const [consoleMsgs, setConsoleMsgs] = useState<ConsoleMsg[]>([]);
   const [elapsed, setElapsed] = useState(0);
+  const [project, setProject] = useState<string>("");
+  const [projects, setProjects] = useState<ProjectInfo[]>([]);
   const abortRef = useRef<AbortController | null>(null);
   const iterStartRef = useRef<number>(0);
   const logRef = useRef<HTMLDivElement>(null);
@@ -64,15 +66,37 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
     if (el) el.scrollTop = el.scrollHeight;
   }, [steps]);
 
-  const refreshFiles = async () => {
+  const loadProjects = async () => {
     try {
-      const r = await (await fetch("/codelab/api/list")).json();
+      setProjects(await listProjects());
+    } catch {
+      /* ignore */
+    }
+  };
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  const refreshFiles = async (pid: string) => {
+    if (!pid) return;
+    try {
+      const r = await (await fetch(`/codelab/api/list?project=${encodeURIComponent(pid)}`)).json();
       const list = r.files ?? [];
       setFiles(list);
       setHasIndex(list.some((f: any) => f.path === "index.html"));
     } catch {
       /* ignore */
     }
+  };
+
+  // selecting a past project from the dropdown loads it read-only into the preview
+  const openProject = async (pid: string) => {
+    setProject(pid);
+    setSteps([]);
+    setConsoleMsgs([]);
+    setLive(null);
+    await refreshFiles(pid);
+    setPreviewKey((k) => k + 1);
   };
 
   const task = mode === "benchmark" ? BENCHMARKS[benchIdx].task : freeform.trim();
@@ -84,11 +108,22 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
     setLive(null);
     iterStartRef.current = Date.now();
     setElapsed(0);
+    // a fresh build gets its OWN project folder (no overwriting past work);
+    // "Fix errors" re-runs in the current project
+    let pid = project;
     if (!extraErrors) {
       setSteps([]);
       setConsoleMsgs([]);
-      await resetWorkspace();
-      await refreshFiles();
+      try {
+        pid = await createProject(mode === "benchmark" ? BENCHMARKS[benchIdx].label : task);
+      } catch (e: any) {
+        setError(String(e?.message ?? e));
+        setBusy(false);
+        return;
+      }
+      setProject(pid);
+      setFiles([]);
+      setHasIndex(false);
     }
     const ctrl = new AbortController();
     abortRef.current = ctrl;
@@ -97,6 +132,7 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
         {
           model: settings.model,
           task,
+          project: pid,
           maxIterations,
           temperature: settings.temperature,
           consoleErrors: extraErrors,
@@ -107,14 +143,15 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
           iterStartRef.current = Date.now();
           setElapsed(0);
           if (step.toolCalls.some((t) => t.name === "write_file")) {
-            refreshFiles();
+            refreshFiles(pid);
             setPreviewKey((k) => k + 1);
           }
         },
         (p) => setLive(p),
         ctrl.signal
       );
-      await refreshFiles();
+      await refreshFiles(pid);
+      await loadProjects();
       setPreviewKey((k) => k + 1);
     } catch (e: any) {
       if (e?.name !== "AbortError") setError(String(e?.message ?? e));
@@ -198,7 +235,31 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
             </div>
 
             <div className="card" style={{ marginTop: 12 }}>
-              <div className="card-title">Files {files.length > 0 ? `(${files.length})` : ""}</div>
+              <div className="card-title">Projects {projects.length > 0 ? `(${projects.length})` : ""}</div>
+              <select
+                value={project}
+                onChange={(e) => openProject(e.target.value)}
+                disabled={busy}
+                style={{ width: "100%" }}
+              >
+                <option value="">— select a past build —</option>
+                {projects.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.id} ({p.files} files{p.hasIndex ? "" : ", no index"})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="card" style={{ marginTop: 12 }}>
+              <div className="card-title" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                Files {files.length > 0 ? `(${files.length})` : ""}
+                {project && files.length > 0 && (
+                  <a className="btn small" style={{ marginLeft: "auto" }} href={`/codelab/api/export?project=${encodeURIComponent(project)}`} download>
+                    ⤓ zip
+                  </a>
+                )}
+              </div>
               {files.length === 0 ? (
                 <div className="prob-prompt">no files yet</div>
               ) : (
@@ -261,11 +322,11 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
               )}
             </div>
             <div className="preview-frame">
-              {hasIndex ? (
+              {hasIndex && project ? (
                 <iframe
                   key={previewKey}
                   title="preview"
-                  src={`/codelab/preview/index.html?v=${previewKey}`}
+                  src={`/codelab/preview/${encodeURIComponent(project)}/index.html?v=${previewKey}`}
                   sandbox="allow-scripts allow-forms allow-modals allow-popups"
                 />
               ) : (

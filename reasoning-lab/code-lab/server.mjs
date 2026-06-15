@@ -2,35 +2,52 @@
 // process — no second port). It is the TRUST BOUNDARY for the local model: the
 // model only emits tool calls; this code executes them under strict rules.
 //
-// Everything is confined to ./workspace. Path-escape, SSRF, size and extension
-// limits are enforced here, never by trusting the model.
+// Each build lives in its own project folder under workspace/projects/<id>/ so
+// freeform builds never overwrite each other. All file ops are jailed to the
+// chosen project; path-escape, SSRF, size and extension limits are enforced here.
 
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(HERE, "workspace");
+const PROJECTS = path.resolve(HERE, "workspace", "projects");
 
-const MAX_FILE_BYTES = 512 * 1024; // 512 KB per file
-const MAX_FILES = 60;
+const MAX_FILE_BYTES = 512 * 1024;
+const MAX_FILES = 80;
 const MAX_FETCH_BYTES = 200 * 1024;
 const FETCH_TIMEOUT_MS = 12_000;
-// only web-app source files — we never execute anything, but keep it tidy/safe
-const ALLOWED_EXT = new Set([
-  ".html", ".htm", ".css", ".js", ".mjs", ".json", ".svg", ".txt", ".md", ".csv",
-]);
+// the model may only WRITE these text source types (never arbitrary binaries)
+const ALLOWED_EXT = new Set([".html", ".htm", ".css", ".js", ".mjs", ".json", ".svg", ".txt", ".md", ".csv"]);
+// these may be SERVED for preview / included in zips (e.g. SD-generated images)
+const MIME = {
+  ".html": "text/html", ".htm": "text/html", ".css": "text/css",
+  ".js": "text/javascript", ".mjs": "text/javascript", ".json": "application/json",
+  ".svg": "image/svg+xml", ".txt": "text/plain", ".md": "text/plain", ".csv": "text/csv",
+  ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".gif": "image/gif",
+};
 
-function ensureRoot() {
-  fs.mkdirSync(ROOT, { recursive: true });
+function ensure() {
+  fs.mkdirSync(PROJECTS, { recursive: true });
 }
 
-// resolve a model-supplied relative path and guarantee it stays inside ROOT
-function safePath(rel) {
+function isSafeId(id) {
+  return typeof id === "string" && /^[a-z0-9][a-z0-9_-]{0,70}$/.test(id);
+}
+
+function projectRoot(id) {
+  if (!isSafeId(id)) throw new Error("invalid project id");
+  const root = path.join(PROJECTS, id);
+  return root;
+}
+
+// resolve a model-supplied relative path, jailed to the given project folder
+function safePath(id, rel) {
+  const root = projectRoot(id);
   if (typeof rel !== "string" || rel.includes("\0")) throw new Error("invalid path");
-  const cleaned = rel.replace(/^[/\\]+/, ""); // strip leading slashes so it can't be absolute
-  const p = path.resolve(ROOT, cleaned);
-  if (p !== ROOT && !p.startsWith(ROOT + path.sep)) throw new Error("path escapes workspace");
+  const cleaned = rel.replace(/^[/\\]+/, "");
+  const p = path.resolve(root, cleaned);
+  if (p !== root && !p.startsWith(root + path.sep)) throw new Error("path escapes project");
   return p;
 }
 
@@ -39,8 +56,41 @@ function checkExt(p) {
   if (!ALLOWED_EXT.has(ext)) throw new Error(`extension not allowed: ${ext || "(none)"}`);
 }
 
-function listFiles() {
-  ensureRoot();
+function slugify(s) {
+  return (
+    String(s || "project")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 40) || "project"
+  );
+}
+
+function createProject(name) {
+  ensure();
+  const stamp = new Date().toISOString().replace(/[-:T]/g, "").slice(2, 12); // yyMMddHHmm
+  let id = `${slugify(name)}-${stamp}`;
+  let n = 1;
+  while (fs.existsSync(path.join(PROJECTS, id))) id = `${slugify(name)}-${stamp}-${n++}`;
+  fs.mkdirSync(path.join(PROJECTS, id), { recursive: true });
+  return id;
+}
+
+function listProjects() {
+  ensure();
+  return fs
+    .readdirSync(PROJECTS)
+    .filter((d) => fs.statSync(path.join(PROJECTS, d)).isDirectory())
+    .map((d) => {
+      const files = listFiles(d);
+      return { id: d, files: files.length, hasIndex: files.some((f) => f.path === "index.html"), mtime: fs.statSync(path.join(PROJECTS, d)).mtimeMs };
+    })
+    .sort((a, b) => b.mtime - a.mtime);
+}
+
+function listFiles(id) {
+  const root = projectRoot(id);
+  if (!fs.existsSync(root)) return [];
   const out = [];
   const walk = (dir, prefix) => {
     for (const name of fs.readdirSync(dir)) {
@@ -51,16 +101,64 @@ function listFiles() {
       else out.push({ path: rel, bytes: st.size });
     }
   };
-  walk(ROOT, "");
+  walk(root, "");
   return out;
 }
 
-function resetWorkspace() {
-  fs.rmSync(ROOT, { recursive: true, force: true });
-  ensureRoot();
+// ---- dependency-free STORED zip (no compression) ----
+const CRC = (() => {
+  const t = new Uint32Array(256);
+  for (let n = 0; n < 256; n++) {
+    let c = n;
+    for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+    t[n] = c >>> 0;
+  }
+  return t;
+})();
+function crc32(buf) {
+  let c = 0xffffffff;
+  for (let i = 0; i < buf.length; i++) c = CRC[(c ^ buf[i]) & 0xff] ^ (c >>> 8);
+  return (c ^ 0xffffffff) >>> 0;
+}
+function makeZip(entries) {
+  const locals = [];
+  const central = [];
+  let offset = 0;
+  for (const e of entries) {
+    const nameBuf = Buffer.from(e.name, "utf8");
+    const crc = crc32(e.data);
+    const lh = Buffer.alloc(30);
+    lh.writeUInt32LE(0x04034b50, 0);
+    lh.writeUInt16LE(20, 4);
+    lh.writeUInt16LE(0, 6);
+    lh.writeUInt16LE(0, 8); // stored
+    lh.writeUInt32LE(crc, 14);
+    lh.writeUInt32LE(e.data.length, 18);
+    lh.writeUInt32LE(e.data.length, 22);
+    lh.writeUInt16LE(nameBuf.length, 26);
+    locals.push(lh, nameBuf, e.data);
+    const ch = Buffer.alloc(46);
+    ch.writeUInt32LE(0x02014b50, 0);
+    ch.writeUInt16LE(20, 4);
+    ch.writeUInt16LE(20, 6);
+    ch.writeUInt32LE(crc, 16);
+    ch.writeUInt32LE(e.data.length, 20);
+    ch.writeUInt32LE(e.data.length, 24);
+    ch.writeUInt16LE(nameBuf.length, 28);
+    ch.writeUInt32LE(offset, 42);
+    central.push(ch, nameBuf);
+    offset += lh.length + nameBuf.length + e.data.length;
+  }
+  const cd = Buffer.concat(central);
+  const eocd = Buffer.alloc(22);
+  eocd.writeUInt32LE(0x06054b50, 0);
+  eocd.writeUInt16LE(entries.length, 8);
+  eocd.writeUInt16LE(entries.length, 10);
+  eocd.writeUInt32LE(cd.length, 12);
+  eocd.writeUInt32LE(offset, 16);
+  return Buffer.concat([...locals, cd, eocd]);
 }
 
-// block obvious SSRF targets (localhost, link-local, private ranges)
 function ssrfBlocked(urlStr) {
   let u;
   try {
@@ -70,31 +168,13 @@ function ssrfBlocked(urlStr) {
   }
   if (!/^https?:$/.test(u.protocol)) return "only http(s) allowed";
   const h = u.hostname.toLowerCase();
-  if (
-    h === "localhost" ||
-    h === "0.0.0.0" ||
-    h.endsWith(".local") ||
-    /^127\./.test(h) ||
-    /^10\./.test(h) ||
-    /^192\.168\./.test(h) ||
-    /^169\.254\./.test(h) ||
-    /^172\.(1[6-9]|2\d|3[01])\./.test(h)
-  )
+  if (h === "localhost" || h === "0.0.0.0" || h.endsWith(".local") || /^127\./.test(h) || /^10\./.test(h) || /^192\.168\./.test(h) || /^169\.254\./.test(h) || /^172\.(1[6-9]|2\d|3[01])\./.test(h))
     return "blocked host (private/loopback)";
   return null;
 }
 
 function htmlToText(html) {
-  return html
-    .replace(/<script[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style[\s\S]*?<\/style>/gi, " ")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/\s+/g, " ")
-    .trim();
+  return html.replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/\s+/g, " ").trim();
 }
 
 async function webFetch(url) {
@@ -114,7 +194,6 @@ async function webFetch(url) {
 }
 
 async function webSearch(query) {
-  // DuckDuckGo HTML endpoint — no API key. Best-effort scrape.
   const url = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
@@ -136,25 +215,15 @@ async function webSearch(query) {
   }
 }
 
-// Injected into served HTML so the sandboxed preview can report runtime errors and
-// console output to the parent via postMessage — works WITHOUT allow-same-origin,
-// so the iframe stays fully isolated. This is what powers the "fix your errors" loop.
 const REPORTER = `<script>(function(){function s(t,a){try{parent.postMessage({__codelab:true,type:t,text:Array.prototype.map.call(a,function(x){try{return typeof x==='object'?JSON.stringify(x):String(x)}catch(e){return String(x)}}).join(' ')},'*')}catch(e){}}
 window.addEventListener('error',function(e){s('error',[(e.message||'error')+' @ '+(e.filename||'')+':'+(e.lineno||0)])});
 window.addEventListener('unhandledrejection',function(e){s('error',['unhandledrejection: '+((e.reason&&e.reason.message)||e.reason)])});
 ['log','warn','error'].forEach(function(k){var o=console[k];console[k]=function(){s(k,arguments);o.apply(console,arguments)}});})();</script>`;
-
 function injectReporter(html) {
   if (/<head[^>]*>/i.test(html)) return html.replace(/<head[^>]*>/i, (m) => m + REPORTER);
   if (/<html[^>]*>/i.test(html)) return html.replace(/<html[^>]*>/i, (m) => m + REPORTER);
   return REPORTER + html;
 }
-
-const MIME = {
-  ".html": "text/html", ".htm": "text/html", ".css": "text/css",
-  ".js": "text/javascript", ".mjs": "text/javascript", ".json": "application/json",
-  ".svg": "image/svg+xml", ".txt": "text/plain", ".md": "text/plain", ".csv": "text/csv",
-};
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -175,77 +244,93 @@ function readBody(req) {
 }
 
 function sendJson(res, code, obj) {
-  const body = JSON.stringify(obj);
   res.statusCode = code;
   res.setHeader("Content-Type", "application/json");
-  res.end(body);
+  res.end(JSON.stringify(obj));
 }
 
 export function codeLabPlugin() {
   return {
     name: "code-lab-backend",
     configureServer(server) {
-      ensureRoot();
+      ensure();
       server.middlewares.use(async (req, res, next) => {
         const u = req.url || "";
         if (!u.startsWith("/codelab/")) return next();
+        const [pathPart, queryPart] = u.split("?");
+        const query = new URLSearchParams(queryPart || "");
 
         try {
-          // ---- preview: serve workspace files in a sandboxed iframe ----
-          if (u.startsWith("/codelab/preview")) {
-            let rel = decodeURIComponent(u.slice("/codelab/preview".length).split("?")[0]);
-            if (rel === "" || rel === "/") rel = "/index.html";
-            const p = safePath(rel);
+          // ---- preview: /codelab/preview/<projectId>/<file...> ----
+          if (pathPart.startsWith("/codelab/preview/")) {
+            const rest = decodeURIComponent(pathPart.slice("/codelab/preview/".length));
+            const slash = rest.indexOf("/");
+            const id = slash === -1 ? rest : rest.slice(0, slash);
+            let rel = slash === -1 ? "index.html" : rest.slice(slash + 1) || "index.html";
+            const p = safePath(id, rel);
             if (!fs.existsSync(p) || !fs.statSync(p).isFile()) {
               res.statusCode = 404;
-              res.end("not found in workspace");
+              res.end("not found");
               return;
             }
             const ext = path.extname(p).toLowerCase();
             res.setHeader("Content-Type", MIME[ext] || "application/octet-stream");
             res.setHeader("Cache-Control", "no-store");
-            if (ext === ".html" || ext === ".htm") {
-              res.end(injectReporter(fs.readFileSync(p, "utf8")));
-            } else {
-              fs.createReadStream(p).pipe(res);
-            }
+            if (ext === ".html" || ext === ".htm") res.end(injectReporter(fs.readFileSync(p, "utf8")));
+            else fs.createReadStream(p).pipe(res);
             return;
           }
 
-          // ---- tool API ----
-          if (u === "/codelab/api/list" && req.method === "GET") {
-            return sendJson(res, 200, { files: listFiles() });
+          // ---- export: GET /codelab/api/export?project=id ----
+          if (pathPart === "/codelab/api/export" && req.method === "GET") {
+            const id = query.get("project");
+            const entries = listFiles(id).map((f) => ({ name: f.path, data: fs.readFileSync(safePath(id, f.path)) }));
+            if (entries.length === 0) throw new Error("empty project");
+            const zip = makeZip(entries);
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/zip");
+            res.setHeader("Content-Disposition", `attachment; filename="${id}.zip"`);
+            res.end(zip);
+            return;
           }
-          if (u === "/codelab/api/reset" && req.method === "POST") {
-            resetWorkspace();
-            return sendJson(res, 200, { ok: true });
+
+          // ---- project management ----
+          if (pathPart === "/codelab/api/projects" && req.method === "GET") {
+            return sendJson(res, 200, { projects: listProjects() });
           }
-          if (u === "/codelab/api/read" && req.method === "POST") {
-            const { path: rel } = await readBody(req);
-            const p = safePath(rel);
+          if (pathPart === "/codelab/api/project/new" && req.method === "POST") {
+            const { name } = await readBody(req);
+            return sendJson(res, 200, { ok: true, id: createProject(name) });
+          }
+
+          // ---- file tools (project-scoped) ----
+          if (pathPart === "/codelab/api/list" && req.method === "GET") {
+            return sendJson(res, 200, { files: listFiles(query.get("project")) });
+          }
+          if (pathPart === "/codelab/api/read" && req.method === "POST") {
+            const { project, path: rel } = await readBody(req);
+            const p = safePath(project, rel);
             if (!fs.existsSync(p)) return sendJson(res, 200, { ok: false, error: "file does not exist" });
             return sendJson(res, 200, { ok: true, content: fs.readFileSync(p, "utf8") });
           }
-          if (u === "/codelab/api/write" && req.method === "POST") {
-            const { path: rel, content } = await readBody(req);
-            const p = safePath(rel);
+          if (pathPart === "/codelab/api/write" && req.method === "POST") {
+            const { project, path: rel, content } = await readBody(req);
+            const p = safePath(project, rel);
             checkExt(p);
             if (typeof content !== "string") throw new Error("content must be a string");
             if (Buffer.byteLength(content, "utf8") > MAX_FILE_BYTES) throw new Error("file too large");
-            if (listFiles().length >= MAX_FILES && !fs.existsSync(p)) throw new Error("too many files");
+            if (listFiles(project).length >= MAX_FILES && !fs.existsSync(p)) throw new Error("too many files");
             fs.mkdirSync(path.dirname(p), { recursive: true });
             fs.writeFileSync(p, content, "utf8");
             return sendJson(res, 200, { ok: true, path: rel, bytes: Buffer.byteLength(content, "utf8") });
           }
-          if (u === "/codelab/api/web-fetch" && req.method === "POST") {
+          if (pathPart === "/codelab/api/web-fetch" && req.method === "POST") {
             const { url } = await readBody(req);
-            const r = await webFetch(url);
-            return sendJson(res, 200, { ok: true, ...r });
+            return sendJson(res, 200, { ok: true, ...(await webFetch(url)) });
           }
-          if (u === "/codelab/api/web-search" && req.method === "POST") {
-            const { query } = await readBody(req);
-            const r = await webSearch(query);
-            return sendJson(res, 200, { ok: true, ...r });
+          if (pathPart === "/codelab/api/web-search" && req.method === "POST") {
+            const { query: q } = await readBody(req);
+            return sendJson(res, 200, { ok: true, ...(await webSearch(q)) });
           }
 
           res.statusCode = 404;

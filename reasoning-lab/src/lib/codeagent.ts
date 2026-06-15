@@ -32,6 +32,7 @@ export interface AgentProgress {
 export interface AgentConfig {
   model: string;
   task: string;
+  project: string;
   maxIterations: number;
   temperature: number;
   /** runtime errors captured from the preview iframe, fed in to seed a fix */
@@ -124,18 +125,18 @@ Rules:
 - When the app is finished and index.html exists, call done with a short summary.
 - Do not explain at length between tool calls; act.`;
 
-async function callTool(name: string, args: any): Promise<string> {
+async function callTool(name: string, args: any, project: string): Promise<string> {
   try {
     if (name === "list_files") {
-      const r = await (await fetch(`${API}/list`)).json();
+      const r = await (await fetch(`${API}/list?project=${encodeURIComponent(project)}`)).json();
       return JSON.stringify(r.files ?? []);
     }
     if (name === "write_file") {
-      const r = await (await fetch(`${API}/write`, post({ path: args.path, content: args.content }))).json();
+      const r = await (await fetch(`${API}/write`, post({ project, path: args.path, content: args.content }))).json();
       return r.ok ? `wrote ${r.path} (${r.bytes} bytes)` : `error: ${r.error}`;
     }
     if (name === "read_file") {
-      const r = await (await fetch(`${API}/read`, post({ path: args.path }))).json();
+      const r = await (await fetch(`${API}/read`, post({ project, path: args.path }))).json();
       return r.ok ? r.content : `error: ${r.error}`;
     }
     if (name === "web_search") {
@@ -157,8 +158,22 @@ function post(body: any): RequestInit {
   return { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) };
 }
 
-export async function resetWorkspace() {
-  await fetch(`${API}/reset`, { method: "POST" });
+export async function createProject(name: string): Promise<string> {
+  const r = await (await fetch(`${API}/project/new`, post({ name }))).json();
+  if (!r.ok) throw new Error(r.error || "could not create project");
+  return r.id as string;
+}
+
+export interface ProjectInfo {
+  id: string;
+  files: number;
+  hasIndex: boolean;
+  mtime: number;
+}
+
+export async function listProjects(): Promise<ProjectInfo[]> {
+  const r = await (await fetch(`${API}/projects`)).json();
+  return r.projects ?? [];
 }
 
 export async function runAgent(
@@ -251,7 +266,7 @@ export async function runAgent(
     for (const tc of rawToolCalls) {
       const name = tc.function?.name;
       const args = typeof tc.function?.arguments === "string" ? safeParse(tc.function.arguments) : tc.function?.arguments ?? {};
-      const result = await callTool(name, args);
+      const result = await callTool(name, args, config.project);
       toolCalls.push({ name, args, result });
       messages.push({ role: "tool", tool_name: name, content: result.slice(0, 4000) });
     }
