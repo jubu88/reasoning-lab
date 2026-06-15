@@ -8,8 +8,15 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { spawn } from "node:child_process";
+
+// vision model used to critique rendered designs. gemma4:e4b's vision is too weak
+// (it hallucinated on test images), so default to a dedicated small VLM. moondream
+// (1.7GB) fits alongside gemma in 16GB and is fast (~25s); qwen2.5vl:3b is more
+// accurate but slower (~86s) and tighter on RAM. Override with VISION_MODEL.
+const VISION_MODEL = process.env.VISION_MODEL || "moondream";
+let sharedBrowser = null; // reused Playwright browser instance
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const PROJECTS = path.resolve(HERE, "workspace", "projects");
@@ -276,6 +283,60 @@ async function generateImage(project, rel, prompt, opts = {}) {
   return { path: safe, bytes: fs.statSync(out).size, seconds: Math.round((Date.now() - t0) / 1000), width: W, height: H };
 }
 
+// screenshot a project's index.html with Playwright. Loaded via file:// so the
+// (untrusted) page runs in chromium with NO access to our backend API.
+async function screenshotProject(project) {
+  const indexPath = safePath(project, "index.html");
+  if (!fs.existsSync(indexPath)) throw new Error("no index.html to screenshot");
+  let chromium;
+  try {
+    ({ chromium } = await import("playwright"));
+  } catch {
+    throw new Error("visual review unavailable (playwright not installed)");
+  }
+  if (!sharedBrowser || !sharedBrowser.isConnected()) {
+    sharedBrowser = await chromium.launch({ headless: true });
+  }
+  // render the true 1280px DESKTOP layout, but rasterize at 0.6x so the output
+  // image is ~768px — small enough for the vision encoder, without collapsing
+  // the page to a mobile layout (which a small viewport would do)
+  const ctx = await sharedBrowser.newContext({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 0.6 });
+  const page = await ctx.newPage();
+  try {
+    await page.goto(pathToFileURL(indexPath).href, { waitUntil: "networkidle", timeout: 20_000 }).catch(() => {});
+    await page.waitForTimeout(600); // let fonts/images settle
+    // viewport-sized (not fullPage): a normal ~1280x800 image the vision model can
+    // actually decode — a tall full-page capture silently fails to load in gemma
+    const buf = await page.screenshot({ fullPage: false, type: "png" });
+    return buf;
+  } finally {
+    await ctx.close();
+  }
+}
+
+const CRITIQUE_PROMPT =
+  "You are a senior UI/UX designer reviewing a screenshot of a web page. Judge ONLY what you can see: visual hierarchy, spacing and alignment, color and contrast, readability, and overall balance. List the 3 most important, concrete, actionable problems to fix (e.g. 'the hero heading has low contrast on the background', 'cards are unevenly spaced'). If it looks good, say so. Be specific and brief — bullet points.";
+
+async function reviewDesign(project, modelOverride) {
+  const shot = await screenshotProject(project);
+  const b64 = shot.toString("base64");
+  const res = await fetch("http://localhost:11434/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: modelOverride || VISION_MODEL,
+      messages: [{ role: "user", content: CRITIQUE_PROMPT, images: [b64] }],
+      stream: false,
+      think: false,
+      keep_alive: "10m",
+      options: { temperature: 0, num_predict: 400 },
+    }),
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(typeof data.error === "string" ? data.error : JSON.stringify(data.error));
+  return { critique: data.message?.content ?? "", screenshotBytes: shot.length };
+}
+
 function readBody(req) {
   return new Promise((resolve, reject) => {
     let data = "";
@@ -390,6 +451,10 @@ export function codeLabPlugin() {
           }
           if (pathPart === "/codelab/api/sd-status" && req.method === "GET") {
             return sendJson(res, 200, { available: fs.existsSync(SD_CLI) && fs.existsSync(SD_MODEL), busy: sdBusy });
+          }
+          if (pathPart === "/codelab/api/review" && req.method === "POST") {
+            const { project, model } = await readBody(req);
+            return sendJson(res, 200, { ok: true, ...(await reviewDesign(project, model)) });
           }
           if (pathPart === "/codelab/api/icon" && req.method === "GET") {
             const name = (query.get("name") || "").replace(/[^a-z0-9-]/gi, "");

@@ -209,6 +209,15 @@ export const TOOLS = [
   {
     type: "function",
     function: {
+      name: "review_design",
+      description:
+        "Render the current index.html and have a designer critique how it actually LOOKS (visual hierarchy, spacing, contrast, balance). Call this once after the page is built but before done, then fix the issues it reports. Returns a short list of concrete problems.",
+      parameters: { type: "object", properties: {} },
+    },
+  },
+  {
+    type: "function",
+    function: {
       name: "done",
       description:
         "Call this when the app is complete and index.html is written. Provide a one-line summary of what you built.",
@@ -231,7 +240,8 @@ Rules:
 - Keep it to a few files (index.html, optionally style.css and app.js, or inline).
 - For icons, call get_icon (returns inline SVG from the Lucide set) and paste the SVG inline — never use emoji as icons.
 - For photos the design needs (hero shots, product images), call generate_image to create a real PNG and reference it with <img src="..."> — do NOT invent filenames for images that don't exist. Use CSS gradients for backgrounds/decoration. Generating images is slow, so generate only the few that matter.
-- When the app is finished and index.html exists, call done with a short summary.
+- Once index.html is built, call review_design ONCE to see how it actually looks, fix the concrete issues it reports, then call done.
+- When the app is finished and index.html exists (and you've reviewed it), call done with a short summary.
 - Do not explain at length between tool calls; act.`;
 
 async function callTool(name: string, args: any, project: string): Promise<string> {
@@ -263,6 +273,10 @@ async function callTool(name: string, args: any, project: string): Promise<strin
     if (name === "web_fetch") {
       const r = await (await fetch(`${API}/web-fetch`, post({ url: args.url }))).json();
       return r.ok ? `[${r.status}] ${r.text}` : `error: ${r.error}`;
+    }
+    if (name === "review_design") {
+      const r = await (await fetch(`${API}/review`, post({ project }))).json();
+      return r.ok ? `DESIGN CRITIQUE:\n${r.critique}` : `error: ${r.error}`;
     }
     if (name === "generate_image") {
       const r = await (

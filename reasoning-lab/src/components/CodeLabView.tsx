@@ -323,6 +323,7 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
                       {t.name === "generate_image" && <span className="tool-arg">{t.args?.path}</span>}
                       {t.name === "web_search" && <span className="tool-arg">{t.args?.query}</span>}
                       {t.name === "web_fetch" && <span className="tool-arg">{t.args?.url}</span>}
+                      {t.name === "review_design" && <span className="tool-arg">design critique</span>}
                       {t.name === "done" && <span className="tool-arg">{t.args?.summary}</span>}
                       <span className="tool-result">{t.result.slice(0, 80)}</span>
                     </div>

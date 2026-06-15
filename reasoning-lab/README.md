@@ -36,6 +36,15 @@ Code Lab can let the model generate real images via [stable-diffusion.cpp](https
 
 Generation is local and CPU/iGPU-bound — roughly 30–60 s per image on an Iris Xe via Vulkan.
 
+## Optional: visual design critique (Code Lab)
+
+Code Lab can render a build and have a vision model critique how it *looks* (the `review_design` tool), then the builder fixes the issues. This needs:
+
+1. **Playwright** for the screenshot: `npm i -D playwright && npx playwright install chromium`.
+2. **A vision model in Ollama.** gemma4's vision is too weak for this (it hallucinates), so pull a dedicated VLM: `ollama pull moondream` (fast, ~1.7 GB, the default) or `ollama pull qwen2.5vl:3b` (more accurate, slower). Override with the `VISION_MODEL` env var.
+
+The page renders at a true 1280px desktop layout but is rasterized at 0.6× so the image is small enough for the vision encoder.
+
 ## Settings that matter
 
 - **Thinking mode** — the model's built-in chain-of-thought (gemma4 supports toggling it).
