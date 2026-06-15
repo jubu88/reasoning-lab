@@ -35,18 +35,21 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
   const [previewKey, setPreviewKey] = useState(0);
   const [hasIndex, setHasIndex] = useState(false);
   const [consoleMsgs, setConsoleMsgs] = useState<ConsoleMsg[]>([]);
-  const [elapsed, setElapsed] = useState(0);
   const [project, setProject] = useState<string>("");
   const [projects, setProjects] = useState<ProjectInfo[]>([]);
+  const [, setTick] = useState(0);
+  const [viewer, setViewer] = useState<{ path: string; content?: string; image?: boolean } | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const iterStartRef = useRef<number>(0);
+  const buildStartRef = useRef<number>(0);
   const logRef = useRef<HTMLDivElement>(null);
 
-  // heartbeat: tick elapsed seconds for the current iteration, even during the
-  // long prefill window where Ollama streams no chunks (so it never looks frozen)
+  // one ticker drives every elapsed display from render-time Date.now(), so it
+  // keeps counting even through long buffered generations where Ollama streams
+  // nothing (the old per-iteration counter could appear frozen)
   useEffect(() => {
     if (!busy) return;
-    const id = setInterval(() => setElapsed(Math.round((Date.now() - iterStartRef.current) / 1000)), 500);
+    const id = setInterval(() => setTick((t) => t + 1), 500);
     return () => clearInterval(id);
   }, [busy]);
 
@@ -95,8 +98,24 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
     setSteps([]);
     setConsoleMsgs([]);
     setLive(null);
+    setViewer(null);
     await refreshFiles(pid);
     setPreviewKey((k) => k + 1);
+  };
+
+  // click a file to view its contents (text) or render it (image)
+  const openFile = async (pid: string, path: string) => {
+    if (/\.(png|jpe?g|webp|gif|svg)$/i.test(path)) {
+      setViewer({ path, image: true });
+      return;
+    }
+    setViewer({ path, content: "loading…" });
+    try {
+      const r = await (await fetch(`/codelab/api/read`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ project: pid, path }) })).json();
+      setViewer({ path, content: r.ok ? r.content : `error: ${r.error}` });
+    } catch (e: any) {
+      setViewer({ path, content: String(e?.message ?? e) });
+    }
   };
 
   const task = mode === "benchmark" ? BENCHMARKS[benchIdx].task : freeform.trim();
@@ -106,8 +125,9 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
     setError("");
     setBusy(true);
     setLive(null);
+    setViewer(null);
     iterStartRef.current = Date.now();
-    setElapsed(0);
+    buildStartRef.current = Date.now();
     // a fresh build gets its OWN project folder (no overwriting past work);
     // "Fix errors" re-runs in the current project
     let pid = project;
@@ -141,7 +161,6 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
           setSteps((s) => [...s, step]);
           setLive(null);
           iterStartRef.current = Date.now();
-          setElapsed(0);
           if (step.toolCalls.some((t) => t.name === "write_file")) {
             refreshFiles(pid);
             setPreviewKey((k) => k + 1);
@@ -162,6 +181,9 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
   };
 
   const errorMsgs = consoleMsgs.filter((m) => m.type === "error");
+  const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+  const iterElapsed = busy ? Math.max(0, Math.round((Date.now() - iterStartRef.current) / 1000)) : 0;
+  const buildElapsed = busy ? Math.max(0, Math.round((Date.now() - buildStartRef.current) / 1000)) : 0;
 
   return (
     <>
@@ -264,7 +286,7 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
                 <div className="prob-prompt">no files yet</div>
               ) : (
                 files.map((f) => (
-                  <div key={f.path} className="file-row">
+                  <div key={f.path} className="file-row file-row-click" onClick={() => openFile(project, f.path)} title="view file">
                     <span className="file-name">{f.path}</span>
                     <span className="file-bytes">{f.bytes} B</span>
                   </div>
@@ -274,14 +296,23 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
           </div>
 
           <div className="codelab-mid">
-            <div className="card-title" style={{ marginBottom: 8 }}>
-              Agent log {busy && <span className="spinner" style={{ marginLeft: 6 }} />}
+            <div className="card-title" style={{ marginBottom: 8, display: "flex", alignItems: "center", gap: 8 }}>
+              Agent log
+              {busy && (
+                <>
+                  <span className="chip">⏱ {fmt(buildElapsed)} total</span>
+                  <span className="spinner" />
+                </>
+              )}
             </div>
             <div className="agent-log" ref={logRef}>
               {steps.length === 0 && !busy && <div className="prob-prompt">The model's tool calls will appear here.</div>}
               {steps.map((s, i) => (
                 <div key={i} className="agent-step">
-                  <div className="agent-step-head">iteration {s.iteration}{s.tokens ? ` · ${s.tokens} tok` : ""}</div>
+                  <div className="agent-step-head">
+                    iteration {s.iteration}{s.tokens ? ` · ${s.tokens} tok` : ""}
+                    {s.truncated && <span className="badge fail" style={{ marginLeft: 8 }}>⚠ hit token cap — write may be truncated</span>}
+                  </div>
                   {s.message && <div className="agent-msg">{s.message}</div>}
                   {s.toolCalls.map((t, j) => (
                     <div key={j} className={`tool-call ${t.result.startsWith("error") ? "err" : ""}`}>
@@ -299,10 +330,10 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
                 <div className="agent-step live">
                   <div className="agent-step-head">
                     iteration {live?.iteration ?? steps.length} ·{" "}
-                    {live ? (
-                      <>generating <b>{live.tokens}</b> tok · {elapsed}s</>
+                    {live && live.tokens > 1 ? (
+                      <>generating <b>{live.tokens}</b> tok · {iterElapsed}s</>
                     ) : (
-                      <>processing prompt… <b>{elapsed}s</b></>
+                      <>working… <b>{iterElapsed}s</b> (model is generating; output may be buffered)</>
                     )}
                     <span className="spinner" style={{ marginLeft: 6 }} />
                   </div>
@@ -349,6 +380,24 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
             )}
           </div>
         </div>
+
+        {viewer && (
+          <div className="file-modal" onClick={() => setViewer(null)}>
+            <div className="file-modal-box" onClick={(e) => e.stopPropagation()}>
+              <div className="file-modal-head">
+                <span className="file-name">{viewer.path}</span>
+                <button className="btn small" onClick={() => setViewer(null)}>✕ close</button>
+              </div>
+              <div className="file-modal-body">
+                {viewer.image ? (
+                  <img src={`/codelab/preview/${encodeURIComponent(project)}/${viewer.path}?v=${previewKey}`} alt={viewer.path} style={{ maxWidth: "100%" }} />
+                ) : (
+                  <pre>{viewer.content}</pre>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

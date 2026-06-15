@@ -19,6 +19,8 @@ export interface AgentStep {
   toolCalls: ToolCallRecord[];
   done: boolean;
   tokens?: number;
+  /** true if the generation hit the token cap (likely a truncated/garbled write) */
+  truncated?: boolean;
 }
 
 export interface AgentProgress {
@@ -233,7 +235,9 @@ export async function runAgent(
         stream: true,
         think: false,
         keep_alive: "15m",
-        options: { temperature: config.temperature, num_ctx: 8192, num_predict: 4096 },
+        // generous cap: a full inline page can exceed 4096 tokens and truncating
+        // mid-tool-call corrupts the write. 8192 fits within the 16384 num_ctx below.
+        options: { temperature: config.temperature, num_ctx: 16384, num_predict: 8192 },
       }),
       signal,
     });
@@ -247,6 +251,7 @@ export async function runAgent(
     let thinking = "";
     const rawToolCalls: any[] = [];
     let evalCount: number | undefined;
+    let doneReason: string | undefined;
     let liveTokens = 0;
 
     while (true) {
@@ -271,6 +276,7 @@ export async function runAgent(
         if (m.tool_calls?.length) rawToolCalls.push(...m.tool_calls);
         if (chunk.done) {
           evalCount = chunk.eval_count ?? evalCount;
+          doneReason = chunk.done_reason ?? doneReason;
         } else {
           // Ollama buffers tool-call generation: intermediate chunks carry empty
           // content, but each chunk IS one generation step — count them all so the
@@ -304,6 +310,7 @@ export async function runAgent(
       toolCalls,
       done: isDone,
       tokens: evalCount ?? liveTokens,
+      truncated: doneReason === "length",
     });
 
     if (isDone) return;
