@@ -6,6 +6,66 @@
 const OLLAMA = "/ollama";
 const API = "/codelab/api";
 
+// Curated, coherent design systems. Small models style ad-hoc (clashing colors,
+// random spacing, emoji icons); handing them a ready-to-paste token set fixes the
+// single biggest "looks amateur" tell. Each returns a complete, drop-in :root block.
+const DESIGN_SYSTEMS: Record<string, string> = {
+  "modern-saas": `Style: Modern SaaS — clean, trustworthy, indigo accent.
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+:root{
+  --bg:#f8fafc; --surface:#ffffff; --text:#0f172a; --muted:#64748b; --border:#e2e8f0;
+  --primary:#4f46e5; --primary-fg:#ffffff; --accent:#06b6d4;
+  --font:'Inter',system-ui,sans-serif; --display:'Inter',sans-serif;
+  --radius:10px; --shadow:0 1px 3px rgba(0,0,0,.08),0 8px 24px rgba(15,23,42,.06);
+  --space:8px;
+}
+Use: body background var(--bg), cards var(--surface)+var(--border)+var(--radius)+var(--shadow), buttons var(--primary)/var(--primary-fg), headings var(--display) weight 700.`,
+
+  "warm-artisan": `Style: Warm Artisan — cozy, handcrafted, cream + terracotta, serif headings.
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+:root{
+  --bg:#f5f0e8; --surface:#fffdf9; --text:#3a2e25; --muted:#8a7a6a; --border:#e6dccd;
+  --primary:#b25d33; --primary-fg:#fffdf9; --accent:#6f7d4e;
+  --font:'Lato',system-ui,sans-serif; --display:'Playfair Display',serif;
+  --radius:8px; --shadow:0 2px 10px rgba(58,46,37,.08);
+  --space:8px;
+}
+Use: serif var(--display) for headings, var(--primary) terracotta for CTAs, generous padding, soft shadows.`,
+
+  "playful": `Style: Playful — bright, rounded, energetic.
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
+:root{
+  --bg:#fff7ed; --surface:#ffffff; --text:#1f2937; --muted:#6b7280; --border:#fde68a;
+  --primary:#f97316; --primary-fg:#ffffff; --accent:#8b5cf6;
+  --font:'Poppins',system-ui,sans-serif; --display:'Poppins',sans-serif;
+  --radius:20px; --shadow:0 10px 30px rgba(249,115,22,.18);
+  --space:10px;
+}
+Use: big radii, bold weights (800 headings), vivid var(--primary)/var(--accent), chunky buttons.`,
+
+  "minimal-mono": `Style: Minimal Monochrome — black/white, lots of whitespace, sharp.
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+:root{
+  --bg:#ffffff; --surface:#ffffff; --text:#111111; --muted:#777777; --border:#111111;
+  --primary:#111111; --primary-fg:#ffffff; --accent:#111111;
+  --font:'Space Grotesk',system-ui,sans-serif; --display:'Space Grotesk',sans-serif;
+  --radius:0px; --shadow:none;
+  --space:12px;
+}
+Use: hairline 1px var(--border) borders, no shadows, square corners, huge whitespace, black buttons.`,
+
+  "dark-dashboard": `Style: Dark Dashboard — deep surfaces, neon accent.
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+:root{
+  --bg:#0b0f1a; --surface:#141a29; --text:#e5e9f0; --muted:#8b95a7; --border:#232a3b;
+  --primary:#3b82f6; --primary-fg:#ffffff; --accent:#22d3ee;
+  --font:'Inter',system-ui,sans-serif; --display:'Inter',sans-serif;
+  --radius:12px; --shadow:0 8px 30px rgba(0,0,0,.4);
+  --space:8px;
+}
+Use: dark var(--bg), elevated var(--surface) cards, var(--accent) cyan highlights, glowing primary buttons.`,
+};
+
 export interface ToolCallRecord {
   name: string;
   args: any;
@@ -81,6 +141,19 @@ export const TOOLS = [
   {
     type: "function",
     function: {
+      name: "get_design_system",
+      description:
+        "Get a coherent, ready-to-use design system (color palette, fonts, spacing, radius, shadows) for a named visual style. CALL THIS FIRST, before writing any CSS, then style everything with the returned CSS variables for a professional, consistent look. Styles: modern-saas, warm-artisan, playful, minimal-mono, dark-dashboard.",
+      parameters: {
+        type: "object",
+        properties: { style: { type: "string", description: "one of: modern-saas, warm-artisan, playful, minimal-mono, dark-dashboard" } },
+        required: ["style"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
       name: "web_search",
       description: "Search the web for documentation or examples. Returns titles and URLs.",
       parameters: {
@@ -139,6 +212,7 @@ const SYSTEM = `You are a coding agent that builds small STATIC web apps (HTML +
 
 Rules:
 - The app MUST have an entry file named exactly "index.html".
+- FIRST call get_design_system with a style that fits the request, paste its CSS variables into your stylesheet, and style EVERYTHING with those variables (colors, font, radius, shadow, spacing). This is how you get a professional, consistent look — do not invent your own ad-hoc colors.
 - Write complete, working files with write_file. No placeholders or "TODO" — write the real code.
 - Everything runs in a sandboxed iframe with no network except CDNs you include. No backend, no localStorage guarantees.
 - Keep it to a few files (index.html, optionally style.css and app.js, or inline).
@@ -148,6 +222,10 @@ Rules:
 
 async function callTool(name: string, args: any, project: string): Promise<string> {
   try {
+    if (name === "get_design_system") {
+      const key = String(args.style || "").toLowerCase();
+      return DESIGN_SYSTEMS[key] ?? `Unknown style "${args.style}". Available: ${Object.keys(DESIGN_SYSTEMS).join(", ")}. ${DESIGN_SYSTEMS["modern-saas"]}`;
+    }
     if (name === "list_files") {
       const r = await (await fetch(`${API}/list?project=${encodeURIComponent(project)}`)).json();
       return JSON.stringify(r.files ?? []);
