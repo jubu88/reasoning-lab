@@ -21,6 +21,14 @@ export interface AgentStep {
   tokens?: number;
 }
 
+export interface AgentProgress {
+  iteration: number;
+  /** live-streamed assistant text so far this turn */
+  text: string;
+  /** approximate tokens generated this turn (one stream chunk ≈ one token) */
+  tokens: number;
+}
+
 export interface AgentConfig {
   model: string;
   task: string;
@@ -156,6 +164,7 @@ export async function resetWorkspace() {
 export async function runAgent(
   config: AgentConfig,
   onStep: (step: AgentStep) => void,
+  onProgress?: (p: AgentProgress) => void,
   signal?: AbortSignal
 ): Promise<void> {
   const messages: any[] = [
@@ -173,6 +182,7 @@ export async function runAgent(
 
   for (let i = 0; i < config.maxIterations; i++) {
     if (signal?.aborted) return;
+    // stream so a long generation shows live progress instead of looking frozen
     const res = await fetch(`${OLLAMA}/api/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -180,7 +190,7 @@ export async function runAgent(
         model: config.model,
         messages,
         tools: TOOLS,
-        stream: false,
+        stream: true,
         think: false,
         keep_alive: "15m",
         options: { temperature: config.temperature, num_ctx: 8192, num_predict: 4096 },
@@ -188,35 +198,77 @@ export async function runAgent(
       signal,
     });
     if (!res.ok) throw new Error(`Ollama error ${res.status}: ${(await res.text()).slice(0, 200)}`);
-    const data = await res.json();
-    const msg = data.message ?? {};
-    const toolCalls: ToolCallRecord[] = [];
+    if (!res.body) throw new Error("no response body from Ollama");
 
-    messages.push(msg);
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = "";
+    let content = "";
+    let thinking = "";
+    const rawToolCalls: any[] = [];
+    let evalCount: number | undefined;
+    let liveTokens = 0;
 
-    if (msg.tool_calls?.length) {
-      for (const tc of msg.tool_calls) {
-        const name = tc.function?.name;
-        const args = typeof tc.function?.arguments === "string" ? safeParse(tc.function.arguments) : tc.function?.arguments ?? {};
-        const result = await callTool(name, args);
-        toolCalls.push({ name, args, result });
-        messages.push({ role: "tool", tool_name: name, content: result.slice(0, 4000) });
+    while (true) {
+      if (signal?.aborted) return;
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += decoder.decode(value, { stream: true });
+      const lines = buf.split("\n");
+      buf = lines.pop() ?? "";
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        let chunk: any;
+        try {
+          chunk = JSON.parse(line);
+        } catch {
+          continue;
+        }
+        if (chunk.error) throw new Error(`Ollama: ${chunk.error}`);
+        const m = chunk.message ?? {};
+        if (m.content) content += m.content;
+        if (m.thinking) thinking += m.thinking;
+        if (m.tool_calls?.length) rawToolCalls.push(...m.tool_calls);
+        if (chunk.done) {
+          evalCount = chunk.eval_count ?? evalCount;
+        } else {
+          // Ollama buffers tool-call generation: intermediate chunks carry empty
+          // content, but each chunk IS one generation step — count them all so the
+          // UI shows live progress instead of looking frozen.
+          liveTokens++;
+          const names = m.tool_calls?.length ? ` · writing ${m.tool_calls.map((t: any) => t.function?.name).join(", ")}` : "";
+          onProgress?.({ iteration: i, text: (content || "thinking / building…") + names, tokens: liveTokens });
+        }
       }
+    }
+
+    const assistantMsg: any = { role: "assistant", content };
+    if (thinking) assistantMsg.thinking = thinking;
+    if (rawToolCalls.length) assistantMsg.tool_calls = rawToolCalls;
+    messages.push(assistantMsg);
+
+    const toolCalls: ToolCallRecord[] = [];
+    for (const tc of rawToolCalls) {
+      const name = tc.function?.name;
+      const args = typeof tc.function?.arguments === "string" ? safeParse(tc.function.arguments) : tc.function?.arguments ?? {};
+      const result = await callTool(name, args);
+      toolCalls.push({ name, args, result });
+      messages.push({ role: "tool", tool_name: name, content: result.slice(0, 4000) });
     }
 
     const isDone = toolCalls.some((t) => t.name === "done");
     onStep({
       iteration: i,
-      thinking: msg.thinking || undefined,
-      message: msg.content ?? "",
+      thinking: thinking || undefined,
+      message: content,
       toolCalls,
       done: isDone,
-      tokens: data.eval_count,
+      tokens: evalCount ?? liveTokens,
     });
 
     if (isDone) return;
     // a turn with no tool calls and no done — nudge once, then stop if it persists
-    if (!msg.tool_calls?.length) {
+    if (!rawToolCalls.length) {
       messages.push({ role: "user", content: "Continue building with tool calls, or call done if index.html is complete." });
     }
   }

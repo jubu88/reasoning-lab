@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Settings } from "../App";
-import { resetWorkspace, runAgent, type AgentStep } from "../lib/codeagent";
+import { resetWorkspace, runAgent, type AgentProgress, type AgentStep } from "../lib/codeagent";
 
 const BENCHMARKS: { label: string; task: string }[] = [
   {
@@ -28,14 +28,25 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
   const [freeform, setFreeform] = useState("");
   const [maxIterations, setMaxIterations] = useState(8);
   const [steps, setSteps] = useState<AgentStep[]>([]);
+  const [live, setLive] = useState<AgentProgress | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [files, setFiles] = useState<{ path: string; bytes: number }[]>([]);
   const [previewKey, setPreviewKey] = useState(0);
   const [hasIndex, setHasIndex] = useState(false);
   const [consoleMsgs, setConsoleMsgs] = useState<ConsoleMsg[]>([]);
+  const [elapsed, setElapsed] = useState(0);
   const abortRef = useRef<AbortController | null>(null);
+  const iterStartRef = useRef<number>(0);
   const logRef = useRef<HTMLDivElement>(null);
+
+  // heartbeat: tick elapsed seconds for the current iteration, even during the
+  // long prefill window where Ollama streams no chunks (so it never looks frozen)
+  useEffect(() => {
+    if (!busy) return;
+    const id = setInterval(() => setElapsed(Math.round((Date.now() - iterStartRef.current) / 1000)), 500);
+    return () => clearInterval(id);
+  }, [busy]);
 
   // collect runtime errors/logs postMessaged from the sandboxed preview iframe
   useEffect(() => {
@@ -70,6 +81,9 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
     if (!task || busy || !settings.model) return;
     setError("");
     setBusy(true);
+    setLive(null);
+    iterStartRef.current = Date.now();
+    setElapsed(0);
     if (!extraErrors) {
       setSteps([]);
       setConsoleMsgs([]);
@@ -89,11 +103,15 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
         },
         (step) => {
           setSteps((s) => [...s, step]);
+          setLive(null);
+          iterStartRef.current = Date.now();
+          setElapsed(0);
           if (step.toolCalls.some((t) => t.name === "write_file")) {
             refreshFiles();
             setPreviewKey((k) => k + 1);
           }
         },
+        (p) => setLive(p),
         ctrl.signal
       );
       await refreshFiles();
@@ -216,6 +234,20 @@ export default function CodeLabView({ settings }: { settings: Settings }) {
                   ))}
                 </div>
               ))}
+              {busy && (
+                <div className="agent-step live">
+                  <div className="agent-step-head">
+                    iteration {live?.iteration ?? steps.length} ·{" "}
+                    {live ? (
+                      <>generating <b>{live.tokens}</b> tok · {elapsed}s</>
+                    ) : (
+                      <>processing prompt… <b>{elapsed}s</b></>
+                    )}
+                    <span className="spinner" style={{ marginLeft: 6 }} />
+                  </div>
+                  {live && <div className="agent-msg live-text">{live.text.slice(-1200)}</div>}
+                </div>
+              )}
             </div>
           </div>
 
